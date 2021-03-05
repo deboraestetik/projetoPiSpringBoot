@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = "http://localhost:4200")
 
 @RestController
 @RequestMapping(value = "/produtos")
@@ -28,7 +28,7 @@ public class ProdutoController {
         return produtoService.findAll();
     }
 
-    @GetMapping("")
+    @GetMapping("/{id}")
     public Produto produtoPorId(@PathVariable(value="id")long id) {
         return produtoService.findById(id);
     }

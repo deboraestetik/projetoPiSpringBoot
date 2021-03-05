@@ -1,8 +1,13 @@
 package com.projetopi.tlgne.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.projetopi.tlgne.enuns.ProdutoStatus;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Produto implements Serializable {
@@ -16,17 +21,26 @@ public class Produto implements Serializable {
     private float preco;
     private int quantidadeEstoque;
     private String categoria;
+    @Column
+    private ProdutoStatus status;
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "produto")
+    private List<Imagem> imagens = new ArrayList<>();
 
     public Produto() {
     }
 
-    public Produto(Long id, String nome, String descricao, float preco, int quantidadeEstoque, String categoria) {
+    public Produto(Long id, String nome, String descricao, float preco, int quantidadeEstoque, String categoria, ProdutoStatus status, List<Imagem> imagens) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
         this.quantidadeEstoque = quantidadeEstoque;
         this.categoria = categoria;
+        this.status = status;
+        this.imagens = imagens;
     }
 
     public Long getId() {
@@ -75,5 +89,17 @@ public class Produto implements Serializable {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public List<Imagem> getImagens() {
+        return imagens;
+    }
+
+    public ProdutoStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ProdutoStatus status) {
+        this.status = status;
     }
 }
