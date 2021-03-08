@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projetopi.tlgne.enuns.ProdutoStatus;
 
 import javax.persistence.*;
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +17,13 @@ public class Produto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
-    private String descricao;
+    private java.lang.String nome;
+    private java.lang.String descricao;
     private float preco;
     private int quantidadeEstoque;
-    private String categoria;
+    private java.lang.String categoria;
+    private int qtdEstrelas;
+    private File imagemProduto;
     @Column
     private ProdutoStatus status;
 
@@ -32,13 +35,15 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Long id, String nome, String descricao, float preco, int quantidadeEstoque, String categoria, ProdutoStatus status, List<Imagem> imagens) {
+    public Produto(Long id, String nome, String descricao, float preco, int quantidadeEstoque, String categoria, int qtdEstrelas, File imagemProduto, ProdutoStatus status, List<Imagem> imagens) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
         this.quantidadeEstoque = quantidadeEstoque;
         this.categoria = categoria;
+        this.qtdEstrelas = qtdEstrelas;
+        this.imagemProduto = imagemProduto;
         this.status = status;
         this.imagens = imagens;
     }
@@ -51,19 +56,19 @@ public class Produto implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
+    public java.lang.String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNome(java.lang.String nome) {
         this.nome = nome;
     }
 
-    public String getDescricao() {
+    public java.lang.String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(String descricao) {
+    public void setDescricao(java.lang.String descricao) {
         this.descricao = descricao;
     }
 
@@ -83,11 +88,11 @@ public class Produto implements Serializable {
         this.quantidadeEstoque = quantidadeEstoque;
     }
 
-    public String getCategoria() {
+    public java.lang.String getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(java.lang.String categoria) {
         this.categoria = categoria;
     }
 
@@ -101,5 +106,21 @@ public class Produto implements Serializable {
 
     public void setStatus(ProdutoStatus status) {
         this.status = status;
+    }
+
+    public int getQtdEstrelas() {
+        return qtdEstrelas;
+    }
+
+    public void setQtdEstrelas(int qtdEstrelas) {
+        this.qtdEstrelas = qtdEstrelas;
+    }
+
+    public File getImagemProduto() {
+        return imagemProduto;
+    }
+
+    public void setImagemProduto(File imagemProduto) {
+        this.imagemProduto = imagemProduto;
     }
 }

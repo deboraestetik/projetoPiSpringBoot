@@ -4,10 +4,11 @@ package com.projetopi.tlgne.enuns;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum ProdutoStatus {
-    @JsonProperty("Ativo")
-    ATIVO(0),
     @JsonProperty("Inativo")
-    INATIVO(1);
+    INATIVO(0),
+    @JsonProperty("Ativo")
+    ATIVO(1);
+
 
     private int valor;
 

@@ -1,8 +1,8 @@
 package com.projetopi.tlgne.entities;
 
-
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 public class Imagem implements Serializable {
@@ -13,6 +13,8 @@ public class Imagem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String caminho;
+    @Transient
+    private List<Byte> img;
 
 
     @ManyToOne
@@ -51,5 +53,9 @@ public class Imagem implements Serializable {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    public List<Byte> getImg() {
+        return img;
     }
 }

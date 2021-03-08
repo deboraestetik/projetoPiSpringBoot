@@ -1,6 +1,8 @@
 package com.projetopi.tlgne.services;
 
+import com.projetopi.tlgne.entities.Imagem;
 import com.projetopi.tlgne.entities.Produto;
+import com.projetopi.tlgne.repositories.ImagemRepository;
 import com.projetopi.tlgne.repositories.ProdutoRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,9 @@ public class ProdutoService {
 
     @Autowired
     private ProdutoRepository produtoRepository;
+
+    @Autowired
+    private ImagemRepository imagemRepository;
 
     public ProdutoService() {
     }
@@ -29,7 +34,16 @@ public class ProdutoService {
     }
 
     public Produto saveProduto(Produto produto){
-        return produtoRepository.save(produto);
+        Produto produtoSalvo = produtoRepository.save(produto);
+        Imagem imagem = new Imagem();
+
+        if(produto.getImagens() != null){
+
+            for (int i=0;i < produto.getImagens().size();i++){
+
+            }
+        }
+        return produtoSalvo;
     }
 
     public void deleteById(long id){
