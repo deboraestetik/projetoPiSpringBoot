@@ -44,7 +44,11 @@ public class ProdutoService {
         return produtoRepository.findById(id);
     }
 
-    public Produto saveProduto(Produto produto, List<MultipartFile> file) throws IOException {
+    public Produto saveProduto(Produto produto){
+        return produtoRepository.save(produto);
+    }
+
+    public Produto saveProdutoComImagem(Produto produto, List<MultipartFile> file) throws IOException {
         Produto produtoSalvo = produtoRepository.save(produto);
 
         if (!file.isEmpty()) {
@@ -58,7 +62,6 @@ public class ProdutoService {
         return produtoSalvo;
     }
 
-//            for(String caminho: produto.getCaminhoImagem()){
 
     private void saveImagemdb(Produto produtoSalvo) {
 

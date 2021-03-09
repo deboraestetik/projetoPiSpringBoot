@@ -13,9 +13,6 @@ public class Imagem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String caminho;
-    @Transient
-    private List<Byte> img;
-
 
     @ManyToOne
     @JoinColumn(name = "produto_id")
@@ -55,7 +52,4 @@ public class Imagem implements Serializable {
         this.produto = produto;
     }
 
-    public List<Byte> getImg() {
-        return img;
-    }
 }

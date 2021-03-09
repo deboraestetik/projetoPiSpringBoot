@@ -39,9 +39,14 @@ public class ProdutoController {
     }
 
     @PostMapping(value = "", consumes = {"multipart/form-data"})
-    public Produto saveProduto(
+    public Produto saveProdutoComImagem(
             @RequestPart Produto produto, @RequestPart List<MultipartFile> file) throws IOException {
-        return produtoService.saveProduto(produto, file);
+        return produtoService.saveProdutoComImagem(produto, file);
+    }
+
+    @PostMapping(value = "")
+    public Produto saveProduto(@RequestBody Produto produto) {
+        return produtoService.saveProduto(produto);
     }
 
     @DeleteMapping("/{id}")
