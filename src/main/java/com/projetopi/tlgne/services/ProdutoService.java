@@ -36,15 +36,15 @@ public class ProdutoService {
     public Produto saveProduto(Produto produto){
         Produto produtoSalvo = produtoRepository.save(produto);
         
-        if(!produto.getCaminhoImagem().isEmpty()) {
-            for(String caminho: produto.getCaminhoImagem()){
+        if(produto.getCaminhoImagem() != null) {
+//            for(String caminho: produto.getCaminhoImagem()){
                 Imagem imagem = new Imagem();
                 imagem.setProduto(produtoSalvo);
-                imagem.setCaminho(caminho);
+                imagem.setCaminho(produto.getCaminhoImagem());
                 imagemRepository.save(imagem);
             }
             
-        }
+
         return produtoSalvo;
     }
 
