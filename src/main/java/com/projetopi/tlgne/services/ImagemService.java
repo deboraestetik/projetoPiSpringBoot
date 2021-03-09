@@ -25,8 +25,8 @@ public class ImagemService {
         return imagemRepository.findById(id);
     }
 
-//    public List<Imagem> findByIdProduto(long id) {
-//
-//        return imagemRepository.findAll(id);
-//    }
+    public List<Imagem> findAll(long id) {
+        return imagemRepository.findAllProduto(id);
+    }
+
 }

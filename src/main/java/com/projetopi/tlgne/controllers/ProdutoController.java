@@ -1,23 +1,12 @@
 package com.projetopi.tlgne.controllers;
 
 import com.projetopi.tlgne.entities.Produto;
+import com.projetopi.tlgne.services.ImagemService;
 import com.projetopi.tlgne.services.ProdutoService;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 import javassist.NotFoundException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.multipart.MultipartFile;
 //@CrossOrigin(origins = "http://localhost:4200")
 
 @RestController
@@ -27,6 +16,9 @@ public class ProdutoController {
 
     @Autowired
     private ProdutoService produtoService;
+
+    @Autowired
+    private ImagemService imagemService;
 
     @GetMapping("/produtos")
     public List<Produto> listaProduto() {
@@ -38,7 +30,6 @@ public class ProdutoController {
         return produtoService.findById(id);
     }
 
-
     @PostMapping(value = "")
     public Produto saveProduto(@RequestBody Produto produto) {
         return produtoService.saveProduto(produto);
@@ -46,7 +37,7 @@ public class ProdutoController {
 
     @DeleteMapping("/{id}")
     public void deleteProduto(@PathVariable(value = "id") long id) {
-        produtoService.deleteById(id);
+       produtoService.deleteById(id);
     }
 
     @PutMapping("")

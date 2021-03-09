@@ -8,7 +8,9 @@ import java.util.List;
 import com.projetopi.tlgne.entities.Produto;
 import com.projetopi.tlgne.services.ImagemService;
 import com.projetopi.tlgne.services.ProdutoService;
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,8 +35,9 @@ public class ImagemController {
        Produto produtoRecuperado = produtoService.findById(id);
         return produtoService.saveProdutoComImagem(produtoRecuperado, file);
     }
-//    @GetMapping("/produto/{id}")
-//    public List<Imagem> imagemPorIdProduto(@PathVariable(value = "id") long id) {
-//        return imagemService.findByIdProduto(id);
-//    }
+
+    @GetMapping("/produto/{id}")
+    public List<Imagem> imagemPorIdProduto(@PathVariable (value = "id") long id) {
+        return imagemService.findAll(id);
+    }
 }

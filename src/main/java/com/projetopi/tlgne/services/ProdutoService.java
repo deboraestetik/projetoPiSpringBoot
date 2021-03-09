@@ -88,8 +88,16 @@ public class ProdutoService {
     }
 
     public void deleteById(long id) {
-        produtoRepository.deleteById(id);
-    }
+        //verificando se existe imagens associadas ao produto
+        List<Imagem> imgs = imagemRepository.findAllProduto(id);
+        if(imgs.isEmpty()) {
+            produtoRepository.deleteById(id);
+        }else{
+            imagemRepository.deleteAll(imgs);
+            produtoRepository.deleteById(id);
+            }
+        }
+
 
     public Produto saveUpdateProduto(Produto produto) throws NotFoundException {
         if (produtoRepository.existsById(produto.getId())) {
