@@ -11,23 +11,22 @@ import java.util.List;
 @Service
 public class ImagemService {
 
-//    @Autowired
-//    private ImagemRepository imagemRepository;
+    @Autowired
+    private ImagemRepository imagemRepository;
+
+    public ImagemService(ImagemRepository imagemRepository) {
+        this.imagemRepository = imagemRepository;
+    }
+
+    public ImagemService() {
+    }
+
+    public Imagem findById(long id) {
+        return imagemRepository.findById(id);
+    }
+
+//    public List<Imagem> findByIdProduto(long id) {
 //
-//    public ImagemService(ImagemRepository imagemRepository) {
-//        this.imagemRepository = imagemRepository;
+//        return imagemRepository.findAll(id);
 //    }
-//
-//    public ImagemService() {
-//    }
-//
-//    public Imagem findById(long id) {
-//        return imagemRepository.findById(id);
-//    }
-//
-////    public List<Imagem> findByIdProduto(long id) {
-////        @Query(value =select
-////        return imagemRepository.findByIdProduto(id);
-////    }
-//}
 }

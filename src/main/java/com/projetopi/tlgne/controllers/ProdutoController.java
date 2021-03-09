@@ -38,11 +38,6 @@ public class ProdutoController {
         return produtoService.findById(id);
     }
 
-    @PostMapping(value = "", consumes = {"multipart/form-data"})
-    public Produto saveProdutoComImagem(
-            @RequestPart Produto produto, @RequestPart List<MultipartFile> file) throws IOException {
-        return produtoService.saveProdutoComImagem(produto, file);
-    }
 
     @PostMapping(value = "")
     public Produto saveProduto(@RequestBody Produto produto) {

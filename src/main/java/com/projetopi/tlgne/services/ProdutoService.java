@@ -48,8 +48,7 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
-    public Produto saveProdutoComImagem(Produto produto, List<MultipartFile> file) throws IOException {
-        Produto produtoSalvo = produtoRepository.save(produto);
+    public Produto saveProdutoComImagem(Produto produtoSalvo, List<MultipartFile> file) throws IOException {
 
         if (!file.isEmpty()) {
             saveCaminhoImagem(file, produtoSalvo);
