@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping(value = "/produtos")
 public class ProdutoController {
 
+
     @Autowired
     private ProdutoService produtoService;
 
@@ -38,32 +39,9 @@ public class ProdutoController {
     }
 
     @PostMapping(value = "", consumes = {"multipart/form-data"})
-    public ResponseEntity<?> saveProduto(
-            @RequestPart Produto produto, @RequestPart MultipartFile file) throws IOException {
-
-        String pasta = "C:\\Users\\User\\Documents\\projetoPi4\\";
-        Produto prod = produto;
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
-                Path caminhoArquivo = Paths.get(pasta + file.getOriginalFilename());
-                Files.write(caminhoArquivo, bytes);
-
-                prod.setCaminhoImagem(pasta + file.getOriginalFilename());
-
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-
-        produtoService.saveProduto(prod);
-
-        return new
-
-                ResponseEntity(HttpStatus.OK);
-
+    public Produto saveProduto(
+            @RequestPart Produto produto, @RequestPart List<MultipartFile> file) throws IOException {
+        return produtoService.saveProduto(produto, file);
     }
 
     @DeleteMapping("/{id}")

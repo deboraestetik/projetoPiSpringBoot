@@ -21,7 +21,8 @@ public class Produto implements Serializable {
     private java.lang.String categoria;
     private int qtdEstrelas;
     private ProdutoStatus status;
-    private String caminhoImagem;
+    @Transient
+    private List<String> caminhoImagem = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "produto")
@@ -30,7 +31,7 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Long id, String nome, String descricao, float preco, int quantidadeEstoque, String categoria, int qtdEstrelas, ProdutoStatus status, String caminhoImagem) {
+    public Produto(Long id, String nome, String descricao, float preco, int quantidadeEstoque, String categoria, int qtdEstrelas, ProdutoStatus status, List<String>  caminhoImagem) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -110,12 +111,12 @@ public class Produto implements Serializable {
         this.qtdEstrelas = qtdEstrelas;
     }
 
-    public String getCaminhoImagem() {
+    public List<String>  getCaminhoImagem() {
         return caminhoImagem;
     }
 
     public void setCaminhoImagem(String caminhoImagem) {
-        this.caminhoImagem = caminhoImagem;
+        this.caminhoImagem.add(caminhoImagem);
     }
 
 }

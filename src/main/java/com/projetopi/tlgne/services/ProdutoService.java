@@ -5,12 +5,23 @@ import com.projetopi.tlgne.entities.Produto;
 import com.projetopi.tlgne.repositories.ImagemRepository;
 import com.projetopi.tlgne.repositories.ProdutoRepository;
 import javassist.NotFoundException;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
+import org.apache.tomcat.util.http.fileupload.impl.SizeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
 public class ProdutoService {
+
+    private String pasta = "C:\\Users\\User\\Documents\\projetoPi4\\";
 
     @Autowired
     private ProdutoRepository produtoRepository;
@@ -25,36 +36,62 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
-    public List<Produto> findAll(){
+    public List<Produto> findAll() {
         return produtoRepository.findAll();
     }
 
-    public Produto findById(long id){
+    public Produto findById(long id) {
         return produtoRepository.findById(id);
     }
 
-    public Produto saveProduto(Produto produto){
+    public Produto saveProduto(Produto produto, List<MultipartFile> file) throws IOException {
         Produto produtoSalvo = produtoRepository.save(produto);
-        
-        if(produto.getCaminhoImagem() != null) {
-//            for(String caminho: produto.getCaminhoImagem()){
-                Imagem imagem = new Imagem();
-                imagem.setProduto(produtoSalvo);
-                imagem.setCaminho(produto.getCaminhoImagem());
-                imagemRepository.save(imagem);
-            }
-            
 
+        if (!file.isEmpty()) {
+            saveCaminhoImagem(file, produtoSalvo);
+        }
+
+        if (!produtoSalvo.getCaminhoImagem().isEmpty()) {
+            saveImagemdb(produtoSalvo);
+
+        }
         return produtoSalvo;
     }
 
-    public void deleteById(long id){
+//            for(String caminho: produto.getCaminhoImagem()){
+
+    private void saveImagemdb(Produto produtoSalvo) {
+
+        for (String caminho : produtoSalvo.getCaminhoImagem()) {
+            Imagem imagem = new Imagem();
+            imagem.setProduto(produtoSalvo);
+            imagem.setCaminho(caminho);
+            imagemRepository.save(imagem);
+        }
+
+    }
+
+    private void saveCaminhoImagem(List<MultipartFile> file, Produto produtoSalvo) {
+        try {
+            for(MultipartFile f : file) {
+                byte[] bytes = f.getBytes();
+                Path caminhoArquivo = Paths.get(pasta + f.getOriginalFilename());
+                Files.write(caminhoArquivo, bytes);
+                produtoSalvo.setCaminhoImagem(pasta + f.getOriginalFilename());
+            }
+        } catch (IOException e) {
+            System.out.println("Error ao salvar caminho imagem");
+        }
+
+    }
+
+    public void deleteById(long id) {
         produtoRepository.deleteById(id);
     }
 
     public Produto saveUpdateProduto(Produto produto) throws NotFoundException {
-        if (produtoRepository.existsById(produto.getId())){
-           return produtoRepository.save(produto);
+        if (produtoRepository.existsById(produto.getId())) {
+            return produtoRepository.save(produto);
         }
         throw new NotFoundException("Produto não cadastrado");
     }
