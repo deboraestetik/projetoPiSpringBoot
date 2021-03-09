@@ -1,11 +1,8 @@
 package com.projetopi.tlgne.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.projetopi.tlgne.enuns.ProdutoStatus;
-
 import javax.persistence.*;
-import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +20,8 @@ public class Produto implements Serializable {
     private int quantidadeEstoque;
     private java.lang.String categoria;
     private int qtdEstrelas;
-    private File imagemProduto;
-    @Column
     private ProdutoStatus status;
-
+    private ArrayList<String> caminhoImagem;
 
     @JsonIgnore
     @OneToMany(mappedBy = "produto")
@@ -35,7 +30,7 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Long id, String nome, String descricao, float preco, int quantidadeEstoque, String categoria, int qtdEstrelas, File imagemProduto, ProdutoStatus status, List<Imagem> imagens) {
+    public Produto(Long id, String nome, String descricao, float preco, int quantidadeEstoque, String categoria, int qtdEstrelas, ProdutoStatus status, ArrayList<String> caminhoImagem) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -43,9 +38,8 @@ public class Produto implements Serializable {
         this.quantidadeEstoque = quantidadeEstoque;
         this.categoria = categoria;
         this.qtdEstrelas = qtdEstrelas;
-        this.imagemProduto = imagemProduto;
         this.status = status;
-        this.imagens = imagens;
+        this.caminhoImagem = caminhoImagem;
     }
 
     public Long getId() {
@@ -116,11 +110,12 @@ public class Produto implements Serializable {
         this.qtdEstrelas = qtdEstrelas;
     }
 
-    public File getImagemProduto() {
-        return imagemProduto;
+    public ArrayList<String> getCaminhoImagem() {
+        return caminhoImagem;
     }
 
-    public void setImagemProduto(File imagemProduto) {
-        this.imagemProduto = imagemProduto;
+    public void setCaminhoImagem(String caminhoImagem) {
+        this.caminhoImagem.add(caminhoImagem);
     }
+
 }
