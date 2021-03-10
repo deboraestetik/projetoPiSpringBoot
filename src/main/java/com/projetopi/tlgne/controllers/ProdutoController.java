@@ -4,7 +4,12 @@ import com.projetopi.tlgne.entities.Produto;
 import com.projetopi.tlgne.services.ImagemService;
 import com.projetopi.tlgne.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
@@ -58,10 +63,5 @@ public class ProdutoController {
         return produtoService.saveUpdateProduto(produto);
     }
 
-    @CrossOrigin
-    @PutMapping("/{status}")
-    public Produto updateProdutoStatus(@RequestBody Produto produto, @PathVariable(value = "status") long status) throws NotFoundException {
-        return produtoService.saveUpdateProdutoStatus(produto , status);
-    }
 
 }

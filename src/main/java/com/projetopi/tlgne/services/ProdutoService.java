@@ -8,8 +8,9 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -46,7 +47,7 @@ public class ProdutoService {
         return produtoRepository.findById(id);
     }
 
-    public Produto saveProduto(Produto produto){
+    public Produto saveProduto(Produto produto) {
         return produtoRepository.save(produto);
     }
 
@@ -57,27 +58,32 @@ public class ProdutoService {
         }
 
         if (!produtoSalvo.getCaminhoImagem().isEmpty()) {
-            saveImagemdb(produtoSalvo);
+            saveImagemdb(file, produtoSalvo);
 
         }
         return produtoSalvo;
     }
 
 
-    private void saveImagemdb(Produto produtoSalvo) {
-
-        for (String caminho : produtoSalvo.getCaminhoImagem()) {
-            Imagem imagem = new Imagem();
-            imagem.setProduto(produtoSalvo);
-            imagem.setCaminho(caminho);
-            imagemRepository.save(imagem);
+    private void saveImagemdb(List<MultipartFile> file, Produto produtoSalvo) {
+        try {
+            for (MultipartFile f : file) {
+                byte[] bytes = f.getBytes();
+                Imagem imagem = new Imagem();
+                imagem.setProduto(produtoSalvo);
+                imagem.setCaminho(pasta + f.getOriginalFilename());
+                imagem.setCaminhoBlob(bytes);
+                imagemRepository.save(imagem);
+            }
+        } catch (IOException e) {
+            System.out.println("Error ao salvar dados imagem no banco de dados");
         }
 
     }
 
     private void saveCaminhoImagem(List<MultipartFile> file, Produto produtoSalvo) {
         try {
-            for(MultipartFile f : file) {
+            for (MultipartFile f : file) {
                 byte[] bytes = f.getBytes();
                 Path caminhoArquivo = Paths.get(pasta + f.getOriginalFilename());
                 Files.write(caminhoArquivo, bytes);
@@ -90,15 +96,15 @@ public class ProdutoService {
     }
 
     public void deleteById(long id) {
-        //verificando se existe imagens associadas ao produto
-        List<Imagem> imgs = imagemRepository.findAllProduto(id);
-        if(imgs.isEmpty()) {
+
+        List<Imagem> imgs = imagemRepository.findAllProduto(id);//verificando se existe imagens associadas ao produto
+        if (imgs.isEmpty()) {
             produtoRepository.deleteById(id);
-        }else{
+        } else {
             imagemRepository.deleteAll(imgs);
             produtoRepository.deleteById(id);
-            }
         }
+    }
 
 
     public Produto saveUpdateProduto(Produto produto) throws NotFoundException {
@@ -109,20 +115,5 @@ public class ProdutoService {
         throw new NotFoundException("Produto não cadastrado");
     }
 
-    public Produto saveUpdateProdutoStatus(Produto produto, long status) throws NotFoundException {
-        if (produtoRepository.existsById(produto.getId())) {
-            if (status == 0) {
-                produto.setStatus(0);
-                return produtoRepository.save(produto);
-            } else if (status == 1){
-                produto.setStatus(1);
-                return produtoRepository.save(produto);
-            }else{
-                throw new NotFoundException("Status Inválido ");
-            }
-
-        }
-        throw new NotFoundException("Produto não cadastrado");
-    }
 
 }

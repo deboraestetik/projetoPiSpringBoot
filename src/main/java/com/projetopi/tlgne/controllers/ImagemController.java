@@ -8,9 +8,7 @@ import java.util.List;
 import com.projetopi.tlgne.entities.Produto;
 import com.projetopi.tlgne.services.ImagemService;
 import com.projetopi.tlgne.services.ProdutoService;
-import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,7 +38,9 @@ public class ImagemController {
 
     @CrossOrigin
     @GetMapping("/produto/{id}")
-    public List<Imagem> imagemPorIdProduto(@PathVariable (value = "id") long id) {
-        return imagemService.findAll(id);
+    public List<byte[]> imagemPorIdProduto(@PathVariable (value = "id") long id) throws IOException {
+        return imagemService.findAllProdutoImagens(id);
     }
+
+
 }
