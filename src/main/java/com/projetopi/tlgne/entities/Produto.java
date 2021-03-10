@@ -1,7 +1,6 @@
 package com.projetopi.tlgne.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.projetopi.tlgne.enuns.ProdutoStatus;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ public class Produto implements Serializable {
     private int quantidadeEstoque;
     private java.lang.String categoria;
     private int qtdEstrelas;
-    private ProdutoStatus status;
+    private int status;
     @Transient
     private List<String> caminhoImagem = new ArrayList<>();
 
@@ -31,7 +30,7 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(Long id, String nome, String descricao, float preco, int quantidadeEstoque, String categoria, int qtdEstrelas, ProdutoStatus status, List<String>  caminhoImagem) {
+    public Produto(Long id, String nome, String descricao, float preco, int quantidadeEstoque, String categoria, int qtdEstrelas, int status, List<String>  caminhoImagem) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -95,11 +94,11 @@ public class Produto implements Serializable {
         return imagens;
     }
 
-    public ProdutoStatus getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(ProdutoStatus status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

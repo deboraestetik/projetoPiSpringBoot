@@ -2,13 +2,9 @@ package com.projetopi.tlgne.services;
 
 import com.projetopi.tlgne.entities.Imagem;
 import com.projetopi.tlgne.entities.Produto;
-import com.projetopi.tlgne.enuns.ProdutoStatus;
 import com.projetopi.tlgne.repositories.ImagemRepository;
 import com.projetopi.tlgne.repositories.ProdutoRepository;
 import javassist.NotFoundException;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
-import org.apache.tomcat.util.http.fileupload.impl.SizeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -116,10 +112,10 @@ public class ProdutoService {
     public Produto saveUpdateProdutoStatus(Produto produto, long status) throws NotFoundException {
         if (produtoRepository.existsById(produto.getId())) {
             if (status == 0) {
-                produto.setStatus(ProdutoStatus.INATIVO);
+                produto.setStatus(0);
                 return produtoRepository.save(produto);
             } else if (status == 1){
-                produto.setStatus(ProdutoStatus.ATIVO);
+                produto.setStatus(1);
                 return produtoRepository.save(produto);
             }else{
                 throw new NotFoundException("Status Inválido ");
