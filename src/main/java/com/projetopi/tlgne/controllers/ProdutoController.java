@@ -30,6 +30,11 @@ public class ProdutoController {
         return produtoService.findById(id);
     }
 
+    @GetMapping("/produtos/{semelhanca}")
+    public List<Produto> listaProdutoSemelhanca(@PathVariable(value = "semelhanca") String semelhanca) {
+        return produtoService.findAllSemelanca();
+    }
+
     @PostMapping(value = "")
     public Produto saveProduto(@RequestBody Produto produto) {
         return produtoService.saveProduto(produto);

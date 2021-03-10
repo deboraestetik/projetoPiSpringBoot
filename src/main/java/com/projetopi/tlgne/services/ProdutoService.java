@@ -43,6 +43,10 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
+    public List<Produto> findAllSemelanca() {
+        return produtoRepository.findAllSemelhanca();
+    }
+
     public Produto findById(long id) {
         return produtoRepository.findById(id);
     }
@@ -124,4 +128,6 @@ public class ProdutoService {
         }
         throw new NotFoundException("Produto não cadastrado");
     }
+
+
 }
