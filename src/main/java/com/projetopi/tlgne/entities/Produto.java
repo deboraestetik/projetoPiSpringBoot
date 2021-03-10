@@ -20,7 +20,9 @@ public class Produto implements Serializable {
     private java.lang.String categoria;
     private int qtdEstrelas;
     private int status;
+
     @Transient
+    @JsonIgnore
     private List<String> caminhoImagem = new ArrayList<>();
 
     @JsonIgnore

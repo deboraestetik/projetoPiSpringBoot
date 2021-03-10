@@ -25,17 +25,20 @@ public class ImagemController {
     @Autowired
     private ProdutoService produtoService;
 
+    @CrossOrigin
     @GetMapping("/{id}")
     public Imagem imagemPorId(@PathVariable(value = "id") long id) {
         return imagemService.findById(id);
     }
 
+    @CrossOrigin
     @PostMapping(value ="/produto/{id}" , consumes = {"multipart/form-data"})
     public Produto saveProdutoComImagem (@RequestPart List<MultipartFile> file,@PathVariable(value = "id") long id) throws IOException {
        Produto produtoRecuperado = produtoService.findById(id);
         return produtoService.saveProdutoComImagem(produtoRecuperado, file);
     }
 
+    @CrossOrigin
     @GetMapping("/produto/{id}")
     public List<Imagem> imagemPorIdProduto(@PathVariable (value = "id") long id) {
         return imagemService.findAll(id);

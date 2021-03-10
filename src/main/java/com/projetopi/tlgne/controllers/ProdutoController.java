@@ -6,8 +6,10 @@ import com.projetopi.tlgne.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Set;
+
 import javassist.NotFoundException;
-//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 
 @RestController
 @RequestMapping(value = "/produtos")
@@ -20,36 +22,43 @@ public class ProdutoController {
     @Autowired
     private ImagemService imagemService;
 
+    @CrossOrigin
     @GetMapping("/produtos")
     public List<Produto> listaProduto() {
         return produtoService.findAll();
     }
 
+    @CrossOrigin
     @GetMapping("/{id}")
     public Produto produtoPorId(@PathVariable(value = "id") long id) {
         return produtoService.findById(id);
     }
 
+    @CrossOrigin
     @GetMapping("/produtos/{semelhanca}")
     public List<Produto> listaProdutoSemelhanca(@PathVariable(value = "semelhanca") String semelhanca) {
-        return produtoService.findAllSemelanca();
+        return produtoService.findAllSemelanca(semelhanca);
     }
 
+    @CrossOrigin
     @PostMapping(value = "")
     public Produto saveProduto(@RequestBody Produto produto) {
         return produtoService.saveProduto(produto);
     }
 
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public void deleteProduto(@PathVariable(value = "id") long id) {
        produtoService.deleteById(id);
     }
 
+    @CrossOrigin
     @PutMapping("")
     public Produto updateProduto(@RequestBody Produto produto) throws NotFoundException {
         return produtoService.saveUpdateProduto(produto);
     }
 
+    @CrossOrigin
     @PutMapping("/{status}")
     public Produto updateProdutoStatus(@RequestBody Produto produto, @PathVariable(value = "status") long status) throws NotFoundException {
         return produtoService.saveUpdateProdutoStatus(produto , status);

@@ -27,7 +27,6 @@ public class ProdutoService {
     private ImagemRepository imagemRepository;
 
 
-
     public ProdutoService() {
     }
 
@@ -39,8 +38,8 @@ public class ProdutoService {
         return produtoRepository.findAll();
     }
 
-    public List<Produto> findAllSemelanca() {
-        return produtoRepository.findAllSemelhanca();
+    public List<Produto> findAllSemelanca(String semelhanca) {
+        return produtoRepository.findAllSemelhanca(semelhanca);
     }
 
     public Produto findById(long id) {
@@ -103,6 +102,7 @@ public class ProdutoService {
 
 
     public Produto saveUpdateProduto(Produto produto) throws NotFoundException {
+
         if (produtoRepository.existsById(produto.getId())) {
             return produtoRepository.saveAndFlush(produto);
         }
@@ -124,6 +124,5 @@ public class ProdutoService {
         }
         throw new NotFoundException("Produto não cadastrado");
     }
-
 
 }
