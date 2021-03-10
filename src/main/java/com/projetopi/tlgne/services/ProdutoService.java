@@ -2,6 +2,7 @@ package com.projetopi.tlgne.services;
 
 import com.projetopi.tlgne.entities.Imagem;
 import com.projetopi.tlgne.entities.Produto;
+import com.projetopi.tlgne.enuns.ProdutoStatus;
 import com.projetopi.tlgne.repositories.ImagemRepository;
 import com.projetopi.tlgne.repositories.ProdutoRepository;
 import javassist.NotFoundException;
@@ -28,6 +29,8 @@ public class ProdutoService {
 
     @Autowired
     private ImagemRepository imagemRepository;
+
+
 
     public ProdutoService() {
     }
@@ -101,9 +104,24 @@ public class ProdutoService {
 
     public Produto saveUpdateProduto(Produto produto) throws NotFoundException {
         if (produtoRepository.existsById(produto.getId())) {
-            return produtoRepository.save(produto);
+            return produtoRepository.saveAndFlush(produto);
         }
         throw new NotFoundException("Produto não cadastrado");
     }
 
+    public Produto saveUpdateProdutoStatus(Produto produto, long status) throws NotFoundException {
+        if (produtoRepository.existsById(produto.getId())) {
+            if (status == 0) {
+                produto.setStatus(ProdutoStatus.INATIVO);
+                return produtoRepository.save(produto);
+            } else if (status == 1){
+                produto.setStatus(ProdutoStatus.ATIVO);
+                return produtoRepository.save(produto);
+            }else{
+                throw new NotFoundException("Status Inválido ");
+            }
+
+        }
+        throw new NotFoundException("Produto não cadastrado");
+    }
 }

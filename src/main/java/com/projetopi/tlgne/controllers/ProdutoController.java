@@ -45,5 +45,9 @@ public class ProdutoController {
         return produtoService.saveUpdateProduto(produto);
     }
 
+    @PutMapping("/{status}")
+    public Produto updateProdutoStatus(@RequestBody Produto produto, @PathVariable(value = "status") long status) throws NotFoundException {
+        return produtoService.saveUpdateProdutoStatus(produto , status);
+    }
 
 }
