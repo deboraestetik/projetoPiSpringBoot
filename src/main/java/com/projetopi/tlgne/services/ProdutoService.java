@@ -51,32 +51,26 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
-    public Produto saveProdutoComImagem(Produto produtoSalvo, List<MultipartFile> file) throws IOException {
+    public Produto saveProdutoComImagem(Produto produtoSalvo, List<MultipartFile> file) throws NotFoundException {
 
         if (!file.isEmpty()) {
             saveCaminhoImagem(file, produtoSalvo);
         }
 
         if (!produtoSalvo.getCaminhoImagem().isEmpty()) {
-            saveImagemdb(file, produtoSalvo);
+            saveImagemdb(produtoSalvo);
 
         }
         return produtoSalvo;
     }
 
 
-    private void saveImagemdb(List<MultipartFile> file, Produto produtoSalvo) {
-        try {
-            for (MultipartFile f : file) {
-                byte[] bytes = f.getBytes();
-                Imagem imagem = new Imagem();
-                imagem.setProduto(produtoSalvo);
-                imagem.setCaminho(pasta + f.getOriginalFilename());
-                imagem.setCaminhoBlob(bytes);
-                imagemRepository.save(imagem);
-            }
-        } catch (IOException e) {
-            System.out.println("Error ao salvar dados imagem no banco de dados");
+    private void saveImagemdb(Produto produtoSalvo) {
+        for (String caminho : produtoSalvo.getCaminhoImagem()) {
+            Imagem imagem = new Imagem();
+            imagem.setProduto(produtoSalvo);
+            imagem.setCaminho(caminho);
+            imagemRepository.save(imagem);
         }
 
     }

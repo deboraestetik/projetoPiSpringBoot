@@ -13,9 +13,6 @@ public class Imagem implements Serializable {
     private Long id;
     private String caminho;
 
-    @Lob
-    public byte[] caminhoBlob;
-
     @ManyToOne
     @JoinColumn(name = "produto_id")
     private Produto produto;
@@ -24,10 +21,9 @@ public class Imagem implements Serializable {
     }
 
 
-    public Imagem(Long id, String caminho, byte[] blob, Produto produto) {
+    public Imagem(Long id, String caminho, Produto produto) {
         this.id = id;
         this.caminho = caminho;
-        this.caminhoBlob = blob;
         this.produto = produto;
     }
 
@@ -55,11 +51,4 @@ public class Imagem implements Serializable {
         this.produto = produto;
     }
 
-    public byte[] getCaminhoBlob() {
-        return caminhoBlob;
-    }
-
-    public void setCaminhoBlob(byte[] caminhoBlob) {
-        this.caminhoBlob = caminhoBlob;
-    }
 }
