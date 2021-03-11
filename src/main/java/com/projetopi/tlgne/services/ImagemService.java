@@ -136,8 +136,18 @@ public class ImagemService {
     }
 
     public void delete(long id){
+        Imagem imagem = imagemRepository.findById(id);
+        try{
+        File file = new File(imagem.getCaminho());
+        if (file.delete()) {
+            System.out.println(file.getName() + " is deleted!");
+        } else {
+            System.out.println("Delete operation is failed.");
+        }
+        }catch (Exception e){
+            System.out.println("Error ao deletar da pasta");
+        }
          imagemRepository.deleteById(id);
     }
-
 
 }
