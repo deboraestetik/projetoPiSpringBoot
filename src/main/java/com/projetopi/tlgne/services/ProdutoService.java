@@ -19,7 +19,6 @@ import java.util.List;
 @Service
 public class ProdutoService {
 
-    private String pasta = "C:\\Users\\User\\Documents\\projetoPi4\\";
 
     @Autowired
     private ProdutoRepository produtoRepository;
@@ -51,44 +50,6 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
 
-    public Produto saveProdutoComImagem(Produto produtoSalvo, List<MultipartFile> file) throws NotFoundException {
-
-        if (!file.isEmpty()) {
-            saveCaminhoImagem(file, produtoSalvo);
-        }
-
-        if (!produtoSalvo.getCaminhoImagem().isEmpty()) {
-            saveImagemdb(file,produtoSalvo);
-
-        }
-        return produtoSalvo;
-    }
-
-
-    private void saveImagemdb(List<MultipartFile> file, Produto produtoSalvo) {
-
-        for (MultipartFile f : file) {
-            Imagem imagem = new Imagem();
-            imagem.setProduto(produtoSalvo);
-            imagem.setCaminho(pasta + (produtoSalvo.getId().toString()) + f.getOriginalFilename());
-            imagemService.save(imagem);
-        }
-
-    }
-
-    private void saveCaminhoImagem(List<MultipartFile> file, Produto produtoSalvo) {
-        try {
-            for (MultipartFile f : file) {
-                byte[] bytes = f.getBytes();
-                Path caminhoArquivo = Paths.get(pasta + (produtoSalvo.getId().toString()) + f.getOriginalFilename());
-                Files.write(caminhoArquivo, bytes);
-                produtoSalvo.setCaminhoImagem(pasta + (produtoSalvo.getId().toString()) + f.getOriginalFilename());
-            }
-        } catch (IOException e) {
-            System.out.println("Error ao salvar caminho imagem");
-        }
-
-    }
 
     public void deleteById(long id) {
 
