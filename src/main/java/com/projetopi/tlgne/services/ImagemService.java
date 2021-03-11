@@ -39,16 +39,13 @@ public class ImagemService {
         imagemRepository.save(imagem);
     }
 
-    public List<Imagem> findAllProdutoImagens(long id) throws IOException {
+    public List<Imagem> findAllImagensProduto(long id) throws IOException {
         List<Imagem> imagens = imagemRepository.findAllImagens(id);
         List<Imagem> imagemList = new ArrayList<>();
-       // FileInputStream fis = null;
-      //  List<byte[]> bytes = new ArrayList<>();
 
         for (Imagem caminho : imagens) {
             File file = new File(caminho.getCaminho());
             byte[] fileContent = Files.readAllBytes(file.toPath());
-            //bytes.add(fileContent);
             Imagem img = caminho;
             img.setImagem(fileContent);
             imagemList.add(img);
@@ -74,7 +71,9 @@ public class ImagemService {
         imagemRepository.deleteAll(imgs);
     }
 
-    public void delete(Imagem imagem){}
+    public void delete(long id){
+         imagemRepository.deleteById(id);
+    }
 
     public List<Imagem> findAllProduto(long id) {
         return imagemRepository.findAllImagens(id);

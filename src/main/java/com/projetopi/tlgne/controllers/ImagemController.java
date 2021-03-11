@@ -10,6 +10,7 @@ import com.projetopi.tlgne.services.ImagemService;
 import com.projetopi.tlgne.services.ProdutoService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,13 +41,13 @@ public class ImagemController {
     @CrossOrigin
     @GetMapping("/produto/{id}")
     public List<Imagem> imagemPorIdProduto(@PathVariable (value = "id") long id) throws IOException {
-        return imagemService.findAllProdutoImagens(id);
+        return imagemService.findAllImagensProduto(id);
     }
 
-//    @CrossOrigin
-//    @DeleteMapping("/{id}")
-//    public void deleteImagem(@PathVariable(value = "id") long id) {
-//        imagemService.delete(id);
-//    }
+    @CrossOrigin
+    @DeleteMapping("/{id}")
+    public void deleteImagem(@PathVariable(value = "id") long id) {
+      imagemService.delete(id);
+    }
 
 }
