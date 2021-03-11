@@ -39,8 +39,14 @@ public class ImagemController {
 
     @CrossOrigin
     @GetMapping("/produto/{id}")
-    public List<byte[]> imagemPorIdProduto(@PathVariable (value = "id") long id) throws IOException {
+    public List<Imagem> imagemPorIdProduto(@PathVariable (value = "id") long id) throws IOException {
         return imagemService.findAllProdutoImagens(id);
     }
+
+//    @CrossOrigin
+//    @DeleteMapping("/{id}")
+//    public void deleteImagem(@PathVariable(value = "id") long id) {
+//        imagemService.delete(id);
+//    }
 
 }

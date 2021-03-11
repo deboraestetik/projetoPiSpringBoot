@@ -31,26 +31,30 @@ public class ImagemService {
         return imagemRepository.findById(id);
     }
 
-    public List<Imagem> findAll(long id) {
-        return imagemRepository.findAllProduto(id);
-    }
+//    public List<Imagem> findAll(long id) {
+//        return imagemRepository.findAllProduto(id);
+//    }
 
     public void save(Imagem imagem){
         imagemRepository.save(imagem);
     }
 
-    public List<byte[]> findAllProdutoImagens(long id) throws IOException {
-        List<String> caminhos = imagemRepository.findAllImagensProduto(id);
-        FileInputStream fis = null;
-        List<byte[]> bytes = new ArrayList<>();
+    public List<Imagem> findAllProdutoImagens(long id) throws IOException {
+        List<Imagem> imagens = imagemRepository.findAllImagens(id);
+        List<Imagem> imagemList = new ArrayList<>();
+       // FileInputStream fis = null;
+      //  List<byte[]> bytes = new ArrayList<>();
 
-        for (String caminho : caminhos) {
-            File file = new File(caminho);
+        for (Imagem caminho : imagens) {
+            File file = new File(caminho.getCaminho());
             byte[] fileContent = Files.readAllBytes(file.toPath());
-            bytes.add(fileContent) ;
+            //bytes.add(fileContent);
+            Imagem img = caminho;
+            img.setImagem(fileContent);
+            imagemList.add(img);
       }
 
-        return bytes;
+        return imagemList;
     }
     public void deleteAll(List<Imagem> imgs) {
             try {
@@ -70,7 +74,9 @@ public class ImagemService {
         imagemRepository.deleteAll(imgs);
     }
 
+    public void delete(Imagem imagem){}
+
     public List<Imagem> findAllProduto(long id) {
-        return imagemRepository.findAllProduto(id);
+        return imagemRepository.findAllImagens(id);
     }
 }

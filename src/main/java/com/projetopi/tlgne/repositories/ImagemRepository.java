@@ -15,8 +15,10 @@ public interface ImagemRepository extends JpaRepository<Imagem, Long> {
     Imagem findById(long id);
 
     @Query(value ="select * from imagem WHERE produto_id = :id",nativeQuery = true)
-    List<Imagem> findAllProduto(long id);
+    List<Imagem> findAllImagens(long id);
 
-    @Query(value ="select caminho from imagem WHERE produto_id = :id",nativeQuery = true)
-    List<String> findAllImagensProduto(long id);
+//    @Query(value ="select caminho from imagem WHERE produto_id = :id",nativeQuery = true)
+//    List<String> findAllImagensProduto(long id);
+
+
 }

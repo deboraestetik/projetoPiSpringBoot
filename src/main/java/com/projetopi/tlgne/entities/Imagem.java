@@ -13,6 +13,9 @@ public class Imagem implements Serializable {
     private Long id;
     private String caminho;
 
+    @Transient
+    private byte[] imagem;
+
     @ManyToOne
     @JoinColumn(name = "produto_id")
     private Produto produto;
@@ -20,10 +23,10 @@ public class Imagem implements Serializable {
     public Imagem() {
     }
 
-
-    public Imagem(Long id, String caminho, Produto produto) {
+    public Imagem(Long id, String caminho, byte[] imagem, Produto produto) {
         this.id = id;
         this.caminho = caminho;
+        this.imagem = imagem;
         this.produto = produto;
     }
 
@@ -51,4 +54,11 @@ public class Imagem implements Serializable {
         this.produto = produto;
     }
 
+    public byte[] getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
+    }
 }
