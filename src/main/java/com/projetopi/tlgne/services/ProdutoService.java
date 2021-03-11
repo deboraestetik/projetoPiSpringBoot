@@ -25,7 +25,7 @@ public class ProdutoService {
     private ProdutoRepository produtoRepository;
 
     @Autowired
-    private ImagemRepository imagemRepository;
+    private ImagemService imagemService;
 
 
     public ProdutoService() {
@@ -58,19 +58,20 @@ public class ProdutoService {
         }
 
         if (!produtoSalvo.getCaminhoImagem().isEmpty()) {
-            saveImagemdb(produtoSalvo);
+            saveImagemdb(file,produtoSalvo);
 
         }
         return produtoSalvo;
     }
 
 
-    private void saveImagemdb(Produto produtoSalvo) {
-        for (String caminho : produtoSalvo.getCaminhoImagem()) {
+    private void saveImagemdb(List<MultipartFile> file, Produto produtoSalvo) {
+
+        for (MultipartFile f : file) {
             Imagem imagem = new Imagem();
             imagem.setProduto(produtoSalvo);
-            imagem.setCaminho(caminho);
-            imagemRepository.save(imagem);
+            imagem.setCaminho(pasta + (produtoSalvo.getId().toString()) + f.getOriginalFilename());
+            imagemService.save(imagem);
         }
 
     }
@@ -79,9 +80,9 @@ public class ProdutoService {
         try {
             for (MultipartFile f : file) {
                 byte[] bytes = f.getBytes();
-                Path caminhoArquivo = Paths.get(pasta + f.getOriginalFilename());
+                Path caminhoArquivo = Paths.get(pasta + (produtoSalvo.getId().toString()) + f.getOriginalFilename());
                 Files.write(caminhoArquivo, bytes);
-                produtoSalvo.setCaminhoImagem(pasta + f.getOriginalFilename());
+                produtoSalvo.setCaminhoImagem(pasta + (produtoSalvo.getId().toString()) + f.getOriginalFilename());
             }
         } catch (IOException e) {
             System.out.println("Error ao salvar caminho imagem");
@@ -91,14 +92,16 @@ public class ProdutoService {
 
     public void deleteById(long id) {
 
-        List<Imagem> imgs = imagemRepository.findAllProduto(id);//verificando se existe imagens associadas ao produto
+        List<Imagem> imgs = imagemService.findAllProduto(id);//verificando se existe imagens associadas ao produto
         if (imgs.isEmpty()) {
             produtoRepository.deleteById(id);
+
         } else {
-            imagemRepository.deleteAll(imgs);
+            imagemService.deleteAll(imgs);
             produtoRepository.deleteById(id);
         }
     }
+
 
 
     public Produto saveUpdateProduto(Produto produto) throws NotFoundException {

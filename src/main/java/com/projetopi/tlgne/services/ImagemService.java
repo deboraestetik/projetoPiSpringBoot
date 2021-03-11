@@ -35,17 +35,42 @@ public class ImagemService {
         return imagemRepository.findAllProduto(id);
     }
 
+    public void save(Imagem imagem){
+        imagemRepository.save(imagem);
+    }
+
     public List<byte[]> findAllProdutoImagens(long id) throws IOException {
-        List<String> teste = imagemRepository.findAllImagensProduto(id);
+        List<String> caminhos = imagemRepository.findAllImagensProduto(id);
         FileInputStream fis = null;
         List<byte[]> bytes = new ArrayList<>();
 
-        for (String t : teste) {
-            File file = new File(t);
+        for (String caminho : caminhos) {
+            File file = new File(caminho);
             byte[] fileContent = Files.readAllBytes(file.toPath());
             bytes.add(fileContent) ;
       }
 
         return bytes;
+    }
+    public void deleteAll(List<Imagem> imgs) {
+            try {
+                for (Imagem img : imgs) {
+
+                    File file = new File(img.getCaminho());
+                    if (file.delete()) {
+                        System.out.println(file.getName() + " is deleted!");
+                    } else {
+                        System.out.println("Delete operation is failed.");
+                    }
+
+                }
+            }catch (Exception e){
+                System.out.println("Error ao deletar da pasta");
+            }
+        imagemRepository.deleteAll(imgs);
+    }
+
+    public List<Imagem> findAllProduto(long id) {
+        return imagemRepository.findAllProduto(id);
     }
 }
