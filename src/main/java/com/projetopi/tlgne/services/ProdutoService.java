@@ -68,7 +68,7 @@ public class ProdutoService {
     public Produto saveUpdateProduto(Produto produto) throws NotFoundException {
 
         if (produtoRepository.existsById(produto.getId())) {
-            return produtoRepository.saveAndFlush(produto);
+            return produtoRepository.save(produto);
         }
         throw new NotFoundException("Produto não cadastrado");
     }

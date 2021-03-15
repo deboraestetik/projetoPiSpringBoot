@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public class ImagemService {
 
-    private String pasta = "C:\\Users\\User\\Documents\\projetoPi4\\";
+    private String pasta = "C:\\Users\\User\\Documents\\projetoPi4FrontEnd\\";
 
     @Autowired
     private ImagemRepository imagemRepository;
