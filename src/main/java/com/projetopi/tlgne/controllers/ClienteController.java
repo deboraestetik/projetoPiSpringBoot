@@ -20,4 +20,6 @@ public class ClienteController {
     public Cliente findAll(@PathVariable(value = "usuario") String usuario){
         return clienteService.findAllUsuario(usuario);
     }
+
+
 }
