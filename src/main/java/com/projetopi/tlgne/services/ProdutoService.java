@@ -34,8 +34,12 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
-    public List<Produto> findAll() {
-        return produtoRepository.findAll();
+    public List<Produto> findAll(String habilitado) {
+        if(habilitado.equals("true")){
+            return produtoRepository.findAll();
+
+        }
+        return null;
     }
 
     public List<Produto> findAllSemelanca(String semelhanca) {

@@ -29,8 +29,8 @@ public class ProdutoController {
 
     @CrossOrigin
     @GetMapping("/produtos")
-    public List<Produto> listaProduto() {
-        return produtoService.findAll();
+    public List<Produto> listaProduto(@RequestHeader("habilitado") String habilitado) {
+        return produtoService.findAll(habilitado);
     }
 
     @CrossOrigin
