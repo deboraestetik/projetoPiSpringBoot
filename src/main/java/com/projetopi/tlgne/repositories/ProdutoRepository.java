@@ -17,3 +17,8 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     @Query(value = "SELECT * FROM `produto` where nome LIKE %:seme%", nativeQuery = true)
     List<Produto> findAllSemelhanca(@Param ("seme") String semelhanca);
 }
+
+
+
+
+

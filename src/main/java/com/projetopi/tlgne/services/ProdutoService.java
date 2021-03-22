@@ -18,7 +18,10 @@ import java.util.List;
 
 @Service
 public class ProdutoService {
-
+    
+    
+ 
+    
 
     @Autowired
     private ProdutoRepository produtoRepository;
@@ -37,6 +40,12 @@ public class ProdutoService {
     public List<Produto> findAll() {
         return produtoRepository.findAll();
     }
+    
+    public List<Produto> finProdAble() {
+        return produtoRepository.findAll();
+    }
+    
+    
 
     public List<Produto> findAllSemelanca(String semelhanca) {
         return produtoRepository.findAllSemelhanca(semelhanca);
