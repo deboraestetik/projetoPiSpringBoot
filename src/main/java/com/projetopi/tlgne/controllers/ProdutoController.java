@@ -39,20 +39,6 @@ public class ProdutoController {
         return produtoService.findAll(habilitado);
     }
     
-     @CrossOrigin
-    @GetMapping("/produtosHabilitados")
-    public List<Produto> listaProdutosHabilitados() {
-        return produtoService.finProdAble();
-    }
-    
-     @CrossOrigin
-    @GetMapping("/produtosHabilitados")
-    public List<Produto> listaProdutoHabilitado() {
-        return produtoService.findAll();
-   }
-    
-
-
     @CrossOrigin
     @GetMapping("/{id}")
     public Produto produtoPorId(@PathVariable(value = "id") long id) {

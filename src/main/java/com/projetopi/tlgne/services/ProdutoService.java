@@ -18,10 +18,7 @@ import java.util.List;
 
 @Service
 public class ProdutoService {
-    
-    
- 
-    
+
 
     @Autowired
     private ProdutoRepository produtoRepository;
@@ -39,17 +36,14 @@ public class ProdutoService {
 
     public List<Produto> findAll(String habilitado) {
         if(habilitado.equals("true")){
+            return produtoRepository.findAllProdutoHabilitado("1");
+
+        }else if (habilitado.equals("false")) {
             return produtoRepository.findAll();
 
         }
         return null;
     }
-    
-    public List<Produto> finProdAble() {
-        return produtoRepository.findAll();
-    }
-    
-    
 
     public List<Produto> findAllSemelanca(String semelhanca) {
         return produtoRepository.findAllSemelhanca(semelhanca);
@@ -76,8 +70,6 @@ public class ProdutoService {
         }
     }
 
-
-
     public Produto saveUpdateProduto(Produto produto) throws NotFoundException {
 
         if (produtoRepository.existsById(produto.getId())) {
@@ -85,6 +77,5 @@ public class ProdutoService {
         }
         throw new NotFoundException("Produto não cadastrado");
     }
-
 
 }
