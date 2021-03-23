@@ -38,6 +38,20 @@ public class ProdutoController {
     public List<Produto> listaProduto(@RequestHeader("habilitado") String habilitado) {
         return produtoService.findAll(habilitado);
     }
+    
+     @CrossOrigin
+    @GetMapping("/produtosHabilitados")
+    public List<Produto> listaProdutosHabilitados() {
+        return produtoService.finProdAble();
+    }
+    
+     @CrossOrigin
+    @GetMapping("/produtosHabilitados")
+    public List<Produto> listaProdutoHabilitado() {
+        return produtoService.findAll();
+   }
+    
+
 
     @CrossOrigin
     @GetMapping("/{id}")
