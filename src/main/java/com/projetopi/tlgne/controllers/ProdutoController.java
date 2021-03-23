@@ -40,6 +40,12 @@ public class ProdutoController {
     }
     
     @CrossOrigin
+    @GetMapping("/protudo/categoria")
+    public List<Produto> ListaCategoria(@RequestHeader("categoria")String categoria){
+        return produtoService.findCategoria(categoria);
+    }
+    
+    @CrossOrigin
     @GetMapping("/{id}")
     public Produto produtoPorId(@PathVariable(value = "id") long id) {
         return produtoService.findById(id);
