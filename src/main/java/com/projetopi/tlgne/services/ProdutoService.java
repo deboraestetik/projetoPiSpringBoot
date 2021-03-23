@@ -36,16 +36,18 @@ public class ProdutoService {
     
     public List<Produto> findCategoria(String categoria){
         if(categoria.equals("cama")){
-            return produtoRepository.findAllCategoria("cama");
+            return produtoRepository.findBed("cama");
          
         }
         else if (categoria.equals("mesa")){
-            return produtoRepository.findAllCategoria("mesa");
+            return produtoRepository.findTable("mesa");
         }
         
         else if (categoria.equals("banho")){
-            return produtoRepository.findAllCategoria("banho");
+            return produtoRepository.findBath("banho");
         }
+        
+        return null;
     }
 
     public List<Produto> findAll(String habilitado) {
