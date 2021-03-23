@@ -35,18 +35,12 @@ public class ProdutoService {
     }
     
     public List<Produto> findCategoria(String categoria){
-        if(categoria.equals("cama")){
-            return produtoRepository.findBed("cama");
-         
-        }
-        else if (categoria.equals("mesa")){
-            return produtoRepository.findTable("mesa");
-        }
+        try {
+          return produtoRepository.findAllCategoria(categoria);}
+        catch(Exception e){
+            System.out.println("Erro ao Buscar Categoria do Produto");
         
-        else if (categoria.equals("banho")){
-            return produtoRepository.findBath("banho");
         }
-        
         return null;
     }
 
