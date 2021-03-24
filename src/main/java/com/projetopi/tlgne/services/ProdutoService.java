@@ -19,13 +19,11 @@ import java.util.List;
 @Service
 public class ProdutoService {
 
-
     @Autowired
     private ProdutoRepository produtoRepository;
 
     @Autowired
     private ImagemService imagemService;
-
 
     public ProdutoService() {
     }
@@ -33,22 +31,29 @@ public class ProdutoService {
     public ProdutoService(ProdutoRepository produtoRepository) {
         this.produtoRepository = produtoRepository;
     }
-    
-    public List<Produto> findCategoria(String categoria){
+
+    public List<Produto> findCategoria(String categoria, String habilitado) {
         try {
-          return produtoRepository.findAllCategoria(categoria);}
-        catch(Exception e){
+            if (habilitado.equals("true")) {
+                return produtoRepository.findAbleCategoria(categoria, habilitado);
+                
+            } else {
+                
+                return produtoRepository.findAllCategoria(categoria);
+            }
+        } catch (Exception e) {
             System.out.println("Erro ao Buscar Categoria do Produto");
-        
+
         }
         return null;
     }
 
     public List<Produto> findAll(String habilitado) {
-        if(habilitado.equals("true")){
+
+        if (habilitado.equals("true")) {
             return produtoRepository.findAllProdutoHabilitado("1");
 
-        }else if (habilitado.equals("false")) {
+        } else if (habilitado.equals("false")) {
             return produtoRepository.findAll();
 
         }
@@ -66,7 +71,6 @@ public class ProdutoService {
     public Produto saveProduto(Produto produto) {
         return produtoRepository.save(produto);
     }
-
 
     public void deleteById(long id) {
 
