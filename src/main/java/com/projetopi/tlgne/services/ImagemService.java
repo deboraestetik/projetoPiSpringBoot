@@ -119,12 +119,14 @@ public class ImagemService {
         }
 
     }
-    public void editarFavorita(String idImagem, long idProduto) {
-        List<Imagem> imgsEditadas = imagemRepository.findAllImagens(idProduto);
+    public void editarFavorita(String idImagem, String idProduto) {
+        long idI =  Long.valueOf(idImagem).longValue();
+        long idP =  Long.valueOf(idProduto).longValue();
+        List<Imagem> imgsEditadas = imagemRepository.findAllImagens(idP);
 
-        long id =  Long. valueOf(idImagem);
+
         for (Imagem img : imgsEditadas) {
-            if (img.getId() == id) {
+            if (img.getId() == idI) {
                 img.setImagemPrincipal(true);
             } else {
                 img.setImagemPrincipal(false);
