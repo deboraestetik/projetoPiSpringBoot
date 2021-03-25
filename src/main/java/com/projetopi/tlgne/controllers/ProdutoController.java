@@ -41,8 +41,8 @@ public class ProdutoController {
     
     @CrossOrigin
     @GetMapping("/protudo/categoria")
-    public List<Produto> ListaCategoria(@RequestHeader("categoria")String categoria){
-        return produtoService.findCategoria(categoria);
+    public List<Produto> ListaCategoria(@RequestHeader("categoria")String categoria, @RequestHeader("habilitado") String habilitado){
+        return produtoService.findCategoria(categoria,habilitado);
     }
     
     @CrossOrigin
