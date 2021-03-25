@@ -120,6 +120,7 @@ public class ImagemService {
         }
 
     }
+
     public void editarFavorita(long idImagem, long idProduto) {
         List<Imagem> imgsEditadas = imagemRepository.findAllImagens(idProduto);
         for (Imagem img : imgsEditadas) {
@@ -151,22 +152,23 @@ public class ImagemService {
     }
 
     public void delete(long id) {
-        Imagem imagem = imagemRepository.findById(id);
-        try {
-            File file = new File(imagem.getCaminho());
-            if (file.delete()) {
-                System.out.println(file.getName() + " is deleted!");
-            } else {
-                System.out.println("Delete operation is failed.");
+//        List<Imagem> imgs = imagemRepository.findAllImagens(id);
+//        if (imgs.size() == 1) {
+//            imgs.get(0).setImagemPrincipal(true);
+//        } else {
+            Imagem imagem = imagemRepository.findById(id);
+            try {
+                File file = new File(imagem.getCaminho());
+                if (file.delete()) {
+                    System.out.println(file.getName() + " is deleted!");
+                } else {
+                    System.out.println("Delete operation is failed.");
+                }
+            } catch (Exception e) {
+                System.out.println("Error ao deletar da pasta");
             }
-        } catch (Exception e) {
-            System.out.println("Error ao deletar da pasta");
-        }
-        List<Imagem> imgs = imagemRepository.findAllImagens(id);
-        if(imgs.size() == 1){
-            imgs.get(1).setImagemPrincipal(true);
-        }else{
             imagemRepository.deleteById(id);
         }
-    }
+   // }
 }
+
