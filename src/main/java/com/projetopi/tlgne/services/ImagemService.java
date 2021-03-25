@@ -162,10 +162,11 @@ public class ImagemService {
         } catch (Exception e) {
             System.out.println("Error ao deletar da pasta");
         }
-        imagemRepository.deleteById(id);
         List<Imagem> imgs = imagemRepository.findAllImagens(id);
         if(imgs.size() == 1){
             imgs.get(1).setImagemPrincipal(true);
+        }else{
+            imagemRepository.deleteById(id);
         }
     }
 }
