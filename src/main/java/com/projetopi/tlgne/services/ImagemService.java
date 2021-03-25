@@ -76,6 +76,7 @@ public class ImagemService {
 
     private void saveImagemdb(List<MultipartFile> file, Produto produtoSalvo, long imagemFavorita) {
         List<Imagem> imgs = imagemRepository.findAllImagens(produtoSalvo.getId());//verificando se existe imagens associadas ao produto
+        //long favorita = Long.parseLong(imagemFavorita);
         int cont = 0;
         if (imgs.isEmpty()) { //Salvar
             for (MultipartFile f : file) {
@@ -120,11 +121,9 @@ public class ImagemService {
 
     }
     public void editarFavorita(String idImagem, String idProduto) {
-        long idI =  Long.valueOf(idImagem).longValue();
-        long idP =  Long.valueOf(idProduto).longValue();
+        long idI = Long.parseLong(idImagem);
+        long idP = Long.parseLong(idProduto);
         List<Imagem> imgsEditadas = imagemRepository.findAllImagens(idP);
-
-
         for (Imagem img : imgsEditadas) {
             if (img.getId() == idI) {
                 img.setImagemPrincipal(true);
