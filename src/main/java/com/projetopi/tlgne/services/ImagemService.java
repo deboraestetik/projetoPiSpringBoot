@@ -92,11 +92,11 @@ public class ImagemService {
 
             }
         } else { // Editar
-            editarImagemdb(file, produtoSalvo, imagemFavorita);
+            editarImagemdb(file, produtoSalvo);
         }
     }
 
-    private void editarImagemdb(List<MultipartFile> file, Produto produtoSalvo, long imagemFavorita) {
+    private void editarImagemdb(List<MultipartFile> file, Produto produtoSalvo) {
         for (MultipartFile f : file) {
             Imagem imagem = new Imagem();
             imagem.setProduto(produtoSalvo);
