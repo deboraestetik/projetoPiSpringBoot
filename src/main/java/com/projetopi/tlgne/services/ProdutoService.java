@@ -35,7 +35,7 @@ public class ProdutoService {
     public List<Produto> findCategoria(String categoria, String habilitado) {
         try {
             if (habilitado.equals("true")) {
-                return produtoRepository.findAbleCategoria(categoria, habilitado);
+                return produtoRepository.findAllCategoria(categoria, "1");
                 
             } else {
                 
@@ -60,9 +60,22 @@ public class ProdutoService {
         return null;
     }
 
-    public List<Produto> findAllSemelanca(String semelhanca) {
-        return produtoRepository.findAllSemelhanca(semelhanca);
+    public List<Produto> findAllSemelanca(String semelhanca, String habilitado) {
+        try {
+            if (habilitado.equals("true")) {
+                return produtoRepository.findAllSemelhanca(semelhanca, "1");
+
+            } else {
+
+                return produtoRepository.findAllSemelhanca(semelhanca);
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao Buscar Produto por semelhança");
+
+        }
+        return null;
     }
+
 
     public Produto findById(long id) {
         return produtoRepository.findById(id);

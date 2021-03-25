@@ -14,17 +14,20 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
     Produto findById(long id);
 
+    @Query(value = "SELECT * FROM `produto` where nome LIKE %:seme% and status =:habilitado", nativeQuery = true)
+    List<Produto> findAllSemelhanca(@Param ("seme") String semelhanca, @Param ("habilitado") String habilitado);
+
     @Query(value = "SELECT * FROM `produto` where nome LIKE %:seme%", nativeQuery = true)
     List<Produto> findAllSemelhanca(@Param ("seme") String semelhanca);
 
     @Query(value = "SELECT * FROM `produto` where status = :true", nativeQuery = true)
     List<Produto> findAllProdutoHabilitado(@Param ("true") String habilitado);
     
-    @Query(value="SELECT * FROM 'produto' where categoria = :categoria", nativeQuery=true)
+    @Query(value="SELECT * FROM `produto` where categoria = :categoria", nativeQuery=true)
     List<Produto> findAllCategoria (@Param ("categoria")String categoria);
     
-     @Query(value="SELECT * FROM 'produto' where categoria = :categoria and status =:true", nativeQuery=true)
-    List<Produto> findAbleCategoria (@Param ("categoria")String categoria,@Param ("true") String habilitado);
+     @Query(value="SELECT * FROM `produto` where categoria = :categoria and status =:habilitado", nativeQuery=true)
+    List<Produto> findAllCategoria (@Param ("categoria")String categoria ,@Param ("habilitado") String habilitado);
     
     
 }

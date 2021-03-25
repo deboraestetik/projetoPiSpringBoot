@@ -75,7 +75,7 @@ public class ImagemService {
 
     private void saveImagemdb(List<MultipartFile> file, Produto produtoSalvo, long imagemFavorita) {
         List<Imagem> imgs = imagemRepository.findAllImagens(produtoSalvo.getId());//verificando se existe imagens associadas ao produto
-        int cont = 1;
+        int cont = 0;
         if (imgs.isEmpty()) {
             for (MultipartFile f : file) {
                     Imagem imagem = new Imagem();

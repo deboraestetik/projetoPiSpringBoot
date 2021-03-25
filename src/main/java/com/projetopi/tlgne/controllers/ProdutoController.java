@@ -34,27 +34,29 @@ public class ProdutoController {
     }
 
     @CrossOrigin
-    @GetMapping("/produtos")
+    @GetMapping("")
     public List<Produto> listaProduto(@RequestHeader("habilitado") String habilitado) {
         return produtoService.findAll(habilitado);
     }
 
     @CrossOrigin
-    @GetMapping("/protudo/categoria")
-    public List<Produto> ListaCategoria(@RequestHeader("categoria")String categoria, @RequestHeader("habilitado") String habilitado){
+    @GetMapping("/categoria")
+    public List<Produto> listaCategoria(@RequestHeader("categoria")String categoria,
+                                        @RequestHeader("habilitado") String habilitado){
         return produtoService.findCategoria(categoria,habilitado);
     }
     
     @CrossOrigin
-    @GetMapping("/{id}")
+    @GetMapping("/find/{id}")
     public Produto produtoPorId(@PathVariable(value = "id") long id) {
         return produtoService.findById(id);
     }
 
     @CrossOrigin
-    @GetMapping("/produtos/{semelhanca}")
-    public List<Produto> listaProdutoSemelhanca(@PathVariable(value = "semelhanca") String semelhanca) {
-        return produtoService.findAllSemelanca(semelhanca);
+    @GetMapping("/{semelhanca}")
+    public List<Produto> listaProdutoSemelhanca(@PathVariable(value = "semelhanca") String semelhanca,
+                                                @RequestHeader("habilitado") String habilitado) {
+        return produtoService.findAllSemelanca(semelhanca, habilitado);
     }
 
     @CrossOrigin
@@ -74,6 +76,5 @@ public class ProdutoController {
     public Produto updateProduto(@RequestBody Produto produto) throws NotFoundException {
         return produtoService.saveUpdateProduto(produto);
     }
-
 
 }
