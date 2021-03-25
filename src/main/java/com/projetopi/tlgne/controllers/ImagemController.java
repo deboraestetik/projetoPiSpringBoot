@@ -46,6 +46,13 @@ public class ImagemController {
     }
 
     @CrossOrigin
+    @GetMapping("/editarFavorita")
+    public void editarFavorita(@RequestHeader("idImagem") long idImagem, @RequestHeader("IdProduto") long idProduto) {
+       imagemService.editarFavorita(idImagem,idProduto);
+    }
+
+
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public void deleteImagem(@PathVariable(value = "id") long id) {
       imagemService.delete(id);
