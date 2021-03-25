@@ -120,12 +120,10 @@ public class ImagemService {
         }
 
     }
-    public void editarFavorita(String idImagem, String idProduto) {
-        long idI = Long.parseLong(idImagem);
-        long idP = Long.parseLong(idProduto);
-        List<Imagem> imgsEditadas = imagemRepository.findAllImagens(idP);
+    public void editarFavorita(long idImagem, long idProduto) {
+        List<Imagem> imgsEditadas = imagemRepository.findAllImagens(idProduto);
         for (Imagem img : imgsEditadas) {
-            if (img.getId() == idI) {
+            if (img.getId() == idImagem) {
                 img.setImagemPrincipal(true);
             } else {
                 img.setImagemPrincipal(false);
@@ -165,5 +163,9 @@ public class ImagemService {
             System.out.println("Error ao deletar da pasta");
         }
         imagemRepository.deleteById(id);
+        List<Imagem> imgs = imagemRepository.findAllImagens(id);
+        if(imgs.size() == 1){
+            imgs.get(1).setImagemPrincipal(true);
+        }
     }
 }

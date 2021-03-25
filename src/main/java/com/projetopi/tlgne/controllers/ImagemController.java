@@ -47,7 +47,7 @@ public class ImagemController {
 
     @CrossOrigin
     @PutMapping("/editarFavorita")
-    public void editarFavorita(@RequestHeader("idImagem") String idImagem, @RequestHeader("idProduto") String idProduto) {
+    public void editarFavorita(@RequestHeader("idImagem") long idImagem, @RequestHeader("idProduto") long idProduto) {
        imagemService.editarFavorita(idImagem,idProduto);
     }
 
@@ -59,3 +59,5 @@ public class ImagemController {
     }
 
 }
+
+
