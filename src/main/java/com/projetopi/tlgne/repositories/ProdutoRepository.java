@@ -23,6 +23,9 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     @Query(value="SELECT * FROM 'produto' where categoria = :categoria", nativeQuery=true)
     List<Produto> findAllCategoria (@Param ("categoria")String categoria);
     
+     @Query(value="SELECT * FROM 'produto' where categoria = :categoria and status =:true", nativeQuery=true)
+    List<Produto> findAbleCategoria (@Param ("categoria")String categoria,@Param ("true") String habilitado);
+    
     
 }
 
