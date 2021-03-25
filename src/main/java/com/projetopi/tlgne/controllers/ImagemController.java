@@ -33,9 +33,9 @@ public class ImagemController {
 
     @CrossOrigin
     @PostMapping(value ="/produto/{id}" , consumes = {"multipart/form-data"})
-    public Produto saveProdutoComImagem (@RequestPart List<MultipartFile> file,@PathVariable(value = "id") long id) throws IOException, NotFoundException {
+    public Produto saveProdutoComImagem (@RequestPart List<MultipartFile> file,@PathVariable(value = "id") long id,@RequestHeader("favorita") long favoritaPosicao) throws IOException, NotFoundException {
        Produto produtoRecuperado = produtoService.findById(id);
-        return imagemService.saveImagemdeProduto(produtoRecuperado, file);
+        return imagemService.saveImagemdeProduto(produtoRecuperado, file, favoritaPosicao);
     }
 
     @CrossOrigin

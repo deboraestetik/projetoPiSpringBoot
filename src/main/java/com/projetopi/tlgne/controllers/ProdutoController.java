@@ -28,9 +28,9 @@ public class ProdutoController {
     private ImagemService imagemService;
 
     @CrossOrigin
-    @GetMapping("/entrar")
+    @GetMapping("/login")
     public String entrar() {
-        return "entrar";
+        return "login";
     }
 
     @CrossOrigin
@@ -38,7 +38,7 @@ public class ProdutoController {
     public List<Produto> listaProduto(@RequestHeader("habilitado") String habilitado) {
         return produtoService.findAll(habilitado);
     }
-    
+
     @CrossOrigin
     @GetMapping("/{id}")
     public Produto produtoPorId(@PathVariable(value = "id") long id) {

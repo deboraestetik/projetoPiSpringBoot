@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public class ImagemService {
 
-    private String pasta = "C:\\Users\\carlo\\OneDrive\\Imagens\\imgs";
+    private String pasta = "C:\\Users\\User\\Documents\\projetoPi4FrontEnd\\";
 
     @Autowired
     private ImagemRepository imagemRepository;
@@ -60,49 +60,46 @@ public class ImagemService {
 
         return imagemList;
     }
-    public Produto saveImagemdeProduto(Produto produtoSalvo, List<MultipartFile> file) throws NotFoundException {
-
+    public Produto saveImagemdeProduto(Produto produtoSalvo, List<MultipartFile> file, long imagemFavorita) throws NotFoundException {
         if (!file.isEmpty()) {
             saveCaminhoImagem(file, produtoSalvo);
         }
 
         if (!produtoSalvo.getCaminhoImagem().isEmpty()) {
-            saveImagemdb(file,produtoSalvo);
+            saveImagemdb(file,produtoSalvo, imagemFavorita );
 
         }
         return produtoSalvo;
     }
 
 
-    private void saveImagemdb(List<MultipartFile> file, Produto produtoSalvo) {
+    private void saveImagemdb(List<MultipartFile> file, Produto produtoSalvo, long imagemFavorita) {
         List<Imagem> imgs = imagemRepository.findAllImagens(produtoSalvo.getId());//verificando se existe imagens associadas ao produto
-        int cont = 0;
-        if(!imgs.isEmpty()){
-            for(Imagem img: imgs){
-                if(img.isImagemPrincipal()){
-                    cont++;
+        int cont = 1;
+        if (imgs.isEmpty()) {
+            for (MultipartFile f : file) {
+                    Imagem imagem = new Imagem();
+                    imagem.setProduto(produtoSalvo);
+                    imagem.setCaminho(pasta + (produtoSalvo.getId().toString()) + f.getOriginalFilename());
+                if (cont == imagemFavorita) {
+                    imagem.setImagemPrincipal(true);
+                }else{
+                    imagem.setImagemPrincipal(false);
                 }
-            }
-        }
-        for (MultipartFile f : file) {
-            if (cont == 0) {
-                Imagem imagem = new Imagem();
-                imagem.setProduto(produtoSalvo);
-                imagem.setCaminho(pasta + (produtoSalvo.getId().toString()) + f.getOriginalFilename());
-                imagem.setImagemPrincipal(true);
                 imagemRepository.save(imagem);
                 cont++;
-            } else {
+
+            }
+        }else {
+            for (MultipartFile f : file) {
                 Imagem imagem = new Imagem();
                 imagem.setProduto(produtoSalvo);
                 imagem.setCaminho(pasta + (produtoSalvo.getId().toString()) + f.getOriginalFilename());
                 imagem.setImagemPrincipal(false);
                 imagemRepository.save(imagem);
             }
-
         }
     }
-
     private void saveCaminhoImagem(List<MultipartFile> file, Produto produtoSalvo) {
         try {
             for (MultipartFile f : file) {
