@@ -5,12 +5,10 @@ import com.projetopi.tlgne.entities.Produto;
 import com.projetopi.tlgne.repositories.ImagemRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -43,11 +41,11 @@ public class ImagemService {
     }
 
     public List<Imagem> findAllProduto(long id) {
-        return imagemRepository.findAllImagens(id);
+        return imagemRepository.findAllImagensByProdutoId(id);
     }
 
     public List<Imagem> findAllImagensProduto(long id) throws IOException {
-        List<Imagem> imagens = imagemRepository.findAllImagens(id);
+        List<Imagem> imagens = imagemRepository.findAllImagensByProdutoId(id);
         List<Imagem> imagemList = new ArrayList<>();
 
         for (Imagem caminho : imagens) {
@@ -75,7 +73,7 @@ public class ImagemService {
 
 
     private void saveImagemdb(List<MultipartFile> file, Produto produtoSalvo, long imagemFavorita) {
-        List<Imagem> imgs = imagemRepository.findAllImagens(produtoSalvo.getId());//verificando se existe imagens associadas ao produto
+        List<Imagem> imgs = imagemRepository.findAllImagensByProdutoId(produtoSalvo.getId());//verificando se existe imagens associadas ao produto
         //long favorita = Long.parseLong(imagemFavorita);
         int cont = 0;
         if (imgs.isEmpty()) { //Salvar
@@ -122,7 +120,7 @@ public class ImagemService {
     }
 
     public void editarFavorita(long idImagem, long idProduto) {
-        List<Imagem> imgsEditadas = imagemRepository.findAllImagens(idProduto);
+        List<Imagem> imgsEditadas = imagemRepository.findAllImagensByProdutoId(idProduto);
         for (Imagem img : imgsEditadas) {
             if (img.getId() == idImagem) {
                 img.setImagemPrincipal(true);
@@ -152,15 +150,13 @@ public class ImagemService {
     }
 
     public void delete(long id) {
-//        List<Imagem> imgs = imagemRepository.findAllImagens(id);
-//        if (imgs.size() == 1) {
-//            imgs.get(0).setImagemPrincipal(true);
-//        } else {
-            Imagem imagem = imagemRepository.findById(id);
+        Imagem imagem = imagemRepository.findById(id);
+        if (imagem.getProduto().getImagens().size() > 1) {
+            Produto produto = imagem.getProduto();
             try {
                 File file = new File(imagem.getCaminho());
                 if (file.delete()) {
-                    System.out.println(file.getName() + " is deleted!");
+                    System.out.println(file.getName() + "Deletado!");
                 } else {
                     System.out.println("Delete operation is failed.");
                 }
@@ -168,7 +164,11 @@ public class ImagemService {
                 System.out.println("Error ao deletar da pasta");
             }
             imagemRepository.deleteById(id);
+            List<Imagem> allImagensByProdutoId = imagemRepository.findAllImagensByProdutoId(produto.getId());
+            if (allImagensByProdutoId.size() == 1) {
+                allImagensByProdutoId.get(0).setImagemPrincipal(true);
+                imagemRepository.save(allImagensByProdutoId.get(0));
+            }
         }
-   // }
+    }
 }
-
