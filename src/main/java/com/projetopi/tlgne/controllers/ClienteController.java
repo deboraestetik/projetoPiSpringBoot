@@ -36,7 +36,7 @@ public class ClienteController {
     
     @CrossOrigin
     @PutMapping("")
-    public Cliente updateProduto(@RequestBody Cliente cliente) throws NotFoundException {
+    public Cliente updateCliente(@RequestBody Cliente cliente) throws NotFoundException {
         return clienteService.saveUpdateCliente(cliente);
     }
 
