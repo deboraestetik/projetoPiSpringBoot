@@ -4,6 +4,7 @@ package com.projetopi.tlgne.controllers;
 import com.projetopi.tlgne.entities.Usuario;
 import com.projetopi.tlgne.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping("")
-    public void saveUsuario(@RequestBody Usuario usuario){
-        usuarioService.saveUsuario(usuario);
+    public HttpStatus saveUsuario(@RequestBody Usuario usuario){
+       return usuarioService.saveUsuario(usuario);
     }
 }

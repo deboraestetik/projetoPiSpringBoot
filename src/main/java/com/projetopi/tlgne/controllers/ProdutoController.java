@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Set;
 
 import javassist.NotFoundException;
-@CrossOrigin(origins = "http://localhost:4200")
 
 @RestController
 @RequestMapping(value = "/produtos")
@@ -27,51 +26,43 @@ public class ProdutoController {
     @Autowired
     private ImagemService imagemService;
 
-    @CrossOrigin
     @GetMapping("/login")
     public String entrar() {
         return "login";
     }
 
-    @CrossOrigin
     @GetMapping("")
     public List<Produto> listaProduto(@RequestHeader("habilitado") String habilitado) {
         return produtoService.findAll(habilitado);
     }
 
-    @CrossOrigin
     @GetMapping("/categoria")
     public List<Produto> listaCategoria(@RequestHeader("categoria")String categoria,
                                         @RequestHeader("habilitado") String habilitado){
         return produtoService.findCategoria(categoria,habilitado);
     }
     
-    @CrossOrigin
     @GetMapping("/find/{id}")
     public Produto produtoPorId(@PathVariable(value = "id") long id) {
         return produtoService.findById(id);
     }
 
-    @CrossOrigin
     @GetMapping("/{semelhanca}")
     public List<Produto> listaProdutoSemelhanca(@PathVariable(value = "semelhanca") String semelhanca,
                                                 @RequestHeader("habilitado") String habilitado) {
         return produtoService.findAllSemelanca(semelhanca, habilitado);
     }
 
-    @CrossOrigin
     @PostMapping(value = "")
     public Produto saveProduto(@RequestBody Produto produto) {
         return produtoService.saveProduto(produto);
     }
 
-    @CrossOrigin
     @DeleteMapping("/{id}")
     public void deleteProduto(@PathVariable(value = "id") long id) {
        produtoService.deleteById(id);
     }
 
-    @CrossOrigin
     @PutMapping("")
     public Produto updateProduto(@RequestBody Produto produto) throws NotFoundException {
         return produtoService.saveUpdateProduto(produto);

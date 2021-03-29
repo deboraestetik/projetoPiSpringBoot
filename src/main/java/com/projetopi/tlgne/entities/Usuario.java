@@ -1,6 +1,8 @@
 package com.projetopi.tlgne.entities;
 
 
+import org.springframework.validation.annotation.Validated;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -13,6 +15,7 @@ public class Usuario  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
+
     private String username;
     private String password;
     private String roles;

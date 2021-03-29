@@ -4,11 +4,15 @@ package com.projetopi.tlgne.services;
 import com.projetopi.tlgne.entities.Usuario;
 import com.projetopi.tlgne.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UsuarioService implements UserDetailsService {
@@ -34,7 +38,13 @@ public class UsuarioService implements UserDetailsService {
     public UsuarioService() {
     }
 
-    public void saveUsuario(Usuario usuario){
-        usuarioRepository.save(usuario);
+    public HttpStatus saveUsuario(Usuario usuario){
+        Optional<Usuario> usuarioExists = usuarioRepository.findByUsername(usuario.getUsername());
+        if(usuarioExists.isPresent()){
+            return HttpStatus.EXPECTATION_FAILED;
+        }else{
+            usuarioRepository.save(usuario);
+            return HttpStatus.CREATED;
+        }
     }
 }
