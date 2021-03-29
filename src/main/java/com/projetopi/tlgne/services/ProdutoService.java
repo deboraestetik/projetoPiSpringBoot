@@ -2,18 +2,11 @@ package com.projetopi.tlgne.services;
 
 import com.projetopi.tlgne.entities.Imagem;
 import com.projetopi.tlgne.entities.Produto;
-import com.projetopi.tlgne.repositories.ImagemRepository;
 import com.projetopi.tlgne.repositories.ProdutoRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.List;
 
 @Service

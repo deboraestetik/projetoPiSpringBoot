@@ -1,11 +1,8 @@
 package com.projetopi.tlgne.entities;
 
 
-import org.springframework.validation.annotation.Validated;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 public class Usuario  implements Serializable {
