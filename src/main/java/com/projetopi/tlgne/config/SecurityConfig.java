@@ -40,8 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/produtos/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/imagens/**").permitAll()
-                .antMatchers( "/oauth/**").permitAll()
-//                .antMatchers(HttpMethod.POST, "/oauth/token").permitAll()
+//                .antMatchers( "/oauth/**").permitAll()
+////                .antMatchers(HttpMethod.POST, "/oauth/token").permitAll()
                 .antMatchers(HttpMethod.POST, "/produtos").hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/produtos").hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/produtos").hasAnyRole("ADMIN")
@@ -51,10 +51,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
-    }
+//    @Override
+//    public void configure(WebSecurity web) throws Exception {
+//        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
