@@ -26,11 +26,6 @@ public class ProdutoController {
     @Autowired
     private ImagemService imagemService;
 
-    @GetMapping("/login")
-    public String entrar() {
-        return "login";
-    }
-
     @GetMapping("")
     public List<Produto> listaProduto(@RequestHeader("habilitado") String habilitado) {
         return produtoService.findAll(habilitado);

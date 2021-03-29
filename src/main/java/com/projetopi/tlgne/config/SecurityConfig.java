@@ -36,25 +36,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
+        http.csrf().disable().cors().and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/produtos/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/imagens/**").permitAll()
-//                .antMatchers( "/oauth/**").permitAll()
-////                .antMatchers(HttpMethod.POST, "/oauth/token").permitAll()
+                .antMatchers( "/imagens/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/produtos").hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/produtos").hasAnyRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/produtos").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/produtos/**").hasAnyRole("ADMIN")
                 .antMatchers("/usuarios").hasAnyRole("ADMIN")
                 .antMatchers("/cliente").permitAll()
-                .anyRequest().authenticated().and().cors().and().httpBasic();
+                .anyRequest().authenticated().and().httpBasic();
 
     }
-
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
