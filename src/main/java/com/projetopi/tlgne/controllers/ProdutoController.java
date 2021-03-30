@@ -4,6 +4,7 @@ import com.projetopi.tlgne.entities.Produto;
 import com.projetopi.tlgne.services.ImagemService;
 import com.projetopi.tlgne.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +49,8 @@ public class ProdutoController {
         return produtoService.findAllSemelanca(semelhanca, habilitado);
     }
 
-    @PostMapping(value = "")
+    @PostMapping("")
+   // @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Produto saveProduto(@RequestBody Produto produto) {
         return produtoService.saveProduto(produto);
     }

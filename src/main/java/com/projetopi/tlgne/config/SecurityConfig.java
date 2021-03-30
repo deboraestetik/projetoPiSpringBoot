@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -30,27 +31,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
-        return  super.authenticationManager();
+        return super.authenticationManager();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().cors().and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeRequests()
+        http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/produtos/**").permitAll()
-                .antMatchers( "/imagens/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/produtos").hasAnyRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/produtos").hasAnyRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/produtos/**").hasAnyRole("ADMIN")
-                .antMatchers("/usuarios").hasAnyRole("ADMIN")
-                .antMatchers("/cliente").permitAll()
-                .anyRequest().authenticated().and().httpBasic();
+                .antMatchers("/imagens/**").permitAll()
+//                .antMatchers(HttpMethod.POST, "/produtos").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.PUT, "/produtos").hasAnyRole("ADMIN")
+//                .antMatchers(HttpMethod.DELETE, "/produtos/**").hasAnyRole("ADMIN")
+//                .antMatchers("/usuarios").hasAnyRole("ADMIN")
+//                .antMatchers("/clientes").permitAll()
+                .anyRequest().authenticated().and().csrf().disable().cors()
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//                .exceptionHandling().accessDeniedPage("/403")
+        ;
 
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
 }
