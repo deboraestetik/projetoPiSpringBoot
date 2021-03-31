@@ -1,17 +1,14 @@
 package com.projetopi.tlgne.config;
 
-
 import com.projetopi.tlgne.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -36,20 +33,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/produtos/**").permitAll()
-                .antMatchers("/imagens/**").permitAll()
-//                .antMatchers(HttpMethod.POST, "/produtos").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.PUT, "/produtos").hasAnyRole("ADMIN")
-//                .antMatchers(HttpMethod.DELETE, "/produtos/**").hasAnyRole("ADMIN")
-//                .antMatchers("/usuarios").hasAnyRole("ADMIN")
-//                .antMatchers("/clientes").permitAll()
-                .anyRequest().authenticated().and().csrf().disable().cors()
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//                .exceptionHandling().accessDeniedPage("/403")
-        ;
-
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/produtos","/produtos/**").permitAll()
+                .antMatchers("/usuarios", "/usuarios/**").permitAll()
+                .antMatchers("/imagens" , "/imagens/**").permitAll()
+                .antMatchers("/clientes" , "/clientes/**").permitAll()
+                .anyRequest().authenticated();
     }
 
     @Bean
