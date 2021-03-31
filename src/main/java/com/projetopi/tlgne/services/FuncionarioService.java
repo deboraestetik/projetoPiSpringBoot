@@ -55,4 +55,10 @@ public class FuncionarioService {
             funcionarioRepository.deleteById(id);
         }
     }
+
+    public Funcionario findById(long id) {
+        return funcionarioRepository.findById(id)
+                .orElseThrow(() ->
+                new UsernameNotFoundException("Funcionário com id " + id + "não existe"));
+    }
 }

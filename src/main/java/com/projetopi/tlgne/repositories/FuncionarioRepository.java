@@ -12,4 +12,5 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
 
     @Query(value ="select * from funcionario WHERE nome = :nome",nativeQuery = true)
     Funcionario findByFuncionario(String nome);
+
 }

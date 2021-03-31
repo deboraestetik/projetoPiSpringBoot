@@ -25,6 +25,12 @@ public class FuncionarioController {
     public Funcionario findBy(@PathVariable(value = "funcionario") String funcionario){
         return funcionarioService.findByFuncionario(funcionario);
     }
+
+    @GetMapping("/find/{id}")
+    public Funcionario findById(@PathVariable(value = "id") long id){
+        return funcionarioService.findById(id);
+    }
+
     @CrossOrigin
     @PostMapping(value = "")
     public Funcionario saveFuncionario(@RequestBody Funcionario funcionario) {
