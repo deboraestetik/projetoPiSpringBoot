@@ -2,21 +2,29 @@ package com.projetopi.tlgne.controllers;
 
 
 import com.projetopi.tlgne.entities.Cliente;
+import com.projetopi.tlgne.entities.Funcionario;
 import com.projetopi.tlgne.services.ClienteService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/clientes")
 public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
 
+    @GetMapping("")
+    public List<Cliente> findAll(){
+        return clienteService.findAll();
+    }
+
     @GetMapping("/{usuario}")
-    public Cliente findAll(@PathVariable(value = "usuario") String usuario){
+    public Cliente findAllByEmail(@PathVariable(value = "usuario") String usuario){
         return clienteService.findAllUsuario(usuario);
     }
     @CrossOrigin
