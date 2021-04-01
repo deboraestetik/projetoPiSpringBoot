@@ -1,6 +1,8 @@
 package com.projetopi.tlgne.entities;
 
 
+import org.springframework.context.annotation.Bean;
+
 import javax.persistence.*;
 
 @Entity
