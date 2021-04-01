@@ -32,14 +32,18 @@ public class UsuarioService implements UserDetailsService {
     }
 
 
-
-    public HttpStatus saveUsuario(Usuario usuario){
+    public HttpStatus saveUsuario(Usuario usuario) {
         Optional<Usuario> usuarioExists = usuarioRepository.findByUsername(usuario.getUsername());
-        if(usuarioExists.isPresent()){
+        if (usuarioExists.isPresent()) {
             return HttpStatus.EXPECTATION_FAILED;
-        }else{
+        } else {
             usuarioRepository.save(usuario);
             return HttpStatus.CREATED;
         }
+    }
+
+    public Usuario verificarEmailExists(String email) {
+        Usuario usuarioExists = usuarioRepository.findByUsername(email).orElse(null);
+        return usuarioExists;
     }
 }

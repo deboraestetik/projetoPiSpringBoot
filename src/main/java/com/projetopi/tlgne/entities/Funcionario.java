@@ -20,11 +20,15 @@ public class Funcionario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    @Column(unique = true)
     private String cpf;
     private String cargo;
     private boolean status;
     private Date dataNascimento;
     private String telefone;
+    private String email;
+    private String senha;
+
     @OneToOne
     @JoinColumn(name = "id_endereco", referencedColumnName = "id")
     private EnderecoFuncionario endereco;
