@@ -44,17 +44,16 @@ public class FuncionarioService {
     }
 
     public Funcionario saveFuncionario(Funcionario funcionario) {
-        if (funcionario.getEndereco() != null) {
-            EnderecoFuncionario enderecoFuncionario = funcionario.getEndereco();
-            enderecoRepository.save(enderecoFuncionario);
-        }
-        Funcionario funcionarioRetornado = funcionarioRepository.save(funcionario);
-
         if (saveUsuarioAndUsuariosRoles(funcionario)) {
             return null;
         }
 
-        return funcionarioRetornado;
+        if (funcionario.getEndereco() != null) {
+            EnderecoFuncionario enderecoFuncionario = funcionario.getEndereco();
+            enderecoRepository.save(enderecoFuncionario);
+        }
+
+        return funcionarioRepository.save(funcionario);
     }
 
     private boolean saveUsuarioAndUsuariosRoles(Funcionario funcionario) {

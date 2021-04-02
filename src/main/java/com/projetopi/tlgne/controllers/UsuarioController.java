@@ -19,7 +19,7 @@ public class UsuarioController {
 //    private BCryptPasswordEncoder encoder;
 
     @GetMapping("")
-    public Usuario verificarEmailExists(@RequestHeader("email") String email){
+    public Usuario verificarEmailExistsIsValid(@RequestHeader("email") String email){
         return usuarioService.verificarEmailExists(email);
     }
 

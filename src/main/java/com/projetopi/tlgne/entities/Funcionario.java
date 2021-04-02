@@ -26,10 +26,13 @@ public class Funcionario implements Serializable {
     private boolean status;
     private Date dataNascimento;
     private String telefone;
+    @Column(unique = true)
     private String email;
     private String senha;
 
     @OneToOne
     @JoinColumn(name = "id_endereco", referencedColumnName = "id")
     private EnderecoFuncionario endereco;
+
+
 }

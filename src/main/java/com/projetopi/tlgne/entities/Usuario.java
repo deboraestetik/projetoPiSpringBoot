@@ -26,6 +26,7 @@ public class Usuario  implements Serializable {
     @Column(unique = true)
     private String username;
     private String password;
+    private int active;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuarios_roles",
