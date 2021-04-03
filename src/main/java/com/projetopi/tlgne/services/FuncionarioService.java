@@ -13,6 +13,7 @@ import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -34,6 +35,11 @@ public class FuncionarioService {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public List<Funcionario> findAll() {
         return funcionarioRepository.findAll();
@@ -44,7 +50,7 @@ public class FuncionarioService {
     }
 
     public Funcionario saveFuncionario(Funcionario funcionario) {
-        if (saveUsuarioAndUsuariosRoles(funcionario)) {
+        if (!saveUsuarioAndUsuariosRoles(funcionario)) {
             return null;
         }
 
@@ -53,6 +59,7 @@ public class FuncionarioService {
             enderecoRepository.save(enderecoFuncionario);
         }
 
+        funcionario.setSenha(passwordEncoder.encode(funcionario.getSenha()));
         return funcionarioRepository.save(funcionario);
     }
 
@@ -61,23 +68,16 @@ public class FuncionarioService {
         if (funcionario.getCargo().equals("Estoquista")) {
             Role role = roleRepository.findById(3).orElseThrow(() -> new NumberFormatException());
             setRole.add(role);
-        } else if (funcionario.getCargo().equals("Cliente")) {
-            Role role = roleRepository.findById(2).orElseThrow(() -> new NumberFormatException());
-            setRole.add(role);
-        } else if (funcionario.getCargo().equals("Admin")) {
+        } else if (funcionario.getCargo().equals("Administrador")) {
             Role role = roleRepository.findById(1).orElseThrow(() -> new NumberFormatException());
             setRole.add(role);
         }
         Usuario usuario = new Usuario();
         usuario.setUsername(funcionario.getEmail());
-        usuario.setPassword(funcionario.getSenha());
+        usuario.setPassword(passwordEncoder.encode(funcionario.getSenha()));
         usuario.setRoles(setRole);
-        HttpStatus httpStatus = usuarioService.saveUsuario(usuario);
-
-        if(httpStatus == HttpStatus.EXPECTATION_FAILED){
+        usuarioRepository.save(usuario);
             return true;
-        }
-        return false;
     }
 
     public Funcionario saveUpdateFuncionario(Funcionario funcionario) throws NotFoundException {

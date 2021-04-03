@@ -26,27 +26,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
-
-    /* Trigger when we issue POST request to /login
-    We also need to pass in {"username":"dan", "password":"dan123"} in the request body
-     */
     @SneakyThrows
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
-        // Grab credentials and map them to login viewmodel
-       // LoginViewModel credentials = null;
 
             LoginViewModel credentials = new ObjectMapper()
                     .readValue(request.getInputStream(), LoginViewModel.class);
 
-        // Create login token
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 credentials.getUsername(),
                 credentials.getPassword(),
                 new ArrayList<>());
 
-        // Authenticate user
         Authentication auth = authenticationManager.authenticate(authenticationToken);
 
         return auth;
@@ -60,10 +52,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // Create JWT Token
         String token = JWT.create()
                 .withSubject(principal.getUsername())
+                .withAudience("Authorization", authResult.getAuthorities().toString())
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
                 .sign(HMAC512(JwtProperties.SECRET.getBytes()));
 
-        // Add token in response
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX +  token);
     }
 }
