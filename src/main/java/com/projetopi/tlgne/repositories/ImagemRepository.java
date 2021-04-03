@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import org.springframework.data.repository.query.Param;
 
 @Repository
 public interface ImagemRepository extends JpaRepository<Imagem, Long> {
@@ -14,6 +15,6 @@ public interface ImagemRepository extends JpaRepository<Imagem, Long> {
     Imagem findById(long id);
 
     @Query(value ="select * from imagem WHERE produto_id = :id order by imagem_principal DESC",nativeQuery = true)
-    List<Imagem> findAllImagensByProdutoId(long id);
+    List<Imagem> findAllImagensByProdutoId(@Param("id")long id);
 
 }
