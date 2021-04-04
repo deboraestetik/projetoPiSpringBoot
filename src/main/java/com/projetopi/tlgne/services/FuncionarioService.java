@@ -75,6 +75,8 @@ public class FuncionarioService {
         Usuario usuario = new Usuario();
         usuario.setUsername(funcionario.getEmail());
         usuario.setPassword(passwordEncoder.encode(funcionario.getSenha()));
+        usuario.setNome(funcionario.getNome());
+        usuario.setActive(1);
         usuario.setRoles(setRole);
         usuarioRepository.save(usuario);
             return true;

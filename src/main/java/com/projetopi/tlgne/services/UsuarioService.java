@@ -71,4 +71,13 @@ public class UsuarioService implements UserDetailsService {
             Usuario usuarioExists = usuarioRepository.findByUsername(email).orElse(null);
             return usuarioExists;
         }
+
+    public String getNome(String username){
+        Funcionario funcionario = funcionarioRepository.findByEmail(username);
+        if(funcionario != null) {
+            return funcionario.getNome();
+        }else{
+            return "";
+        }
+    }
     }

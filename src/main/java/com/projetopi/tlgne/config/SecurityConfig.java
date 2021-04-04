@@ -47,10 +47,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), usuarioRepository))
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/produtos", "/produtos/**").permitAll()
-                .antMatchers("/usuarios", "/usuarios/**").permitAll()
-                .antMatchers("/imagens", "/imagens/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/produtos", "/produtos/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/produtos", "/produtos/**").hasAnyRole("ADMIN","ESTOQUISTA")
+                .antMatchers(HttpMethod.DELETE,"/produtos", "/produtos/**").hasRole("ADMIN")
+
+                .antMatchers(HttpMethod.GET,"/imagens", "/imagens/**").permitAll()
+                .antMatchers(HttpMethod.POST,"/imagens", "/imagens/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/imagens", "/imagens/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/imagens", "/imagens/**").hasRole("ADMIN")
+
+                .antMatchers(HttpMethod.POST,"/usuarios").hasRole("ADMIN")
+
                 .antMatchers(HttpMethod.GET, "/funcionarios", "/funcionarios/**").hasAnyRole("ADMIN", "ESTOQUISTA")
-                .antMatchers(HttpMethod.POST, "/funcionarios", "/funcionarios/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/funcionarios", "/funcionarios/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .anyRequest().authenticated().and()
                 .formLogin().loginPage("/login");

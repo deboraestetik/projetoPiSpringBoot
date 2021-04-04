@@ -2,14 +2,20 @@ package com.projetopi.tlgne.config;
 
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.projetopi.tlgne.entities.Funcionario;
 import com.projetopi.tlgne.entities.LoginViewModel;
 import com.projetopi.tlgne.entities.MyUsuarioDetails;
+import com.projetopi.tlgne.repositories.FuncionarioRepository;
+import com.projetopi.tlgne.services.FuncionarioService;
+import com.projetopi.tlgne.services.UsuarioService;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +53,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        // Grab principal
         MyUsuarioDetails principal = (MyUsuarioDetails) authResult.getPrincipal();
         String aut = authResult.getAuthorities().toString().replace("[", "");
         aut = aut.replace("]", "");
@@ -56,6 +61,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withSubject(principal.getUsername())
                 .withAudience(aut)
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
+                .withClaim("nome",principal.getNomeUsuario())
                 .sign(HMAC512(JwtProperties.SECRET.getBytes()));
 
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + token);
