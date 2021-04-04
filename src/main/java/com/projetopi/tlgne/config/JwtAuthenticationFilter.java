@@ -49,11 +49,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         // Grab principal
         MyUsuarioDetails principal = (MyUsuarioDetails) authResult.getPrincipal();
-
+        String aut = authResult.getAuthorities().toString().replace("[", "");
+        aut = aut.replace("]", "");
         // Create JWT Token
         String token = JWT.create()
                 .withSubject(principal.getUsername())
-                .withAudience("authorities", authResult.getAuthorities().toString())
+                .withAudience(aut)
                 .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
                 .sign(HMAC512(JwtProperties.SECRET.getBytes()));
 
