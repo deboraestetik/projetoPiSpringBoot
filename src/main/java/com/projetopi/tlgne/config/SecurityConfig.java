@@ -44,14 +44,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager(),  usuarioRepository))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), usuarioRepository))
                 .authorizeRequests()
-                .antMatchers("/produtos","/produtos/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/produtos", "/produtos/**").permitAll()
                 .antMatchers("/usuarios", "/usuarios/**").permitAll()
-                .antMatchers("/imagens" , "/imagens/**").permitAll()
-                .antMatchers("/funcionarios" , "/funcionarios/**").permitAll()
-                .antMatchers(HttpMethod.POST,"/login").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/imagens", "/imagens/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/funcionarios", "/funcionarios/**").hasAnyRole("ADMIN", "ESTOQUISTA")
+                .antMatchers(HttpMethod.POST, "/funcionarios", "/funcionarios/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .anyRequest().authenticated().and()
+                .formLogin().loginPage("/login");
+
     }
 
     @Bean

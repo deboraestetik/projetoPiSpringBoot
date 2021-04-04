@@ -15,9 +15,6 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-//    @Autowired
-//    private BCryptPasswordEncoder encoder;
-
     @GetMapping("")
     public Usuario verificarEmailExistsIsValid(@RequestHeader("email") String email){
         return usuarioService.verificarEmailExists(email);
@@ -25,7 +22,6 @@ public class UsuarioController {
 
     @PostMapping("")
     public HttpStatus saveUsuario(@RequestBody Usuario usuario){
-      //  usuario.setPassword(encoder.encode(usuario.getPassword()));
        return usuarioService.saveUsuario(usuario);
     }
 }

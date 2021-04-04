@@ -69,18 +69,6 @@ public class UsuarioService implements UserDetailsService {
     }
         public Usuario verificarEmailExists (String email){
             Usuario usuarioExists = usuarioRepository.findByUsername(email).orElse(null);
-            boolean result = true;
-            try {
-                InternetAddress emailAddr = new InternetAddress(email);
-                emailAddr.validate();
-            } catch (AddressException ex) {
-                result = false;
-            }
-            if (result == true && usuarioExists == null) {
-                return null;
-            } else if (result == false) {
-                System.out.println("Email não valido");
-            }
             return usuarioExists;
         }
     }
