@@ -71,7 +71,7 @@ public class FuncionarioService {
             setRole.add(role);
         }
         usuario.setUsername(funcionario.getEmail());
-        if(!passwordEncoder.matches(funcionario.getSenha(),usuario.getPassword())){
+        if(!funcionario.getSenha().equals(usuario.getPassword())){
             usuario.setPassword(passwordEncoder.encode(funcionario.getSenha()));
         }
         usuario.setNome(funcionario.getNome());
