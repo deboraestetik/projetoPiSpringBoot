@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
 
     @Query(value ="select * from funcionario WHERE nome = :nome",nativeQuery = true)
-    Funcionario findByFuncionario(String nome);
+    Funcionario findByNome(@Param("nome")String nome);
 
     @Query(value ="select * from funcionario WHERE email = :username",nativeQuery = true)
     Funcionario findByEmail(@Param("username")String username);

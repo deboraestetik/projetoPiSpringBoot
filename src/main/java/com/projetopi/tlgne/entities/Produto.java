@@ -1,6 +1,8 @@
 package com.projetopi.tlgne.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,13 +14,23 @@ public class Produto implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Long id;
-    private java.lang.String nome;
-    private java.lang.String descricao;
+    @Column(length=2000)
+    @NotNull
+    private String nome;
+    @Column(length=2000)
+    @NotNull
+    private String descricao;
+    @NotNull
     private float preco;
+    @NotNull
     private int quantidadeEstoque;
-    private java.lang.String categoria;
+    @NotNull
+    private String categoria;
+    @NotNull
     private int qtdEstrelas;
+    @NotNull
     private int status;
 
     @Transient

@@ -1,6 +1,7 @@
 package com.projetopi.tlgne.entities;
 
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,10 +24,14 @@ public class Usuario  implements Serializable {
     @Column(name = "usuario_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     private String nome;
     @Column(unique = true)
+    @NotNull
     private String username;
+    @NotNull
     private String password;
+    @NotNull
     private int active;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(

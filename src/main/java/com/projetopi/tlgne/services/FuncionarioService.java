@@ -45,8 +45,8 @@ public class FuncionarioService {
         return funcionarioRepository.findAll();
     }
 
-    public Funcionario findByFuncionario(String funcionario) {
-        return funcionarioRepository.findByFuncionario(funcionario);
+    public Funcionario findByNomeFuncionario(String nomeFuncionario) {
+        return funcionarioRepository.findByNome(nomeFuncionario);
     }
 
     public Funcionario saveFuncionario(Funcionario funcionario) {

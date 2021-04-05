@@ -1,6 +1,8 @@
 package com.projetopi.tlgne.entities;
 
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -15,10 +17,15 @@ public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotNull
     private String nome;
+    @NotNull
     private String email;
+    @NotNull
     private long telefone;
+    @NotNull
     private String endereco;
+    @NotNull
     private long senha;
 
 

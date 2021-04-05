@@ -21,9 +21,9 @@ public class FuncionarioController {
         return funcionarioService.findAll();
     }
 
-    @GetMapping("/{usuario}")
-    public Funcionario findBy(@PathVariable(value = "funcionario") String funcionario){
-        return funcionarioService.findByFuncionario(funcionario);
+    @GetMapping("/{nomeFuncionario}")
+    public Funcionario findBy(@PathVariable(value = "nomeFuncionario") String nomeFuncionario){
+        return funcionarioService.findByNomeFuncionario(nomeFuncionario);
     }
 
     @GetMapping("/find/{id}")
