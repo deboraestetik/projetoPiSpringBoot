@@ -16,12 +16,12 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping("")
-    public Usuario verificarEmailExistsIsValid(@RequestHeader("email") String email){
+    public Usuario verificarEmailExists(@RequestHeader("email") String email){
         return usuarioService.verificarEmailExists(email);
     }
 
     @PostMapping("")
-    public HttpStatus saveUsuario(@RequestBody Usuario usuario){
+    public Usuario saveUsuario(@RequestBody Usuario usuario){
        return usuarioService.saveUsuario(usuario);
     }
 }

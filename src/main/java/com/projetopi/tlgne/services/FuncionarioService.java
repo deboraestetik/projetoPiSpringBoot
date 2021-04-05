@@ -27,7 +27,7 @@ public class FuncionarioService {
     private FuncionarioRepository funcionarioRepository;
 
     @Autowired
-    private EnderecoFuncionarioRepository enderecoRepository;
+    private EnderecoFuncionarioRepository enderecoFuncionarioRepository;
 
     @Autowired
     private UsuarioService usuarioService;
@@ -38,9 +38,6 @@ public class FuncionarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
-
     public List<Funcionario> findAll() {
         return funcionarioRepository.findAll();
     }
@@ -50,20 +47,21 @@ public class FuncionarioService {
     }
 
     public Funcionario saveFuncionario(Funcionario funcionario) {
-        if (!saveUsuarioAndUsuariosRoles(funcionario)) {
-            return null;
-        }
+        Usuario usuario = new Usuario();
+        //Salvando Usuário e a role dele
+        saveUsuarioAndUsuariosRoles(funcionario, usuario);
 
         if (funcionario.getEndereco() != null) {
             EnderecoFuncionario enderecoFuncionario = funcionario.getEndereco();
-            enderecoRepository.save(enderecoFuncionario);
+            enderecoFuncionarioRepository.save(enderecoFuncionario);
         }
 
+        //Criptografando a senha antes de salvar funcionário
         funcionario.setSenha(passwordEncoder.encode(funcionario.getSenha()));
         return funcionarioRepository.save(funcionario);
     }
 
-    private boolean saveUsuarioAndUsuariosRoles(Funcionario funcionario) {
+    private void saveUsuarioAndUsuariosRoles(Funcionario funcionario, Usuario usuario) {
         Set<Role> setRole = new HashSet<>();
         if (funcionario.getCargo().equals("Estoquista")) {
             Role role = roleRepository.findById(3).orElseThrow(() -> new NumberFormatException());
@@ -72,22 +70,24 @@ public class FuncionarioService {
             Role role = roleRepository.findById(1).orElseThrow(() -> new NumberFormatException());
             setRole.add(role);
         }
-        Usuario usuario = new Usuario();
         usuario.setUsername(funcionario.getEmail());
         usuario.setPassword(passwordEncoder.encode(funcionario.getSenha()));
         usuario.setNome(funcionario.getNome());
-        usuario.setActive(1);
+        usuario.setActive(funcionario.isStatus());
         usuario.setRoles(setRole);
-        usuarioRepository.save(usuario);
-            return true;
+        usuarioService.saveUsuario(usuario);
     }
 
     public Funcionario saveUpdateFuncionario(Funcionario funcionario) throws NotFoundException {
 
         if (funcionarioRepository.existsById(funcionario.getId())) {
-            if (enderecoRepository.existsById(funcionario.getEndereco().getId())) {
-                enderecoRepository.save(funcionario.getEndereco());
+            if (enderecoFuncionarioRepository.existsById(funcionario.getEndereco().getId())) {
+                enderecoFuncionarioRepository.save(funcionario.getEndereco());
             }
+            Usuario usuario = usuarioService.verificarEmailExists(funcionario.getEmail());
+            //alterando dados de usuário e roles
+            saveUsuarioAndUsuariosRoles(funcionario, usuario);
+            funcionario.setSenha(passwordEncoder.encode(funcionario.getSenha()));
             return funcionarioRepository.save(funcionario);
         }
         throw new NotFoundException("Funcioanrio não cadastrado");
@@ -98,7 +98,16 @@ public class FuncionarioService {
         Funcionario funcionario = funcionarioRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Não existe funcionário cadastrado"));
         if (funcionario != null) {
-            enderecoRepository.deleteById(funcionario.getEndereco().getId());
+            Usuario usuario = usuarioService.verificarEmailExists(funcionario.getEmail());
+            if(usuario != null) {
+                usuarioService.deleteById(usuario.getId());
+            }
+            try {
+                enderecoFuncionarioRepository.deleteById(funcionario.getEndereco().getId());
+
+            }catch (Exception e){
+                System.out.println("Falha ao deletar endereço de funcionário");
+            }
             funcionarioRepository.deleteById(id);
         }
     }

@@ -32,7 +32,7 @@ public class Usuario  implements Serializable {
     @NotNull
     private String password;
     @NotNull
-    private int active;
+    private boolean active;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuarios_roles",
