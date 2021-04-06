@@ -28,8 +28,6 @@ public class Funcionario implements Serializable {
     @NotNull
     private String cargo;
     @NotNull
-    private boolean status;
-    @NotNull
     private Date dataNascimento;
     @NotNull
     private String telefone;

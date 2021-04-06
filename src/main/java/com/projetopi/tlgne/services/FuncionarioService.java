@@ -57,6 +57,7 @@ public class FuncionarioService {
 
         //Criptografando a senha antes de salvar funcionário
         funcionario.getUsuario().setPassword(passwordEncoder.encode(funcionario.getUsuario().getPassword()));
+        funcionario.getUsuario().setActive(true);
         return funcionarioRepository.save(funcionario);
     }
 
