@@ -47,9 +47,8 @@ public class FuncionarioService {
     }
 
     public Funcionario saveFuncionario(Funcionario funcionario) {
-        Usuario usuario = new Usuario();
         //Salvando Usuário e a role dele
-        saveUsuarioAndUsuariosRoles(funcionario, usuario);
+        saveUsuarioAndUsuariosRoles(funcionario);
 
         if (funcionario.getEndereco() != null) {
             EnderecoFuncionario enderecoFuncionario = funcionario.getEndereco();
@@ -57,11 +56,11 @@ public class FuncionarioService {
         }
 
         //Criptografando a senha antes de salvar funcionário
-        funcionario.setSenha(passwordEncoder.encode(funcionario.getSenha()));
+        funcionario.getUsuario().setPassword(passwordEncoder.encode(funcionario.getUsuario().getPassword()));
         return funcionarioRepository.save(funcionario);
     }
 
-    private void saveUsuarioAndUsuariosRoles(Funcionario funcionario, Usuario usuario) {
+    private void saveUsuarioAndUsuariosRoles(Funcionario funcionario) {
         Set<Role> setRole = new HashSet<>();
         if (funcionario.getCargo().equals("Estoquista")) {
             Role role = roleRepository.findById(3).orElseThrow(() -> new NumberFormatException());
@@ -70,14 +69,12 @@ public class FuncionarioService {
             Role role = roleRepository.findById(1).orElseThrow(() -> new NumberFormatException());
             setRole.add(role);
         }
-        usuario.setUsername(funcionario.getEmail());
-        if(!funcionario.getSenha().equals(usuario.getPassword())){
-            usuario.setPassword(passwordEncoder.encode(funcionario.getSenha()));
+        Usuario usuario = usuarioService.findById(funcionario.getUsuario().getId());
+        if(!funcionario.getUsuario().getPassword().equals(usuario.getPassword())){
+            funcionario.getUsuario().setPassword(passwordEncoder.encode(funcionario.getUsuario().getPassword()));
         }
-        usuario.setNome(funcionario.getNome());
-        usuario.setActive(funcionario.isStatus());
-        usuario.setRoles(setRole);
-        usuarioService.saveUsuario(usuario);
+        funcionario.getUsuario().setRoles(setRole);
+        usuarioService.saveUsuario(funcionario.getUsuario());
     }
 
     public Funcionario saveUpdateFuncionario(Funcionario funcionario) throws NotFoundException {
@@ -86,9 +83,8 @@ public class FuncionarioService {
             if (enderecoFuncionarioRepository.existsById(funcionario.getEndereco().getId())) {
                 enderecoFuncionarioRepository.save(funcionario.getEndereco());
             }
-            Usuario usuario = usuarioService.verificarEmailExists(funcionario.getEmail());
             //alterando dados de usuário e roles
-            saveUsuarioAndUsuariosRoles(funcionario, usuario);
+            saveUsuarioAndUsuariosRoles(funcionario);
             return funcionarioRepository.save(funcionario);
         }
         throw new NotFoundException("Funcioanrio não cadastrado");
@@ -99,7 +95,7 @@ public class FuncionarioService {
         Funcionario funcionario = funcionarioRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Não existe funcionário cadastrado"));
         if (funcionario != null) {
-            Usuario usuario = usuarioService.verificarEmailExists(funcionario.getEmail());
+            Usuario usuario = usuarioService.verificarEmailExists(funcionario.getUsuario().getUsername());
             if(usuario != null) {
                 usuarioService.deleteById(usuario.getId());
             }

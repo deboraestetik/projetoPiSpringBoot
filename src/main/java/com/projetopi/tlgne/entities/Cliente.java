@@ -2,14 +2,18 @@ package com.projetopi.tlgne.entities;
 
 
 import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-@Table(name="CLIENTE",
-        uniqueConstraints={@UniqueConstraint(columnNames="email")}
-)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -20,72 +24,19 @@ public class Cliente implements Serializable {
     @NotNull
     private String nome;
     @NotNull
+    @Column(unique = true)
     private String email;
+    @NotNull
+    private long senha;
     @NotNull
     private long telefone;
     @NotNull
-    private String endereco;
+    @Column(unique = true)
+    private String cpf;
     @NotNull
-    private long senha;
+    private Date dataNascimento;
+    @NotNull
+    private String endereco;
 
 
-    public Cliente() {
-    }
-
-    public Cliente(long id, String nome, String email, long telefone, String endereco, long senha) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.telefone = telefone;
-        this.endereco = endereco;
-        this.senha = senha;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public long getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(long telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public long getSenha() {
-        return senha;
-    }
-
-    public void setSenha(long senha) {
-        this.senha = senha;
-    }
 }

@@ -1,6 +1,7 @@
 package com.projetopi.tlgne.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +34,7 @@ public class Usuario  implements Serializable {
     private String password;
     @NotNull
     private boolean active;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuarios_roles",
