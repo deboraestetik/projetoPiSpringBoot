@@ -56,39 +56,14 @@ public class UsuarioService implements UserDetailsService {
         return usuarioRepository.findById(id).orElse(null);
     }
 
-//    public HttpStatus saveUsuarios(Usuario usuario) {
-//        Optional<Usuario> usuarioExists = usuarioRepository.findByUsername(usuario.getUsername());
-//        if (usuarioExists.isPresent()) {
-//            return HttpStatus.EXPECTATION_FAILED;
-//        } else {
-//            Set<Role> roles = new HashSet<>();
-//            for (Role role : usuario.getRoles()) {
-//                Optional<Role> optionalRole = roleRepository.findById(role.getId());
-//                if (optionalRole.isPresent()) {
-//                    roles.add(optionalRole.get());
-//                }
-//            }
-//            usuario.setRoles(roles);
-//            usuario.setPassword(encoder.encode(usuario.getPassword()));
-//            usuarioRepository.save(usuario);
-//            return HttpStatus.CREATED;
-//        }
-   // }
 
     public Usuario verificarEmailExists(String email) {
         Usuario usuarioExists = usuarioRepository.findByUsername(email).orElse(null);
         return usuarioExists;
     }
 
-    public String getNome(String username) {
-        Funcionario funcionario = funcionarioRepository.findByEmail(username);
-        if (funcionario != null) {
-            return funcionario.getNome();
-        } else {
-            return "";
-        }
-    }
     public void deleteById(long id){
         usuarioRepository.deleteById(id);
     }
+
 }

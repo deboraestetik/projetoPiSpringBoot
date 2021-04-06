@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,6 +21,9 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> 
     @Query(value ="select * from funcionario WHERE email = :username",nativeQuery = true)
     Funcionario findByEmail(@Param("username")String username);
 
+    @Query(value ="select * from funcionario ORDER BY id DESC",nativeQuery = true)
+    List<Funcionario> findAllFuncionarios();
 
+    Optional<Funcionario> findByCpf(String cpf);
 
 }

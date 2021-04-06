@@ -39,7 +39,7 @@ public class FuncionarioService {
     private PasswordEncoder passwordEncoder;
 
     public List<Funcionario> findAll() {
-        return funcionarioRepository.findAll();
+        return funcionarioRepository.findAllFuncionarios();
     }
 
     public Funcionario findByNomeFuncionario(String nomeFuncionario) {
@@ -89,7 +89,6 @@ public class FuncionarioService {
             Usuario usuario = usuarioService.verificarEmailExists(funcionario.getEmail());
             //alterando dados de usuário e roles
             saveUsuarioAndUsuariosRoles(funcionario, usuario);
-            funcionario.setSenha(passwordEncoder.encode(funcionario.getSenha()));
             return funcionarioRepository.save(funcionario);
         }
         throw new NotFoundException("Funcioanrio não cadastrado");
@@ -118,5 +117,9 @@ public class FuncionarioService {
         return funcionarioRepository.findById(id)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("Funcionário com id " + id + "não existe"));
+    }
+
+    public Funcionario verificarCpfJaCadastrado(String cpf) {
+       return funcionarioRepository.findByCpf(cpf).orElse(null);
     }
 }

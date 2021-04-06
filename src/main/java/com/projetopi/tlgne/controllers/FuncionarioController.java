@@ -2,6 +2,7 @@ package com.projetopi.tlgne.controllers;
 
 
 import com.projetopi.tlgne.entities.Funcionario;
+import com.projetopi.tlgne.entities.Usuario;
 import com.projetopi.tlgne.services.FuncionarioService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,10 @@ public class FuncionarioController {
     @PostMapping(value = "")
     public Funcionario saveFuncionario(@RequestBody Funcionario funcionario) {
         return funcionarioService.saveFuncionario(funcionario);
+    }
+    @GetMapping("/cpf")
+    public Funcionario verificarCpfJaCadastrado(@RequestHeader("cpf") String cpf){
+        return funcionarioService.verificarCpfJaCadastrado(cpf);
     }
 
     @CrossOrigin
