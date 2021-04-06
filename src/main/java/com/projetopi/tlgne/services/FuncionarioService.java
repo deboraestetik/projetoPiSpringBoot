@@ -69,9 +69,11 @@ public class FuncionarioService {
             Role role = roleRepository.findById(1).orElseThrow(() -> new NumberFormatException());
             setRole.add(role);
         }
-        Usuario usuario = usuarioService.findById(funcionario.getUsuario().getId());
-        if(!funcionario.getUsuario().getPassword().equals(usuario.getPassword())){
-            funcionario.getUsuario().setPassword(passwordEncoder.encode(funcionario.getUsuario().getPassword()));
+        if(funcionario.getUsuario().getId() != null) {
+            Usuario usuario = usuarioService.findById(funcionario.getUsuario().getId());
+            if (!funcionario.getUsuario().getPassword().equals(usuario.getPassword())) {
+                funcionario.getUsuario().setPassword(passwordEncoder.encode(funcionario.getUsuario().getPassword()));
+            }
         }
         funcionario.getUsuario().setRoles(setRole);
         usuarioService.saveUsuario(funcionario.getUsuario());
