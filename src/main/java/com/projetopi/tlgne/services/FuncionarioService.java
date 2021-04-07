@@ -77,6 +77,7 @@ public class FuncionarioService {
             }
         }
         funcionario.getUsuario().setRoles(setRole);
+        funcionario.getUsuario().setNome(funcionario.getNome());
         usuarioService.saveUsuario(funcionario.getUsuario());
     }
 
