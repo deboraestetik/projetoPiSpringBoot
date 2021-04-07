@@ -23,10 +23,8 @@ public class EnderecoCliente implements Serializable {
     private String cidade;
     private String uf;
     private String descrição;
-
-
     @ManyToOne
-    @JoinColumn(name = "id_cliente")
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
 }
