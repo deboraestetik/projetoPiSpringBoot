@@ -1,6 +1,7 @@
 package com.projetopi.tlgne.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +9,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -24,19 +27,21 @@ public class Cliente implements Serializable {
     @NotNull
     private String nome;
     @NotNull
-    @Column(unique = true)
-    private String email;
-    @NotNull
-    private long senha;
-    @NotNull
     private long telefone;
     @NotNull
     @Column(unique = true)
     private String cpf;
     @NotNull
-    private Date dataNascimento;
+    private String sexo;
     @NotNull
-    private String endereco;
+    private Date dataNascimento;
+    @OneToOne()
+    @JoinColumn(name = "id_usuario", referencedColumnName = "usuario_id")
+    private Usuario usuario;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "endereco")
+    private List<EnderecoCliente> endereco = new ArrayList<>();
 
 
 }

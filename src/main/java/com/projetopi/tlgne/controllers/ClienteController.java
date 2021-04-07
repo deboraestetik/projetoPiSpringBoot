@@ -27,6 +27,10 @@ public class ClienteController {
     public Cliente findAllByEmail(@PathVariable(value = "usuario") String usuario){
         return clienteService.findAllUsuario(usuario);
     }
+    @GetMapping("/cpf")
+    public Cliente verificarCpfJaCadastrado(@RequestHeader("cpf") String cpf){
+        return clienteService.verificarCpfJaCadastrado(cpf);
+    }
     @CrossOrigin
     @PostMapping(value = "")
     public Cliente saveCliente(@RequestBody Cliente cliente) {
