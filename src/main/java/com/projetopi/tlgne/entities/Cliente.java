@@ -41,6 +41,6 @@ public class Cliente implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<EnderecoCliente> endereco = new ArrayList<>();
-
+//debora
 
 }
