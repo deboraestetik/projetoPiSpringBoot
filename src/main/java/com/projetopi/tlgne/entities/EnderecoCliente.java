@@ -29,8 +29,6 @@ public class EnderecoCliente implements Serializable {
     @NotNull
     private String uf;
     @NotNull
-    private String descrição;
-    @NotNull
     private boolean status;
     @NotNull
     private String bairro;
