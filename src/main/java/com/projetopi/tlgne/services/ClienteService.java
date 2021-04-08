@@ -47,6 +47,7 @@ public class ClienteService {
         cliente.getUsuario().setPassword(passwordEncoder.encode(cliente.getUsuario().getPassword()));
         Cliente clienteRetornado = clienteRepository.save(cliente);
         clienteRetornado.getUsuario().setIdClienteFuncionario(clienteRetornado.getId());
+        usuarioService.saveUsuario(clienteRetornado.getUsuario());
         return clienteRetornado;
 
     }

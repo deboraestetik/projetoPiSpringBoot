@@ -60,6 +60,7 @@ public class FuncionarioService {
         funcionario.getUsuario().setActive(true);
         Funcionario funcionarioRetornado =  funcionarioRepository.save(funcionario);
         funcionarioRetornado.getUsuario().setIdClienteFuncionario(funcionarioRetornado.getId());
+        usuarioService.saveUsuario(funcionarioRetornado.getUsuario());
         return funcionarioRetornado;
     }
 
