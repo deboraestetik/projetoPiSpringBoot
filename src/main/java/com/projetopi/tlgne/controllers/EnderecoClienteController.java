@@ -33,8 +33,8 @@ public class EnderecoClienteController {
     }
 
     @PutMapping("")
-    public EnderecoCliente updateEndereco(@RequestBody EnderecoCliente enderecoCliente) throws NotFoundException {
-        return enderecoClienteService.update(enderecoCliente);
+    public EnderecoCliente updateEndereco(@RequestBody EnderecoCliente enderecoCliente, @RequestHeader("id") long id) throws NotFoundException {
+        return enderecoClienteService.update(enderecoCliente,id);
     }
 
     @DeleteMapping("/{id}")

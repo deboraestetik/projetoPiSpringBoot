@@ -30,8 +30,10 @@ public class EnderecoClienteService {
 
     }
 
-    public EnderecoCliente update(EnderecoCliente enderecoCliente) throws NotFoundException {
+    public EnderecoCliente update(EnderecoCliente enderecoCliente, long id) throws NotFoundException {
         if (enderecoClienteRepository.existsById(enderecoCliente.getId())) {
+            Cliente cliente = clienteRepository.findById(id).orElse(null);
+            enderecoCliente.setCliente(cliente);
             return enderecoClienteRepository.save(enderecoCliente);
         }
         throw new NotFoundException("Endereço não cadastrado");
