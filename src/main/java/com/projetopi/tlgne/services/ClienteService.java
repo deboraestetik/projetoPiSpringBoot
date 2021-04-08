@@ -1,14 +1,12 @@
 package com.projetopi.tlgne.services;
 
 import com.projetopi.tlgne.entities.Cliente;
-import com.projetopi.tlgne.entities.Funcionario;
 import com.projetopi.tlgne.entities.Role;
 import com.projetopi.tlgne.entities.Usuario;
 import com.projetopi.tlgne.repositories.ClienteRepository;
 import com.projetopi.tlgne.repositories.RoleRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +37,7 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    public List<Cliente> findAll(){
+    public List<Cliente> findAll() {
         return clienteRepository.findAll();
     }
 
@@ -47,24 +45,23 @@ public class ClienteService {
         return clienteRepository.findAllUsuario(usuario);
     }
 
-    
-    public Cliente saveCliente(Cliente cliente){
+
+    public Cliente saveCliente(Cliente cliente) {
         saveUsuarioAndUsuariosRoles(cliente);
 
         cliente.getUsuario().setPassword(passwordEncoder.encode(cliente.getUsuario().getPassword()));
         return clienteRepository.save(cliente);
-        
+
     }
 
     private void saveUsuarioAndUsuariosRoles(Cliente cliente) {
-            Set<Role> setRole = new HashSet<>();
-            Role role = roleRepository.findById(2).orElseThrow(() -> new NumberFormatException());
-            setRole.add(role);
+        Set<Role> setRole = new HashSet<>();
+        Role role = roleRepository.findById(2).orElseThrow(() -> new NumberFormatException());
+        setRole.add(role);
 
-            cliente.getUsuario().setRoles(setRole);
-            cliente.getUsuario().setNome(cliente.getNome());
-           Usuario usuario = usuarioService.saveUsuario(cliente.getUsuario());
-
+        cliente.getUsuario().setRoles(setRole);
+        cliente.getUsuario().setNome(cliente.getNome());
+        usuarioService.saveUsuario(cliente.getUsuario());
     }
 
     public Cliente saveUpdateCliente(Cliente cliente) throws NotFoundException {
@@ -78,16 +75,17 @@ public class ClienteService {
 
     private void updateUsuarioAndUsuarios(Cliente cliente) {
 
-            Usuario usuario = usuarioService.findById(cliente.getUsuario().getId());
-            if (!cliente.getUsuario().getPassword().equals(usuario.getPassword())) {
-                cliente.getUsuario().setPassword(passwordEncoder.encode(cliente.getUsuario().getPassword()));
-            }
+        Usuario usuario = usuarioService.findById(cliente.getUsuario().getId());
+        if (!cliente.getUsuario().getPassword().equals(usuario.getPassword())) {
+            cliente.getUsuario().setPassword(passwordEncoder.encode(cliente.getUsuario().getPassword()));
+        }
 
         cliente.getUsuario().setNome(cliente.getNome());
+        cliente.getUsuario().setActive(cliente.getUsuario().isActive());
         usuarioService.saveUsuario(cliente.getUsuario());
     }
 
-    public void deleteById(long id){
+    public void deleteById(long id) {
         clienteRepository.deleteById(id);
     }
 
