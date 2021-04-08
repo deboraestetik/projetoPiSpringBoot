@@ -2,11 +2,13 @@ package com.projetopi.tlgne.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.projetopi.tlgne.services.ClienteService;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,6 +35,8 @@ public class Usuario  implements Serializable {
     @NotNull
     private String password;
     @NotNull
+    private long idClienteFuncionario;
+    @NotNull
     private boolean active;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -50,4 +54,5 @@ public class Usuario  implements Serializable {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
 }

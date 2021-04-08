@@ -1,4 +1,4 @@
-package com.projetopi.tlgne.config;
+package com.projetopi.tlgne.action;
 
 
 import com.projetopi.tlgne.entities.Role;

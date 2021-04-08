@@ -28,7 +28,7 @@ public class EnderecoClienteController {
     }
 
     @PostMapping("/cliente/{id}")
-    public EnderecoCliente saveProdutoComImagem (@RequestBody EnderecoCliente enderecoCliente, @PathVariable(value = "id") long id) {
+    public EnderecoCliente saveEnderecoCliente(@RequestBody EnderecoCliente enderecoCliente, @PathVariable(value = "id") long id) {
         return enderecoClienteService.saveEnderecoCliente(enderecoCliente,id);
     }
 

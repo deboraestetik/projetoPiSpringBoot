@@ -41,16 +41,13 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Cliente findAllUsuario(String usuario) {
-        return clienteRepository.findAllUsuario(usuario);
-    }
-
-
     public Cliente saveCliente(Cliente cliente) {
         saveUsuarioAndUsuariosRoles(cliente);
 
         cliente.getUsuario().setPassword(passwordEncoder.encode(cliente.getUsuario().getPassword()));
-        return clienteRepository.save(cliente);
+        Cliente clienteRetornado = clienteRepository.save(cliente);
+        clienteRetornado.getUsuario().setIdClienteFuncionario(clienteRetornado.getId());
+        return clienteRetornado;
 
     }
 
@@ -61,6 +58,7 @@ public class ClienteService {
 
         cliente.getUsuario().setRoles(setRole);
         cliente.getUsuario().setNome(cliente.getNome());
+        cliente.getUsuario().setIdClienteFuncionario(cliente.getId());
         usuarioService.saveUsuario(cliente.getUsuario());
     }
 
@@ -91,5 +89,9 @@ public class ClienteService {
 
     public Cliente verificarCpfJaCadastrado(String cpf) {
         return clienteRepository.findByCpf(cpf).orElse(null);
+    }
+
+    public Cliente findByCliente(Long id) {
+        return clienteRepository.findByCliente(id);
     }
 }

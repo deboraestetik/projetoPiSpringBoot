@@ -58,7 +58,9 @@ public class FuncionarioService {
         //Criptografando a senha antes de salvar funcionário
         funcionario.getUsuario().setPassword(passwordEncoder.encode(funcionario.getUsuario().getPassword()));
         funcionario.getUsuario().setActive(true);
-        return funcionarioRepository.save(funcionario);
+        Funcionario funcionarioRetornado =  funcionarioRepository.save(funcionario);
+        funcionarioRetornado.getUsuario().setIdClienteFuncionario(funcionarioRetornado.getId());
+        return funcionarioRetornado;
     }
 
     private void saveUsuarioAndUsuariosRoles(Funcionario funcionario) {

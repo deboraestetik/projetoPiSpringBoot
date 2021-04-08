@@ -32,16 +32,16 @@ public class FuncionarioController {
         return funcionarioService.findById(id);
     }
 
-    @CrossOrigin
-    @PostMapping(value = "")
-    public Funcionario saveFuncionario(@RequestBody Funcionario funcionario) {
-        return funcionarioService.saveFuncionario(funcionario);
-    }
     @GetMapping("/cpf")
     public Funcionario verificarCpfJaCadastrado(@RequestHeader("cpf") String cpf){
         return funcionarioService.verificarCpfJaCadastrado(cpf);
     }
 
+    @CrossOrigin
+    @PostMapping(value = "")
+    public Funcionario saveFuncionario(@RequestBody Funcionario funcionario) {
+        return funcionarioService.saveFuncionario(funcionario);
+    }
     @CrossOrigin
     @PutMapping("")
     public Funcionario updateFuncionario(@RequestBody Funcionario funcionario) throws NotFoundException {
