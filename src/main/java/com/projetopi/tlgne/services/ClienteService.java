@@ -58,7 +58,6 @@ public class ClienteService {
 
         cliente.getUsuario().setRoles(setRole);
         cliente.getUsuario().setNome(cliente.getNome());
-        cliente.getUsuario().setIdClienteFuncionario(cliente.getId());
         usuarioService.saveUsuario(cliente.getUsuario());
     }
 
