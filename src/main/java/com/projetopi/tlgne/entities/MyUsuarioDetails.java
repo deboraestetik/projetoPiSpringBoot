@@ -1,6 +1,8 @@
 package com.projetopi.tlgne.entities;
 
+import com.projetopi.tlgne.repositories.ClienteRepository;
 import com.projetopi.tlgne.repositories.FuncionarioRepository;
+import com.projetopi.tlgne.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,8 +14,7 @@ import java.util.List;
 import java.util.Set;
 
 public class MyUsuarioDetails implements UserDetails {
-    @Autowired
-    private FuncionarioRepository funcionarioRepository;
+
 
     private Usuario usuario;
 
@@ -36,6 +37,10 @@ public class MyUsuarioDetails implements UserDetails {
 
     public String getNomeUsuario(){
         return usuario.getNome();
+    }
+
+    public long getIdUsuario() {
+       return usuario.getIdClienteFuncionario();
     }
 
     @Override

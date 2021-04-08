@@ -20,8 +20,6 @@ public class UsuarioController {
         return usuarioService.verificarEmailExists(email);
     }
 
-
-
     @PostMapping("")
     public Usuario saveUsuario(@RequestBody Usuario usuario){
        return usuarioService.saveUsuario(usuario);

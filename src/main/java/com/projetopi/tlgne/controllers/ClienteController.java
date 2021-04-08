@@ -23,10 +23,11 @@ public class ClienteController {
         return clienteService.findAll();
     }
 
-    @GetMapping("/{usuario}")
-    public Cliente findAllByEmail(@PathVariable(value = "usuario") String usuario){
-        return clienteService.findAllUsuario(usuario);
+    @GetMapping("/find/{id}")
+    public Cliente findClienteByUsuario(@PathVariable(value = "id") long id){
+        return clienteService.findByCliente(id);
     }
+
     @GetMapping("/cpf")
     public Cliente verificarCpfJaCadastrado(@RequestHeader("cpf") String cpf){
         return clienteService.verificarCpfJaCadastrado(cpf);

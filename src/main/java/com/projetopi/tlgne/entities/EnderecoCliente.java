@@ -1,6 +1,7 @@
 package com.projetopi.tlgne.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,8 +24,15 @@ public class EnderecoCliente implements Serializable {
     private String cidade;
     private String uf;
     private String descrição;
+    private boolean status;
+    private String bairro;
+    private String complemento;
+    private int numero;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
+
 
 }
