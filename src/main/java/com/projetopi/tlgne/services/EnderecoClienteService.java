@@ -33,6 +33,12 @@ public class EnderecoClienteService {
     public EnderecoCliente update(EnderecoCliente enderecoCliente, long id) throws NotFoundException {
         if (enderecoClienteRepository.existsById(enderecoCliente.getId())) {
             Cliente cliente = clienteRepository.findById(id).orElse(null);
+            if(enderecoCliente.isPrincipal()){
+                for(EnderecoCliente endereco: cliente.getEndereco()){
+                    endereco.setPrincipal(false);
+                    enderecoClienteRepository.save(endereco);
+                }
+            }
             enderecoCliente.setCliente(cliente);
             return enderecoClienteRepository.save(enderecoCliente);
         }
@@ -45,7 +51,9 @@ public class EnderecoClienteService {
 
     public EnderecoCliente saveEnderecoCliente(EnderecoCliente enderecoCliente, long id) {
         Cliente cliente = clienteRepository.findById(id).orElseThrow(null);
-
+        if(cliente.getEndereco().isEmpty()){
+            enderecoCliente.setPrincipal(true);
+        }
         cliente.setEndereco(enderecoCliente);
         enderecoCliente.setCliente(cliente);
         return enderecoClienteRepository.save(enderecoCliente);

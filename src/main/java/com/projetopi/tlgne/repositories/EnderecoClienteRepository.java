@@ -12,6 +12,6 @@ import java.util.List;
 @Repository
 public interface EnderecoClienteRepository extends JpaRepository<EnderecoCliente, Long> {
 
-    @Query(value ="select * from endereco_cliente WHERE cliente_id = :id ",nativeQuery = true)
+    @Query(value ="select * from endereco_cliente WHERE cliente_id = :id ORDER BY principal DESC",nativeQuery = true)
     List<EnderecoCliente> findAllEnderecoCliente(@Param("id")long id);
 }

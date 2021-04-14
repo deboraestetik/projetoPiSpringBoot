@@ -6,6 +6,7 @@ import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,9 +28,12 @@ public class Cliente implements Serializable {
     @NotNull
     private String nome;
     @NotNull
+    private String sobrenome;
+    @NotNull
     private long telefone;
     @NotNull
     @Column(unique = true)
+    @CPF
     private String cpf;
     @NotNull
     private String sexo;
@@ -38,6 +42,7 @@ public class Cliente implements Serializable {
     @OneToOne()
     @JoinColumn(name = "id_usuario", referencedColumnName = "usuario_id")
     private Usuario usuario;
+    private EnderecoCliente enderecoCobranca;
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<EnderecoCliente> endereco = new ArrayList<>();
