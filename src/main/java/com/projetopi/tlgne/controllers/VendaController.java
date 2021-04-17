@@ -42,10 +42,17 @@ public class VendaController {
     }
 
     @GetMapping("/categoriasPorcentagem")
-    public List<CategoriaPorcentagem> findVendasPorCategorias (
+    public List<CategoriaPorcentagem> findVendasCategoriasPorcentagem (
             @RequestHeader("dataInicio") String dataInicio,
             @RequestHeader("dataFim") String dataFim) {
-        return vendaService.findVendasPorCategorias(dataInicio, dataFim);
+        return vendaService.findVendasCategoriasPorcentagem(dataInicio, dataFim);
+    }
+    
+    @GetMapping("/porDia")
+    public List<String> findVendasByDia (
+            @RequestHeader("dataInicio") String dataInicio,
+            @RequestHeader("dataFim") String dataFim) {
+        return vendaService.findVendasByDia(dataInicio, dataFim);
     }
 
 }

@@ -14,6 +14,8 @@ public interface VendaRepository extends JpaRepository<Venda, Long> {
     Venda findVendaClienteById(@Param("id") Long id);
 
     @Query(value = "select * from venda where data_venda between :dataInicio and :dataFim", nativeQuery = true)
-    List<Venda> findProdutosIntervaloDatas(@Param("dataInicio") String dataInicio, @Param("dataFim") String dataFim);
+    List<Venda> findVendasCategoriasPorcentagem(@Param("dataInicio") String dataInicio, @Param("dataFim") String dataFim);
 
+    @Query(value = "select * from venda where data_venda between :dataInicio and :dataFim", nativeQuery = true)
+    List<Venda> findVendasByDia(@Param("dataInicio") String dataInicio, @Param("dataFim") String dataFim);
 }
