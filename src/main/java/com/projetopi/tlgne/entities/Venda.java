@@ -1,14 +1,13 @@
 package com.projetopi.tlgne.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -23,6 +22,7 @@ public class Venda implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private double valorTotal;
+    private Date dataVenda;
     @ManyToOne
     @JoinColumn(name = "endereco_id")
     private EnderecoCliente enderecoCliente;

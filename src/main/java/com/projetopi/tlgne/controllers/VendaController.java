@@ -1,5 +1,6 @@
 package com.projetopi.tlgne.controllers;
 
+import com.projetopi.tlgne.entities.Produto;
 import com.projetopi.tlgne.entities.Venda;
 import com.projetopi.tlgne.services.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,28 +16,35 @@ public class VendaController {
     private VendaService vendaService;
 
     @PostMapping("")
-    public Venda saveVenda(@RequestBody Venda venda){
+    public Venda saveVenda(@RequestBody Venda venda) {
         return vendaService.saveVenda(venda);
     }
 
     @GetMapping("")
-    public List<Venda> findAll(){
+    public List<Venda> findAll() {
         return vendaService.findAll();
     }
-   
+
     @GetMapping("/find/{id}")
-    public Venda findVendaById(@PathVariable(value = "id") long id){
+    public Venda findVendaById(@PathVariable(value = "id") long id) {
         return vendaService.findByVenda(id);
     }
-    
+
     @GetMapping("/cliente/{id}")
-    public Venda findVendaClienteById(@PathVariable(value = "id") long id){
+    public Venda findVendaClienteById(@PathVariable(value = "id") long id) {
         return vendaService.findVendaClienteById(id);
     }
-    
+
     @DeleteMapping("/{id}")
     public void deleteVendaById(@PathVariable(value = "id") long id) {
-       vendaService.deleteVendaById(id);
+        vendaService.deleteVendaById(id);
     }
-    
+
+    @GetMapping("/categorias-periodo")
+    public List<Produto> findVendasPorCategorias (
+            @RequestHeader("dataInicio") String dataInicio,
+            @RequestHeader("dataFim") String dataFim) {
+        return vendaService.findVendasPorCategorias(dataInicio, dataFim);
+    }
+
 }
