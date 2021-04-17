@@ -1,5 +1,6 @@
 package com.projetopi.tlgne.services;
 
+import com.projetopi.tlgne.entities.CategoriaPorcentagem;
 import com.projetopi.tlgne.entities.DetalhesVenda;
 import com.projetopi.tlgne.entities.Produto;
 import com.projetopi.tlgne.entities.Venda;
@@ -9,9 +10,7 @@ import com.projetopi.tlgne.repositories.VendaRepository;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VendaService {
@@ -53,18 +52,40 @@ public class VendaService {
         vendaRepository.deleteById(id);
     }
 
-    public List<Produto> findVendasPorCategorias(String dataInicio, String dataFim) {
+    public List<CategoriaPorcentagem> findVendasPorCategorias(String dataInicio, String dataFim) {
         List<Produto> listaProdutos = new ArrayList<>();
+        List<CategoriaPorcentagem> listaCategoriaPorcentagem = new ArrayList<>();
+        int totalProdutos = 0, cama = 0, mesa = 0, banho = 0, decoracao = 0;
         List<Venda> listaVendas = vendaRepository.findProdutosIntervaloDatas(dataInicio, dataFim);
         for (Venda venda : listaVendas) {
             List<DetalhesVenda> listaDetalhesVenda = detalhesVendaRepository.findVendaById(venda.getId());
             for (DetalhesVenda detalheVenda : listaDetalhesVenda) {
                 long id = detalheVenda.getProduto().getId();
-                listaProdutos.add(produtoRepository.findById(id));
+                Produto p = produtoRepository.findById(id);
+                if(p.getCategoria().equals("Cama")) {
+                    cama++;
+                } else if (p.getCategoria().equals("Mesa")) {
+                    mesa++;
+                } else if (p.getCategoria().equals("Banho")) {
+                    banho++;
+                } else if (p.getCategoria().equals("Decoração")) {
+                    decoracao++;
+                }
+                listaProdutos.add(p);
             }
         }
-        return listaProdutos;
-        //return vendaRepository.findProdutosIntervaloDatas(dataInicio, dataFim);
+        totalProdutos = listaProdutos.size();
+        float camaPorcento = (float)cama / (float)totalProdutos * 100;
+        float mesaPorcento = (float)mesa / (float)totalProdutos * 100;
+        float banhoPorcento = (float)banho / (float)totalProdutos * 100;
+        float decoracaoPorcento = (float)decoracao / (float)totalProdutos * 100;
+        
+        listaCategoriaPorcentagem.add(new CategoriaPorcentagem("Cama", camaPorcento));
+        listaCategoriaPorcentagem.add(new CategoriaPorcentagem("Mesa", mesaPorcento));
+        listaCategoriaPorcentagem.add(new CategoriaPorcentagem("Banho", banhoPorcento));
+        listaCategoriaPorcentagem.add(new CategoriaPorcentagem("Decoração", decoracaoPorcento));
+        
+        return listaCategoriaPorcentagem;
     }
 
 }
