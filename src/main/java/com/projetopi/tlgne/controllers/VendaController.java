@@ -1,5 +1,6 @@
 package com.projetopi.tlgne.controllers;
 
+import com.projetopi.tlgne.entities.CategoriaPorcentagem;
 import com.projetopi.tlgne.entities.Produto;
 import com.projetopi.tlgne.entities.Venda;
 import com.projetopi.tlgne.services.VendaService;
@@ -40,11 +41,18 @@ public class VendaController {
         vendaService.deleteVendaById(id);
     }
 
-    @GetMapping("/categorias-periodo")
-    public List<Produto> findVendasPorCategorias (
+    @GetMapping("/categoriasPorcentagem")
+    public List<CategoriaPorcentagem> findVendasCategoriasPorcentagem (
             @RequestHeader("dataInicio") String dataInicio,
             @RequestHeader("dataFim") String dataFim) {
-        return vendaService.findVendasPorCategorias(dataInicio, dataFim);
+        return vendaService.findVendasCategoriasPorcentagem(dataInicio, dataFim);
+    }
+    
+    @GetMapping("/porDia")
+    public List<String> findVendasByDia (
+            @RequestHeader("dataInicio") String dataInicio,
+            @RequestHeader("dataFim") String dataFim) {
+        return vendaService.findVendasByDia(dataInicio, dataFim);
     }
 
 }
