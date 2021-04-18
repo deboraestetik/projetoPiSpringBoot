@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface ClienteRepository  extends JpaRepository<Cliente, Long> {
 
-    @Query(value ="select * from cliente WHERE id_usuario = :idUsuario",nativeQuery = true)
+    @Query(value ="select * from cliente WHERE id = :idUsuario",nativeQuery = true)
     Cliente findByCliente(@Param("idUsuario") Long idUsuario);
 
     Optional<Cliente> findByCpf(String cpf);
