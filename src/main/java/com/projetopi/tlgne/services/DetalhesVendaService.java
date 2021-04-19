@@ -16,4 +16,5 @@ public class DetalhesVendaService {
     public void saveDetalhesVenda(DetalhesVenda detalhesVenda) {
         detalhesVendaRepository.save(detalhesVenda);
     }
+
 }

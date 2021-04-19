@@ -27,6 +27,11 @@ public class VendaService {
 
     @Autowired
     private DetalhesVendaService detalhesVendaService;
+    
+    public int findAllVenda (String dataInico, String dataFim){
+        return vendaRepository.findAllVenda(dataInico , dataFim);
+    }
+    
 
     public Venda saveVenda(Venda venda) {
 

@@ -18,4 +18,7 @@ public interface VendaRepository extends JpaRepository<Venda, Long> {
 
     @Query(value = "select * from venda where data_venda between :dataInicio and :dataFim", nativeQuery = true)
     List<Venda> findVendasByDia(@Param("dataInicio") String dataInicio, @Param("dataFim") String dataFim);
+    
+    @Query(value = "select count(*) from venda where data_venda between :dataInicio and :dataFim", nativeQuery = true)
+    int findAllVenda(@Param("dataInico") String dataInico, @Param("dataFim") String dataFim);
 }
