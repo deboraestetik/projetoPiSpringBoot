@@ -25,13 +25,13 @@ public class VendaController {
     public List<Venda> findAll() {
         return vendaService.findAll();
     }
-    
-    @GetMapping("totalVendas")
+    // here
+    /*@GetMapping("/totalVendas")
     public int findAllVenda (
             @RequestHeader("dataInicio") String dataInicio,
             @RequestHeader("dataFim") String dataFim){
         return vendaService.findAllVenda(dataInicio, dataFim);
-    }
+    }*/
 
     @GetMapping("/find/{id}")
     public Venda findVendaById(@PathVariable(value = "id") long id) {

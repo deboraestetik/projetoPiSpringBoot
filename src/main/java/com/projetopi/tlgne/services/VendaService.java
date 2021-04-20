@@ -27,11 +27,6 @@ public class VendaService {
 
     @Autowired
     private DetalhesVendaService detalhesVendaService;
-    
-    public int findAllVenda (String dataInico, String dataFim){
-        return vendaRepository.findAllVenda(dataInico , dataFim);
-    }
-    
 
     public Venda saveVenda(Venda venda) {
 
@@ -45,6 +40,11 @@ public class VendaService {
     public List<Venda> findAll() {
         return vendaRepository.findAll();
     }
+    // here
+   /* public int findAllVenda (String dataInico, String dataFim){
+        List<Venda> listaVendas = vendaRepository.findAllVenda(dataInico , dataFim);
+        return listaVendas.size();
+    }*/
 
     public Venda findByVenda(Long id) {
         return vendaRepository.findById(id).orElse(null);
