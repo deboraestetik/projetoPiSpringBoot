@@ -1,6 +1,7 @@
 package com.projetopi.tlgne.controllers;
 
 import com.projetopi.tlgne.entities.CategoriaPorcentagem;
+import com.projetopi.tlgne.entities.MesVendas;
 import com.projetopi.tlgne.entities.Produto;
 import com.projetopi.tlgne.entities.Venda;
 import com.projetopi.tlgne.services.VendaService;
@@ -25,13 +26,14 @@ public class VendaController {
     public List<Venda> findAll() {
         return vendaService.findAll();
     }
+
     // here
-    /*@GetMapping("/totalVendas")
-    public int findAllVenda (
+    @GetMapping("/totalVendas")
+    public int findAllVenda(
             @RequestHeader("dataInicio") String dataInicio,
-            @RequestHeader("dataFim") String dataFim){
+            @RequestHeader("dataFim") String dataFim) {
         return vendaService.findAllVenda(dataInicio, dataFim);
-    }*/
+    }
 
     @GetMapping("/find/{id}")
     public Venda findVendaById(@PathVariable(value = "id") long id) {
@@ -49,17 +51,24 @@ public class VendaController {
     }
 
     @GetMapping("/categoriasPorcentagem")
-    public List<CategoriaPorcentagem> findVendasCategoriasPorcentagem (
+    public List<CategoriaPorcentagem> findVendasCategoriasPorcentagem(
             @RequestHeader("dataInicio") String dataInicio,
             @RequestHeader("dataFim") String dataFim) {
         return vendaService.findVendasCategoriasPorcentagem(dataInicio, dataFim);
     }
-    
+
     @GetMapping("/porDia")
-    public List<String> findVendasByDia (
+    public List<String> findVendasByDia(
             @RequestHeader("dataInicio") String dataInicio,
             @RequestHeader("dataFim") String dataFim) {
         return vendaService.findVendasByDia(dataInicio, dataFim);
+    }
+    
+    @GetMapping("/porMes")
+    public List<MesVendas> findVendasByMes(
+            @RequestHeader("dataInicio") String dataInicio,
+            @RequestHeader("dataFim") String dataFim) {
+        return vendaService.findVendasByMes(dataInicio, dataFim);
     }
 
 }
