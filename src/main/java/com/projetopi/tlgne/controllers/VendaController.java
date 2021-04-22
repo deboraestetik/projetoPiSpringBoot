@@ -34,6 +34,14 @@ public class VendaController {
             @RequestHeader("dataFim") String dataFim) {
         return vendaService.findAllVenda(dataInicio, dataFim);
     }
+    
+    //here
+    @GetMapping("/totalProdVend")
+     public int findTotalProdutosVendidos(
+            @RequestHeader("dataInicio") String dataInicio,
+            @RequestHeader("dataFim") String dataFim){
+         return vendaService.totalProdutosVendidos(dataInicio , dataFim);
+     }
 
     @GetMapping("/find/{id}")
     public Venda findVendaById(@PathVariable(value = "id") long id) {

@@ -49,6 +49,25 @@ public class VendaService {
         return listaVendas.size();
     }
 
+    //here
+    public int totalProdutosVendidos(String dataInicio, String dataFim) {
+        List<Produto> listaProdutos = new ArrayList<>();
+        int totProd = 0;
+        List<Venda> listaVendas = vendaRepository.findVendasPorPeriodo(dataInicio, dataFim);
+        for (Venda vendas : listaVendas) {
+            List<DetalhesVenda> listaDetalhesVenda = detalhesVendaRepository.findVendaById(vendas.getId());
+            for (DetalhesVenda detalheVenda : listaDetalhesVenda) {
+                long id = detalheVenda.getProduto().getId();
+                Produto p = produtoRepository.findById(id);
+                listaProdutos.add(p);
+
+            }
+
+        }
+
+        return listaProdutos.size();
+    }
+
     public Venda findByVenda(Long id) {
         return vendaRepository.findById(id).orElse(null);
     }
