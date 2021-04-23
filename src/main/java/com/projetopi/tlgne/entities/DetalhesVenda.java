@@ -21,6 +21,7 @@ public class DetalhesVenda implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private double subTotal;
+    private int quantidade;
     @ManyToOne
     @JoinColumn(name = "produto_id")
     private Produto produto;

@@ -32,5 +32,6 @@ public class Venda implements Serializable{
     @JsonIgnore
     @OneToMany(mappedBy = "venda")
     private List<DetalhesVenda> detalhesVenda;
+    private int quantidadeTotal;
 }
 

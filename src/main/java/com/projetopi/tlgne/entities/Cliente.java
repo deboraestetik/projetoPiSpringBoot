@@ -42,6 +42,8 @@ public class Cliente implements Serializable {
     @OneToOne()
     @JoinColumn(name = "id_usuario", referencedColumnName = "usuario_id")
     private Usuario usuario;
+    @OneToOne()
+    @JoinColumn(name = "id_enderecoCobranca", referencedColumnName = "id")
     private EnderecoCliente enderecoCobranca;
     @JsonIgnore
     @OneToMany(mappedBy = "cliente")
