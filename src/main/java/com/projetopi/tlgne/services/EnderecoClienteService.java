@@ -29,6 +29,9 @@ public class EnderecoClienteService {
         return enderecoClienteRepository.findAllEnderecoCliente(id);
 
     }
+    public EnderecoCliente save(EnderecoCliente enderecoCliente){
+        return enderecoClienteRepository.save(enderecoCliente);
+    }
 
     public EnderecoCliente saveEnderecoCliente(EnderecoCliente enderecoCliente, long id) {
         Cliente cliente = clienteRepository.findById(id).orElseThrow(null);
@@ -37,6 +40,7 @@ public class EnderecoClienteService {
         }
         cliente.setEndereco(enderecoCliente);
         enderecoCliente.setCliente(cliente);
+        enderecoCliente.setStatus(true);
         return enderecoClienteRepository.save(enderecoCliente);
 
     }

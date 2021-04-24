@@ -1,9 +1,11 @@
 package com.projetopi.tlgne.services;
 
 import com.projetopi.tlgne.entities.Cliente;
+import com.projetopi.tlgne.entities.EnderecoCliente;
 import com.projetopi.tlgne.entities.Role;
 import com.projetopi.tlgne.entities.Usuario;
 import com.projetopi.tlgne.repositories.ClienteRepository;
+import com.projetopi.tlgne.repositories.EnderecoClienteRepository;
 import com.projetopi.tlgne.repositories.RoleRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class ClienteService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EnderecoClienteService enderecoClienteService;
 
     public ClienteService() {
     }
@@ -65,6 +70,9 @@ public class ClienteService {
     public Cliente saveUpdateCliente(Cliente cliente) throws NotFoundException {
 
         if (clienteRepository.existsById(cliente.getId())) {
+            if(cliente.getEnderecoCobranca() != null){
+                updateEnderecoCobranca(cliente);
+            }
             updateUsuarioAndUsuarios(cliente);
             return clienteRepository.save(cliente);
         }
@@ -81,6 +89,11 @@ public class ClienteService {
         cliente.getUsuario().setNome(cliente.getNome());
         cliente.getUsuario().setActive(cliente.getUsuario().isActive());
         usuarioService.saveUsuario(cliente.getUsuario());
+    }
+
+    private void updateEnderecoCobranca(Cliente cliente){
+        EnderecoCliente enderecoCliente = enderecoClienteService.save(cliente.getEnderecoCobranca());
+        cliente.setEnderecoCobranca(enderecoCliente);
     }
 
     public void deleteById(long id) {
