@@ -33,5 +33,8 @@ public class Venda implements Serializable{
     @OneToMany(mappedBy = "venda")
     private List<DetalhesVenda> detalhesVenda;
     private int quantidadeTotal;
+    private String numeroPedido;
+
+
 }
 

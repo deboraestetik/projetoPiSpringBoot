@@ -10,6 +10,7 @@ import com.projetopi.tlgne.repositories.DetalhesVendaRepository;
 import com.projetopi.tlgne.repositories.ProdutoRepository;
 import com.projetopi.tlgne.repositories.VendaRepository;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,18 @@ public class VendaService {
             detalhesVenda.setVenda(venda);
             detalhesVendaService.saveDetalhesVenda(detalhesVenda);
         }
+        gerarNumeroPedido(venda);
         return vendaRepository.save(venda);
+    }
+    private void gerarNumeroPedido(Venda venda) {
+        LocalDateTime data = LocalDateTime.now();
+        String ano = String.valueOf(data.getYear());
+        String mes = String.valueOf(data.getMonthValue());
+        String dia = String.valueOf(data.getDayOfMonth());
+        String hora = String.valueOf(data.getHour());
+        String minutos = String.valueOf(data.getMinute());
+        venda.setNumeroPedido(ano + mes + dia + hora + minutos + venda.getId() +
+                "-" + venda.getCliente().getId());
     }
 
     public List<Venda> findAll() {
