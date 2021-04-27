@@ -29,6 +29,9 @@ public class EnderecoClienteService {
         return enderecoClienteRepository.findAllEnderecoCliente(id);
 
     }
+    public List<EnderecoCliente> findAllEnderecoClienteAtivos(long id) {
+        return enderecoClienteRepository.findAllEnderecoClienteAtivos(id);
+    }
     public EnderecoCliente save(EnderecoCliente enderecoCliente){
         return enderecoClienteRepository.save(enderecoCliente);
     }
@@ -63,5 +66,6 @@ public class EnderecoClienteService {
     public void delete(long id) {
         enderecoClienteRepository.deleteById(id);
     }
+
 
 }

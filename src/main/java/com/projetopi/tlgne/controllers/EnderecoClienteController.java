@@ -26,6 +26,10 @@ public class EnderecoClienteController {
     public List<EnderecoCliente> findAllEnderecoCliente(@PathVariable (value = "id") long id) throws IOException {
         return enderecoClienteService.findAllEnderecoCliente(id);
     }
+    @GetMapping("/ativos/cliente/{id}")
+    public List<EnderecoCliente> findAllEnderecoClienteAtivos(@PathVariable (value = "id") long id) throws IOException {
+        return enderecoClienteService.findAllEnderecoClienteAtivos(id);
+    }
 
     @PostMapping("/cliente/{id}")
     public EnderecoCliente saveEnderecoCliente(@RequestBody EnderecoCliente enderecoCliente, @PathVariable(value = "id") long id) {

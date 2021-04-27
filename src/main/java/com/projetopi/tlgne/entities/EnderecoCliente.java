@@ -38,6 +38,8 @@ public class EnderecoCliente implements Serializable {
     private int numero;
     @NotNull
     private boolean principal;
+    @JsonIgnore
+    private boolean enderecoCobranca;
 
     @JsonIgnore
     @ManyToOne

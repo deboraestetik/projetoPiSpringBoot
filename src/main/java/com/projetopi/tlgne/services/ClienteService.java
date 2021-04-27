@@ -91,8 +91,10 @@ public class ClienteService {
         usuarioService.saveUsuario(cliente.getUsuario());
     }
 
+
     private void updateEnderecoCobranca(Cliente cliente){
         cliente.getEnderecoCobranca().setCliente(cliente);
+        cliente.getEnderecoCobranca().setEnderecoCobranca(true);
         EnderecoCliente enderecoCliente = enderecoClienteService.save(cliente.getEnderecoCobranca());
         cliente.setEnderecoCobranca(enderecoCliente);
     }
