@@ -32,13 +32,13 @@ public class VendaService {
     private DetalhesVendaService detalhesVendaService;
 
     public Venda saveVenda(Venda venda) {
-
+        gerarNumeroPedido(venda);
+        Venda vendaSalva = vendaRepository.save(venda);
         for (DetalhesVenda detalhesVenda : venda.getDetalhesVenda()) {
-            detalhesVenda.setVenda(venda);
+            detalhesVenda.setVenda(vendaSalva);
             detalhesVendaService.saveDetalhesVenda(detalhesVenda);
         }
-        gerarNumeroPedido(venda);
-        return vendaRepository.save(venda);
+        return vendaSalva;
     }
     private void gerarNumeroPedido(Venda venda) {
         LocalDateTime data = LocalDateTime.now();

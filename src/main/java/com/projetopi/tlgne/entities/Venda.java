@@ -29,9 +29,10 @@ public class Venda implements Serializable{
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-    @JsonIgnore
+
     @OneToMany(mappedBy = "venda")
     private List<DetalhesVenda> detalhesVenda;
+
     private int quantidadeTotal;
     private String numeroPedido;
 
