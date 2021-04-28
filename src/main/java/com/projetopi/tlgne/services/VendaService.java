@@ -13,6 +13,7 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -31,14 +32,17 @@ public class VendaService {
     @Autowired
     private DetalhesVendaService detalhesVendaService;
 
-    public Venda saveVenda(Venda venda) {
+    public HttpStatus saveVenda(Venda venda) {
         gerarNumeroPedido(venda);
         Venda vendaSalva = vendaRepository.save(venda);
         for (DetalhesVenda detalhesVenda : venda.getDetalhesVenda()) {
             detalhesVenda.setVenda(vendaSalva);
             detalhesVendaService.saveDetalhesVenda(detalhesVenda);
         }
-        return vendaSalva;
+        if(vendaSalva != null) {
+            return HttpStatus.OK;
+        }
+        return HttpStatus.NOT_FOUND;
     }
     private void gerarNumeroPedido(Venda venda) {
         LocalDateTime data = LocalDateTime.now();

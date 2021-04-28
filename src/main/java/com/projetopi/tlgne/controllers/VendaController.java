@@ -6,6 +6,7 @@ import com.projetopi.tlgne.entities.Produto;
 import com.projetopi.tlgne.entities.Venda;
 import com.projetopi.tlgne.services.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class VendaController {
     private VendaService vendaService;
 
     @PostMapping("")
-    public Venda saveVenda(@RequestBody Venda venda) {
+    public HttpStatus saveVenda(@RequestBody Venda venda) {
         return vendaService.saveVenda(venda);
     }
 
