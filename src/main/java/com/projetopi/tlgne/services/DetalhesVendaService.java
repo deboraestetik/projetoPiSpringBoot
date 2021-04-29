@@ -12,6 +12,9 @@ public class DetalhesVendaService {
     @Autowired
     private DetalhesVendaRepository detalhesVendaRepository;
 
+    public DetalhesVendaService(DetalhesVendaRepository detalhesVendaRepository) {
+        this.detalhesVendaRepository = detalhesVendaRepository;
+    }
 
     public void saveDetalhesVenda(DetalhesVenda detalhesVenda) {
         detalhesVendaRepository.save(detalhesVenda);

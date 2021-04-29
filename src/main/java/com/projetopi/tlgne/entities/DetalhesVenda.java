@@ -1,6 +1,7 @@
 package com.projetopi.tlgne.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class DetalhesVenda implements Serializable {
     @ManyToOne
     @JoinColumn(name = "produto_id")
     private Produto produto;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "venda_id")
     private Venda venda;

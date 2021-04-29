@@ -21,8 +21,9 @@ public class ProdutoService {
     public ProdutoService() {
     }
 
-    public ProdutoService(ProdutoRepository produtoRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository, ImagemService imagemService) {
         this.produtoRepository = produtoRepository;
+        this.imagemService = imagemService;
     }
 
     public List<Produto> findCategoria(String categoria, String habilitado) {

@@ -32,17 +32,17 @@ public class VendaService {
     @Autowired
     private DetalhesVendaService detalhesVendaService;
 
-    public HttpStatus saveVenda(Venda venda) {
+    public Venda saveVenda(Venda venda) {
         gerarNumeroPedido(venda);
         Venda vendaSalva = vendaRepository.save(venda);
         for (DetalhesVenda detalhesVenda : venda.getDetalhesVenda()) {
             detalhesVenda.setVenda(vendaSalva);
             detalhesVendaService.saveDetalhesVenda(detalhesVenda);
         }
-        if(vendaSalva != null) {
-            return HttpStatus.OK;
-        }
-        return HttpStatus.NOT_FOUND;
+
+            return vendaSalva;
+
+
     }
     private void gerarNumeroPedido(Venda venda) {
         LocalDateTime data = LocalDateTime.now();

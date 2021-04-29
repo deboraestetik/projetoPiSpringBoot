@@ -38,8 +38,12 @@ public class ClienteService {
     public ClienteService() {
     }
 
-    public ClienteService(ClienteRepository clienteRepository) {
+    public ClienteService(ClienteRepository clienteRepository, RoleRepository roleRepository, UsuarioService usuarioService, PasswordEncoder passwordEncoder, EnderecoClienteService enderecoClienteService) {
         this.clienteRepository = clienteRepository;
+        this.roleRepository = roleRepository;
+        this.usuarioService = usuarioService;
+        this.passwordEncoder = passwordEncoder;
+        this.enderecoClienteService = enderecoClienteService;
     }
 
     public List<Cliente> findAll() {

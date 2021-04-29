@@ -20,6 +20,10 @@ public class EnderecoClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    public EnderecoClienteService(EnderecoClienteRepository enderecoClienteRepository, ClienteRepository clienteRepository) {
+        this.enderecoClienteRepository = enderecoClienteRepository;
+        this.clienteRepository = clienteRepository;
+    }
 
     public EnderecoCliente findById(long id) {
         return enderecoClienteRepository.findById(id).orElse(null);

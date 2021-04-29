@@ -18,31 +18,24 @@ public class VendaController {
     @Autowired
     private VendaService vendaService;
 
-    @PostMapping("")
-    public HttpStatus saveVenda(@RequestBody Venda venda) {
-        return vendaService.saveVenda(venda);
-    }
-
     @GetMapping("")
     public List<Venda> findAll() {
         return vendaService.findAll();
     }
 
-    // here
     @GetMapping("/totalVendas")
     public int findAllVenda(
             @RequestHeader("dataInicio") String dataInicio,
             @RequestHeader("dataFim") String dataFim) {
         return vendaService.findAllVenda(dataInicio, dataFim);
     }
-    
-    //here
+
     @GetMapping("/totalProdVend")
-     public int findTotalProdutosVendidos(
+    public int findTotalProdutosVendidos(
             @RequestHeader("dataInicio") String dataInicio,
-            @RequestHeader("dataFim") String dataFim){
-         return vendaService.totalProdutosVendidos(dataInicio , dataFim);
-     }
+            @RequestHeader("dataFim") String dataFim) {
+        return vendaService.totalProdutosVendidos(dataInicio, dataFim);
+    }
 
     @GetMapping("/find/{id}")
     public Venda findVendaById(@PathVariable(value = "id") long id) {
@@ -52,11 +45,6 @@ public class VendaController {
     @GetMapping("/cliente/{id}")
     public Venda findVendaClienteById(@PathVariable(value = "id") long id) {
         return vendaService.findVendaClienteById(id);
-    }
-
-    @DeleteMapping("/{id}")
-    public void deleteVendaById(@PathVariable(value = "id") long id) {
-        vendaService.deleteVendaById(id);
     }
 
     @GetMapping("/categoriasPorcentagem")
@@ -72,12 +60,23 @@ public class VendaController {
             @RequestHeader("dataFim") String dataFim) {
         return vendaService.findVendasByDia(dataInicio, dataFim);
     }
-    
+
     @GetMapping("/porMes")
     public List<MesVendas> findVendasByMes(
             @RequestHeader("dataInicio") String dataInicio,
             @RequestHeader("dataFim") String dataFim) {
         return vendaService.findVendasByMes(dataInicio, dataFim);
     }
+
+    @PostMapping("")
+    public Venda saveVenda(@RequestBody Venda venda) {
+        return vendaService.saveVenda(venda);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteVendaById(@PathVariable(value = "id") long id) {
+        vendaService.deleteVendaById(id);
+    }
+
 
 }
