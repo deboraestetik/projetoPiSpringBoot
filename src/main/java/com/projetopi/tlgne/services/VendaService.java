@@ -1,20 +1,16 @@
 package com.projetopi.tlgne.services;
 
-import com.projetopi.tlgne.entities.CategoriaPorcentagem;
-import com.projetopi.tlgne.entities.DetalhesVenda;
-import com.projetopi.tlgne.entities.MesVendas;
-import com.projetopi.tlgne.entities.Meses;
-import com.projetopi.tlgne.entities.Produto;
-import com.projetopi.tlgne.entities.Venda;
+import com.projetopi.tlgne.entities.*;
 import com.projetopi.tlgne.repositories.DetalhesVendaRepository;
+import com.projetopi.tlgne.repositories.FreteRepository;
 import com.projetopi.tlgne.repositories.ProdutoRepository;
 import com.projetopi.tlgne.repositories.VendaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
@@ -32,18 +28,26 @@ public class VendaService {
     @Autowired
     private DetalhesVendaService detalhesVendaService;
 
+    @Autowired
+    private FreteRepository freteRepository;
+
     public Venda saveVenda(Venda venda) {
         gerarNumeroPedido(venda);
+        venda.setStatus("Aguardando pagamento");
+
+        Frete frete = freteRepository.save(venda.getFrete());
+        venda.setFrete(frete);
         Venda vendaSalva = vendaRepository.save(venda);
+        vendaSalva.getFrete().setVenda(vendaSalva);
+        freteRepository.save(vendaSalva.getFrete());
+
         for (DetalhesVenda detalhesVenda : venda.getDetalhesVenda()) {
             detalhesVenda.setVenda(vendaSalva);
             detalhesVendaService.saveDetalhesVenda(detalhesVenda);
         }
-
             return vendaSalva;
-
-
     }
+
     private void gerarNumeroPedido(Venda venda) {
         LocalDateTime data = LocalDateTime.now();
         String ano = String.valueOf(data.getYear());

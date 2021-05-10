@@ -1,6 +1,5 @@
 package com.projetopi.tlgne.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,19 +22,22 @@ public class Venda implements Serializable{
     private long id;
     private double valorTotal;
     private Date dataVenda;
+    private int quantidadeTotal;
+    private String numeroPedido;
+    private String pagamento;
+    private int parcelasCartao;
+    private String status;
+    private double desconto;
     @ManyToOne
     @JoinColumn(name = "endereco_id")
     private EnderecoCliente enderecoCliente;
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-
     @OneToMany(mappedBy = "venda")
     private List<DetalhesVenda> detalhesVenda;
-
-    private int quantidadeTotal;
-    private String numeroPedido;
-
-
+    @OneToOne()
+    @JoinColumn(name = "frete_id", referencedColumnName = "id")
+    private Frete frete;
 }
 

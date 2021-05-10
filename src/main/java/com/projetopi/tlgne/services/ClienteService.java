@@ -5,7 +5,6 @@ import com.projetopi.tlgne.entities.EnderecoCliente;
 import com.projetopi.tlgne.entities.Role;
 import com.projetopi.tlgne.entities.Usuario;
 import com.projetopi.tlgne.repositories.ClienteRepository;
-import com.projetopi.tlgne.repositories.EnderecoClienteRepository;
 import com.projetopi.tlgne.repositories.RoleRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

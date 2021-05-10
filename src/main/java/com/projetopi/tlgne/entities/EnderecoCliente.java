@@ -32,13 +32,11 @@ public class EnderecoCliente implements Serializable {
     private boolean status;
     @NotNull
     private String bairro;
-
     private String complemento;
     @NotNull
     private int numero;
     @NotNull
     private boolean principal;
-
     private boolean enderecoCobranca;
 
     @JsonIgnore
