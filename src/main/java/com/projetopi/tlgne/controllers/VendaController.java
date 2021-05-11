@@ -43,7 +43,7 @@ public class VendaController {
     }
 
     @GetMapping("/cliente/{id}")
-    public Venda findVendaClienteById(@PathVariable(value = "id") long id) {
+    public List<Venda> findVendaClienteById(@PathVariable(value = "id") long id) {
         return vendaService.findVendaClienteById(id);
     }
 

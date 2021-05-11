@@ -55,7 +55,7 @@ public class VendaService {
         String dia = String.valueOf(data.getDayOfMonth());
         String hora = String.valueOf(data.getHour());
         String minutos = String.valueOf(data.getMinute());
-        venda.setNumeroPedido(ano + mes + dia + hora + minutos + venda.getId() +
+        venda.setNumeroPedido(ano + mes + dia + hora + minutos +
                 "-" + venda.getCliente().getId());
     }
 
@@ -92,7 +92,7 @@ public class VendaService {
         return vendaRepository.findById(id).orElse(null);
     }
 
-    public Venda findVendaClienteById(Long id) {
+    public List<Venda> findVendaClienteById(Long id) {
         return vendaRepository.findVendaClienteById(id);
     }
 
