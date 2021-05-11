@@ -28,6 +28,7 @@ public class Venda implements Serializable{
     private int parcelasCartao;
     private String status;
     private double desconto;
+    private double valorParcial;
     @ManyToOne
     @JoinColumn(name = "endereco_id")
     private EnderecoCliente enderecoCliente;
