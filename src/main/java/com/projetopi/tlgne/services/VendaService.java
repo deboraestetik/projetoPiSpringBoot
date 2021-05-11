@@ -35,6 +35,10 @@ public class VendaService {
         gerarNumeroPedido(venda);
         venda.setStatus("Aguardando pagamento");
 
+        if(venda.getPagamento().equals("Boleto")){
+            venda.setParcelasCartao(0);
+        }
+        
         Frete frete = freteRepository.save(venda.getFrete());
         venda.setFrete(frete);
         Venda vendaSalva = vendaRepository.save(venda);
