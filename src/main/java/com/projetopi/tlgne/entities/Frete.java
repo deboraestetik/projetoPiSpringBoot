@@ -1,5 +1,6 @@
 package com.projetopi.tlgne.entities;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,8 +21,4 @@ public class Frete {
     private Integer id;
     private String transportadora;
     private double valorFrete;
-    @JsonIgnore
-    @OneToOne()
-    @JoinColumn(name = "id_venda", referencedColumnName = "id")
-    private Venda venda;
 }

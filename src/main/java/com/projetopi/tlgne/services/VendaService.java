@@ -38,8 +38,7 @@ public class VendaService {
         Frete frete = freteRepository.save(venda.getFrete());
         venda.setFrete(frete);
         Venda vendaSalva = vendaRepository.save(venda);
-        vendaSalva.getFrete().setVenda(vendaSalva);
-        freteRepository.save(vendaSalva.getFrete());
+
 
         for (DetalhesVenda detalhesVenda : venda.getDetalhesVenda()) {
             detalhesVenda.setVenda(vendaSalva);
