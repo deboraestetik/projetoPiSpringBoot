@@ -2,11 +2,9 @@ package com.projetopi.tlgne.controllers;
 
 import com.projetopi.tlgne.entities.CategoriaPorcentagem;
 import com.projetopi.tlgne.entities.MesVendas;
-import com.projetopi.tlgne.entities.Produto;
 import com.projetopi.tlgne.entities.Venda;
 import com.projetopi.tlgne.services.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -66,6 +64,11 @@ public class VendaController {
             @RequestHeader("dataInicio") String dataInicio,
             @RequestHeader("dataFim") String dataFim) {
         return vendaService.findVendasByMes(dataInicio, dataFim);
+    }
+
+    @GetMapping("/numeroPedido/cliente/{id}")
+    public List<Venda> findVendaNumeroPedido(@PathVariable(value = "id") long id, @RequestHeader("numeroPedido") String numeroPedido) {
+        return vendaService.findVendaNumeroPedido(id,numeroPedido);
     }
 
     @PostMapping("")

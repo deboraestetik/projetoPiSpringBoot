@@ -98,6 +98,9 @@ public class VendaService {
     public List<Venda> findVendaClienteById(Long id) {
         return vendaRepository.findVendaClienteById(id);
     }
+    public List<Venda> findVendaNumeroPedido(long id, String numeroPedido) {
+        return vendaRepository.findVendaByNumeroPedido(id, numeroPedido);
+    }
 
     public void deleteVendaById(long id) {
         vendaRepository.deleteById(id);
@@ -228,5 +231,6 @@ public class VendaService {
         }
         return qtdVendasMes;
     }
+
 
 }
