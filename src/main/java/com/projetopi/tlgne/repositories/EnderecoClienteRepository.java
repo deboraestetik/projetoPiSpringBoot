@@ -15,6 +15,6 @@ public interface EnderecoClienteRepository extends JpaRepository<EnderecoCliente
     @Query(value ="select * from endereco_cliente WHERE cliente_id = :id and endereco_cobranca = 0 ORDER BY status DESC, principal DESC",nativeQuery = true)
     List<EnderecoCliente> findAllEnderecoCliente(@Param("id")long id);
 
-    @Query(value ="select * from endereco_cliente WHERE cliente_id = :id and endereco_cobranca = 0 and status = 1",nativeQuery = true)
-    List<EnderecoCliente> findAllEnderecoClienteAtivos(long id);
+    @Query(value ="select * from endereco_cliente WHERE cliente_id = :id and endereco_cobranca = 0 and status = 1 ORDER BY principal DESC",nativeQuery = true)
+    List<EnderecoCliente> findAllEnderecoClienteAtivos(@Param("id")long id);
 }
