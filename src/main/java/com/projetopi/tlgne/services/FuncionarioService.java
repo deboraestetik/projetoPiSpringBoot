@@ -38,6 +38,15 @@ public class FuncionarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public FuncionarioService(FuncionarioRepository funcionarioRepository, EnderecoFuncionarioRepository enderecoFuncionarioRepository,
+                              UsuarioService usuarioService, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+        this.funcionarioRepository = funcionarioRepository;
+        this.enderecoFuncionarioRepository = enderecoFuncionarioRepository;
+        this.usuarioService = usuarioService;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
     public List<Funcionario> findAll() {
         return funcionarioRepository.findAllFuncionarios();
     }

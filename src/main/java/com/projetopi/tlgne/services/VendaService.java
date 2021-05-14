@@ -31,6 +31,15 @@ public class VendaService {
     @Autowired
     private FreteRepository freteRepository;
 
+
+    public VendaService(VendaRepository vendaRepository, DetalhesVendaRepository detalhesVendaRepository, ProdutoRepository produtoRepository, DetalhesVendaService detalhesVendaService, FreteRepository freteRepository) {
+        this.vendaRepository = vendaRepository;
+        this.detalhesVendaRepository = detalhesVendaRepository;
+        this.produtoRepository = produtoRepository;
+        this.detalhesVendaService = detalhesVendaService;
+        this.freteRepository = freteRepository;
+    }
+
     public Venda saveVenda(Venda venda) {
         gerarNumeroPedido(venda);
         venda.setStatus("Aguardando pagamento");

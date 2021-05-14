@@ -32,7 +32,7 @@ public class ImagemService {
     }
 
     public Imagem findById(long id) {
-        return imagemRepository.findById(id);
+        return imagemRepository.findById(id).orElse(null);
     }
 
 
@@ -150,7 +150,7 @@ public class ImagemService {
     }
 
     public void delete(long id) {
-        Imagem imagem = imagemRepository.findById(id);
+        Imagem imagem = imagemRepository.findById(id).orElse(null);
         if (imagem.getProduto().getImagens().size() > 1) {
             Produto produto = imagem.getProduto();
             try {

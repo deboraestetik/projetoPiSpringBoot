@@ -37,7 +37,11 @@ public class UsuarioService implements UserDetailsService {
     @Autowired
     private PasswordEncoder encoder;
 
-    public UsuarioService() {
+    public UsuarioService(UsuarioRepository usuarioRepository, FuncionarioRepository funcionarioRepository, RoleRepository roleRepository, PasswordEncoder encoder) {
+        this.usuarioRepository = usuarioRepository;
+        this.funcionarioRepository = funcionarioRepository;
+        this.roleRepository = roleRepository;
+        this.encoder = encoder;
     }
 
     @Override

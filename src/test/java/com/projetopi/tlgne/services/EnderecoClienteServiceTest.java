@@ -98,6 +98,21 @@ public class EnderecoClienteServiceTest {
         assertEquals(enderecoCliente,enderecoClienteRetornado);
     }
 
+    @Test
+    public void deveAtualizarEnderecoClientePorIdClientePrincipall() throws NotFoundException {
+        EnderecoCliente enderecoCliente = Mockito.mock(EnderecoCliente.class);
+        List<EnderecoCliente> enderecoClienteList = new ArrayList<>();
+        enderecoClienteList.add(enderecoCliente);
+        when(enderecoClienteRepository.existsById(enderecoCliente.getId())).thenReturn(true);
+        Cliente cliente = Mockito.mock(Cliente.class);
+        when(clienteRepository.findById(anyLong())).thenReturn(Optional.of(cliente));
+        when(enderecoCliente.isPrincipal()).thenReturn(true);
+        when(cliente.getEndereco()).thenReturn(enderecoClienteList);
+        when(enderecoClienteRepository.save(any())).thenReturn(enderecoCliente);
+        EnderecoCliente enderecoClienteRetornado = enderecoClienteService.update(enderecoCliente,2);
+        assertEquals(enderecoCliente,enderecoClienteRetornado);
+    }
+
     @Test(expected = NotFoundException.class)
     public void deveLancarExceptionAtualizarEnderecoCliente() throws NotFoundException {
         EnderecoCliente enderecoCliente = Mockito.mock(EnderecoCliente.class);

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -61,13 +62,20 @@ public class ProdutoServiceTest {
     }
 
 
-
     @Test
     public void deveBuscarProdutosNaoHabilitados(){
         List<Produto> produtoList = Mockito.mock(ArrayList.class);
         when(produtoRepository.findAll()).thenReturn(produtoList);
         List<Produto> produtoListRetornado = produtoService.findAll("false");
         assertEquals(produtoList,produtoListRetornado);
+    }
+
+    @Test
+    public void deveBuscarProdutosHabilitadosNull(){
+        List<Produto> produtoList = Mockito.mock(ArrayList.class);
+        when(produtoRepository.findAllProdutoHabilitado(anyString())).thenReturn(produtoList);
+        List<Produto> produtoListRetornado = produtoService.findAll("null");
+        assertNull(produtoListRetornado);
     }
 
     @Test
@@ -87,6 +95,8 @@ public class ProdutoServiceTest {
         List<Produto> produtoListRetornado = produtoService.findAllSemelanca("seme","false");
         assertEquals(produtoList,produtoListRetornado);
     }
+
+
 
     @Test
     public void deveBuscarProdutoPorId(){
