@@ -18,4 +18,7 @@ public interface VendaRepository extends JpaRepository<Venda, Long> {
 
     @Query(value = "select * from venda where cliente_id = :id and numero_pedido = :numeroPedido ", nativeQuery = true)
     List<Venda> findVendaByNumeroPedido(@Param("id") Long id, @Param("numeroPedido") String numeroPedido);
+    
+    @Query(value="select * from venda inner join detalhes_venda on detalhes_venda.venda_id = venda.id inner join frete on frete.id = venda.frete_id;", nativeQuery = true)
+    List<Venda> findVendas ();
 }

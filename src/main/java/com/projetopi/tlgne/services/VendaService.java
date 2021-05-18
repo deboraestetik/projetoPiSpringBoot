@@ -107,6 +107,13 @@ public class VendaService {
     public List<Venda> findVendaClienteById(Long id) {
         return vendaRepository.findVendaClienteById(id);
     }
+
+    
+    // esssa aquuii
+    public List<Venda> findVendas(){
+        return vendaRepository.findVendas();
+    }
+
     public List<Venda> findVendaNumeroPedido(long id, String numeroPedido) {
         return vendaRepository.findVendaByNumeroPedido(id, numeroPedido);
     }

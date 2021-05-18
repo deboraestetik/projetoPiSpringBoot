@@ -44,7 +44,13 @@ public class VendaController {
     public List<Venda> findVendaClienteById(@PathVariable(value = "id") long id) {
         return vendaService.findVendaClienteById(id);
     }
-
+    
+    //essaa aquiii
+    @GetMapping("/todasvendas")
+    public List<Venda> findVendas () {
+    return vendaService.findVendas();
+    };
+ 
     @GetMapping("/categoriasPorcentagem")
     public List<CategoriaPorcentagem> findVendasCategoriasPorcentagem(
             @RequestHeader("dataInicio") String dataInicio,
