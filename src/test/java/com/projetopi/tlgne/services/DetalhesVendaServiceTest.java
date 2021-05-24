@@ -27,6 +27,7 @@ public class DetalhesVendaServiceTest {
     @Test
     public void deveRetornarDetalhesVendaSalvo(){
         detalhesVendaService.saveDetalhesVenda(any());
+        
         verify(detalhesVendaRepository, times(1)).save(any());
     }
 }
