@@ -6,21 +6,20 @@ import com.projetopi.tlgne.repositories.DetalhesVendaRepository;
 import com.projetopi.tlgne.repositories.FreteRepository;
 import com.projetopi.tlgne.repositories.ProdutoRepository;
 import com.projetopi.tlgne.repositories.VendaRepository;
+import java.time.Instant;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -79,9 +78,9 @@ public class VendaServiceTest {
     @Test
     public void debeBuscarTodasAsVendasPorData(){
         List<Venda> vendaList = Mockito.mock(ArrayList.class);
-        when(vendaRepository.findVendasPorPeriodo("datainicio","datafim")).thenReturn(vendaList);
+        when(vendaRepository.findVendasPorPeriodo(Date.from(Instant.MIN),Date.from(Instant.MIN))).thenReturn(vendaList);
         when(vendaList.size()).thenReturn(1);
-        int vendaListRetornado = vendaService.findAllVenda("datainicio","datafim");
+        int vendaListRetornado = vendaService.findAllVenda(Date.from(Instant.MIN),Date.from(Instant.MIN));
         assertEquals(vendaListRetornado,1);
     }
     @Test
@@ -94,12 +93,12 @@ public class VendaServiceTest {
         detalhesVendaList.add(detalhesVenda);
         vendaList.add(venda);
         Long l = Long.valueOf("1").longValue();
-        when(vendaRepository.findVendasPorPeriodo("datainicio","datafim")).thenReturn(vendaList);
+        when(vendaRepository.findVendasPorPeriodo(Date.from(Instant.MIN),Date.from(Instant.MIN))).thenReturn(vendaList);
         when(detalhesVendaRepository.findVendaById(anyLong())).thenReturn(detalhesVendaList);
         when(detalhesVenda.getProduto()).thenReturn(produto);
         when(produto.getId()).thenReturn(l);
         when(produtoRepository.findById(anyLong())).thenReturn(produto);
-        int retorno = vendaService.totalProdutosVendidos("datainicio","datafim");
+        int retorno = vendaService.totalProdutosVendidos(Date.from(Instant.MIN),Date.from(Instant.MIN));
         assertEquals(retorno,1);
 
     }

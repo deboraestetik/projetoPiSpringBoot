@@ -8,10 +8,11 @@ import com.projetopi.tlgne.repositories.VendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class VendaService {
@@ -76,13 +77,13 @@ public class VendaService {
     }
 
     // here
-    public int findAllVenda(String dataInico, String dataFim) {
+    public int findAllVenda(Date dataInico, Date dataFim) {
         List<Venda> listaVendas = vendaRepository.findVendasPorPeriodo(dataInico, dataFim);
         return listaVendas.size();
     }
 
     //here
-    public int totalProdutosVendidos(String dataInicio, String dataFim) {
+    public int totalProdutosVendidos(Date dataInicio, Date dataFim) {
         List<Produto> listaProdutos = new ArrayList<>();
         int totProd = 0;
         List<Venda> listaVendas = vendaRepository.findVendasPorPeriodo(dataInicio, dataFim);
@@ -92,7 +93,6 @@ public class VendaService {
                 long id = detalheVenda.getProduto().getId();
                 Produto p = produtoRepository.findById(id);
                 listaProdutos.add(p);
-
             }
 
         }
@@ -122,7 +122,7 @@ public class VendaService {
         vendaRepository.deleteById(id);
     }
 
-    public List<CategoriaPorcentagem> findVendasCategoriasPorcentagem(String dataInicio, String dataFim) {
+    public List<CategoriaPorcentagem> findVendasCategoriasPorcentagem(Date dataInicio, Date dataFim) {
         List<Produto> listaProdutos = new ArrayList<>();
         List<CategoriaPorcentagem> listaCategoriaPorcentagem = new ArrayList<>();
         int totalProdutos = 0, cama = 0, mesa = 0, banho = 0, decoracao = 0;
@@ -165,8 +165,8 @@ public class VendaService {
         return listaCategoriaPorcentagem;
     }
 
-    public List<String> findVendasByDia(String dataInicio, String dataFim) {
-        List<Venda> vendas = vendaRepository.findVendasPorPeriodo(dataInicio, dataFim);
+    public List<String> findVendasByDia(Date dataInicio, Date dataFim) {
+      /*  List<Venda> vendas = vendaRepository.findVendasPorPeriodo(dataInicio, dataFim);
         List<String> vendaPorDia = new ArrayList<>();
         int qtdVendida = 0;
 
@@ -192,58 +192,19 @@ public class VendaService {
         } else {
             vendaPorDia.add("Não há vendas nesse período!");
             return vendaPorDia;
-        }
+        }*/
 
-        return vendaPorDia;
+        return null;
     }
 
-    public List<MesVendas> findVendasByMes(String dataInicio, String dataFim) {
+    public List<MesVendas> findVendasByMes(Date dataInicio, Date dataFim) {
         List<Venda> vendas = vendaRepository.findVendasPorPeriodo(dataInicio, dataFim);
         List<MesVendas> qtdVendasMes = new ArrayList<>();
-        int mesInicio = Date.valueOf(dataInicio).getMonth();
-        int mesFim = Date.valueOf(dataFim).getMonth();
-        int qtdVendida = 0, mesVenda = 0;
-
-        if (vendas.size() > 0) {
-            if (mesInicio == mesFim) {
-                for (Venda venda : vendas) {
-                    qtdVendida++;
-                }
-                qtdVendasMes.add(new MesVendas(Meses.values()[mesInicio].getNomeAbreviado(), qtdVendida));
-                return qtdVendasMes;
-            } else {
-                for (Venda venda : vendas) {
-                    String dataVendaStr = venda.getDataVenda().toString();
-                    dataVendaStr = dataVendaStr.substring(0, 10);
-                    Date dataVenda = Date.valueOf(dataVendaStr);
-                    mesVenda = dataVenda.getMonth();
-                    if (mesInicio < mesVenda && qtdVendida == 0) {
-                        while (mesInicio < mesVenda) {
-                            qtdVendasMes.add(new MesVendas(Meses.values()[mesInicio].getNomeAbreviado(), qtdVendida));
-                            mesInicio++;
-                        }
-                    }
-                    if (mesInicio == mesVenda) {
-                        qtdVendida++;
-                    }
-                }
-                if (qtdVendida > 0) {
-                    qtdVendasMes.add(new MesVendas(Meses.values()[mesVenda].getNomeAbreviado(), qtdVendida));
-                    if (mesVenda < mesFim) {
-                        qtdVendida = 0;
-                        while (mesVenda < mesFim) {
-                            mesVenda++;
-                            qtdVendasMes.add(new MesVendas(Meses.values()[mesVenda].getNomeAbreviado(), qtdVendida));
-                        }
-                    }
-                }
-            }
-        } else {
-            while (mesInicio <= mesFim) {
-                qtdVendasMes.add(new MesVendas(Meses.values()[mesInicio].getNomeAbreviado(), qtdVendida));
-                mesInicio++;
-            }
-            return qtdVendasMes;
+        
+        for(int i=dataInicio.getMonth(); i<=dataFim.getMonth(); i++){
+           List<Venda> vendasMes=vendas.stream().filter(x -> x.getDataVenda().getMonth() == 1)
+            .collect(Collectors.toList());
+           qtdVendasMes.add(new MesVendas(Meses.values()[i].getNomeAbreviado(), vendasMes.size()));
         }
         return qtdVendasMes;
     }

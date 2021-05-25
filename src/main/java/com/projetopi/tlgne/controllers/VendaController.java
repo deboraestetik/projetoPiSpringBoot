@@ -4,6 +4,7 @@ import com.projetopi.tlgne.entities.CategoriaPorcentagem;
 import com.projetopi.tlgne.entities.MesVendas;
 import com.projetopi.tlgne.entities.Venda;
 import com.projetopi.tlgne.services.VendaService;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,15 +24,15 @@ public class VendaController {
 
     @GetMapping("/totalVendas")
     public int findAllVenda(
-            @RequestHeader("dataInicio") String dataInicio,
-            @RequestHeader("dataFim") String dataFim) {
+            @RequestHeader("dataInicio") Date dataInicio,
+            @RequestHeader("dataFim") Date  dataFim) {
         return vendaService.findAllVenda(dataInicio, dataFim);
     }
 
     @GetMapping("/totalProdVend")
     public int findTotalProdutosVendidos(
-            @RequestHeader("dataInicio") String dataInicio,
-            @RequestHeader("dataFim") String dataFim) {
+            @RequestHeader("dataInicio") Date dataInicio,
+            @RequestHeader("dataFim") Date dataFim) {
         return vendaService.totalProdutosVendidos(dataInicio, dataFim);
     }
 
@@ -53,22 +54,22 @@ public class VendaController {
  
     @GetMapping("/categoriasPorcentagem")
     public List<CategoriaPorcentagem> findVendasCategoriasPorcentagem(
-            @RequestHeader("dataInicio") String dataInicio,
-            @RequestHeader("dataFim") String dataFim) {
+            @RequestHeader("dataInicio") Date dataInicio,
+            @RequestHeader("dataFim") Date dataFim) {
         return vendaService.findVendasCategoriasPorcentagem(dataInicio, dataFim);
     }
 
     @GetMapping("/porDia")
     public List<String> findVendasByDia(
-            @RequestHeader("dataInicio") String dataInicio,
-            @RequestHeader("dataFim") String dataFim) {
+            @RequestHeader("dataInicio") Date dataInicio,
+            @RequestHeader("dataFim") Date dataFim) {
         return vendaService.findVendasByDia(dataInicio, dataFim);
     }
 
     @GetMapping("/porMes")
     public List<MesVendas> findVendasByMes(
-            @RequestHeader("dataInicio") String dataInicio,
-            @RequestHeader("dataFim") String dataFim) {
+            @RequestHeader("dataInicio") Date dataInicio,
+            @RequestHeader("dataFim") Date dataFim) {
         return vendaService.findVendasByMes(dataInicio, dataFim);
     }
 
