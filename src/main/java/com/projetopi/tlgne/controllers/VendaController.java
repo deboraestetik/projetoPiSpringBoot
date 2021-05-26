@@ -81,6 +81,10 @@ public class VendaController {
     public Venda saveVenda(@RequestBody Venda venda) {
         return vendaService.saveVenda(venda);
     }
+    @PutMapping("")
+    public Venda updateVenda(@RequestBody Venda venda) {
+        return vendaService.updateVenda(venda);
+    }
 
     @DeleteMapping("/{id}")
     public void deleteVendaById(@PathVariable(value = "id") long id) {

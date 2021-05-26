@@ -59,6 +59,14 @@ public class VendaService {
         return vendaSalva;
     }
 
+    public Venda updateVenda(Venda venda) {
+        Venda vendaAlterada = new Venda();
+        if (vendaRepository.existsById(venda.getId())) {
+            vendaAlterada = vendaRepository.save(venda);
+        }
+        return vendaAlterada;
+    }
+
     private void gerarNumeroPedido(Venda venda) {
         LocalDateTime data = LocalDateTime.now();
         String ano = String.valueOf(data.getYear());
