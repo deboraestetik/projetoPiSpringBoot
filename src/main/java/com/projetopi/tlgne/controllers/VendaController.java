@@ -29,7 +29,7 @@ public class VendaController {
         return vendaService.findAllVenda(dataInicio, dataFim);
     }
 
-    @GetMapping("/totalProdVend")
+    @GetMapping("/totalProdutosVendidos")
     public int findTotalProdutosVendidos(
             @RequestHeader("dataInicio") Date dataInicio,
             @RequestHeader("dataFim") Date dataFim) {
@@ -46,7 +46,6 @@ public class VendaController {
         return vendaService.findVendaClienteById(id);
     }
     
-    //essaa aquiii
     @GetMapping("/todasvendas")
     public List<Venda> findVendas () {
     return vendaService.findVendas();
