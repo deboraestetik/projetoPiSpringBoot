@@ -17,12 +17,15 @@ public interface VendaRepository extends JpaRepository<Venda, Long> {
     @Query(value = "select * from venda where data_venda between :dataInicio and :dataFim", nativeQuery = true)
     List<Venda> findVendasPorPeriodo(@Param("dataInicio") Date dataInicio, @Param("dataFim") Date dataFim);
 
-    @Query(value = "select * from venda where cliente_id = :id and numero_pedido = :numeroPedido ", nativeQuery = true)
+    @Query(value = "select * from venda where cliente_id = :id and  numero_pedido LIKE %:numeroPedido% ORDER BY  data_venda DESC", nativeQuery = true)
     List<Venda> findVendaByNumeroPedido(@Param("id") Long id, @Param("numeroPedido") String numeroPedido);
-    
-    @Query(value="select * from venda inner join detalhes_venda on detalhes_venda.venda_id = venda.id inner join frete on frete.id = venda.frete_id;", nativeQuery = true)
-    List<Venda> findVendas ();
-    
+
+    @Query(value = "select * from venda inner join detalhes_venda on detalhes_venda.venda_id = venda.id inner join frete on frete.id = venda.frete_id;", nativeQuery = true)
+    List<Venda> findVendas();
+
     @Query(value = "select * from venda ORDER BY  data_venda DESC", nativeQuery = true)
     List<Venda> findAll();
+
+    @Query(value = "select * from venda where numero_pedido LIKE %:numeroPedido% ORDER BY  data_venda DESC", nativeQuery = true)
+    List<Venda> findAllLike(@Param("numeroPedido") String numeroPedido);
 }

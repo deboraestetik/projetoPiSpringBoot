@@ -33,16 +33,14 @@ public class VendaService {
 
     @Autowired
     private FreteRepository freteRepository;
-    
+
     public VendaService(VendaRepository vendaRepository, DetalhesVendaRepository detalhesVendaRepository, ProdutoRepository produtoRepository, DetalhesVendaService detalhesVendaService, FreteRepository freteRepository) {
         this.vendaRepository = vendaRepository;
         this.detalhesVendaRepository = detalhesVendaRepository;
         this.produtoRepository = produtoRepository;
         this.detalhesVendaService = detalhesVendaService;
-        this.freteRepository = freteRepository;       
+        this.freteRepository = freteRepository;
     }
-
-   
 
     public Venda saveVenda(Venda venda) {
         gerarNumeroPedido(venda);
@@ -173,7 +171,6 @@ public class VendaService {
 
     }
 
-   
     public List<MesVendas> findVendasByMes(Date dataInicio, Date dataFim) {
         List<Venda> vendas = vendaRepository.findVendasPorPeriodo(dataInicio, dataFim);
         List<MesVendas> qtdVendasMes = new ArrayList<>();
@@ -187,6 +184,8 @@ public class VendaService {
         }
         return qtdVendasMes;
     }
-   
 
+    public List<Venda> findAllLike(String numeroPedido) {
+        return vendaRepository.findAllLike(numeroPedido);
+    }
 }

@@ -70,6 +70,10 @@ public class VendaController {
     public List<Venda> findVendaNumeroPedido(@PathVariable(value = "id") long id, @RequestHeader("numeroPedido") String numeroPedido) {
         return vendaService.findVendaNumeroPedido(id,numeroPedido);
     }
+    @GetMapping("/numeroPedido")
+    public List<Venda> findAllLike(@RequestHeader("numeroPedido") String numeroPedido) {
+        return vendaService.findAllLike(numeroPedido);
+    }
 
     @PostMapping("")
     public Venda saveVenda(@RequestBody Venda venda) {
