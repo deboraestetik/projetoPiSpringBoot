@@ -4,6 +4,7 @@ import com.projetopi.tlgne.entities.*;
 import com.projetopi.tlgne.repositories.DetalhesVendaRepository;
 import com.projetopi.tlgne.repositories.FreteRepository;
 import com.projetopi.tlgne.repositories.ProdutoRepository;
+import com.projetopi.tlgne.repositories.UsuarioRepository;
 import com.projetopi.tlgne.repositories.VendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class VendaService {
@@ -31,14 +33,16 @@ public class VendaService {
 
     @Autowired
     private FreteRepository freteRepository;
-
+    
     public VendaService(VendaRepository vendaRepository, DetalhesVendaRepository detalhesVendaRepository, ProdutoRepository produtoRepository, DetalhesVendaService detalhesVendaService, FreteRepository freteRepository) {
         this.vendaRepository = vendaRepository;
         this.detalhesVendaRepository = detalhesVendaRepository;
         this.produtoRepository = produtoRepository;
         this.detalhesVendaService = detalhesVendaService;
-        this.freteRepository = freteRepository;
+        this.freteRepository = freteRepository;       
     }
+
+   
 
     public Venda saveVenda(Venda venda) {
         gerarNumeroPedido(venda);
@@ -169,38 +173,7 @@ public class VendaService {
 
     }
 
-    public List<String> findVendasByDia(Date dataInicio, Date dataFim) {
-        /*  List<Venda> vendas = vendaRepository.findVendasPorPeriodo(dataInicio, dataFim);
-        List<String> vendaPorDia = new ArrayList<>();
-        int qtdVendida = 0;
-
-        if (vendas.size() > 0) {
-            String dataAtualStr = vendas.get(0).getDataVenda().toString();
-            dataAtualStr = dataAtualStr.substring(0, 10);
-            Date dataAtual = Date.valueOf(dataAtualStr);
-
-            for (Venda venda : vendas) {
-                String dataVendaStr = venda.getDataVenda().toString();
-                dataVendaStr = dataVendaStr.substring(0, 10);
-                Date dataVenda = Date.valueOf(dataVendaStr);
-
-                if (dataAtual.equals(dataVenda)) {
-                    qtdVendida++;
-                } else if (dataAtual.getDay() < dataVenda.getDay()) {
-                    vendaPorDia.add(dataAtual.toString() + " " + qtdVendida);
-                    dataAtual.setDate(dataAtual.getDate() + 1);
-                    qtdVendida = 0;
-                }
-            }
-            vendaPorDia.add(dataAtual.toString() + " " + (qtdVendida + 1));
-        } else {
-            vendaPorDia.add("Não há vendas nesse período!");
-            return vendaPorDia;
-        }*/
-
-        return null;
-    }
-
+   
     public List<MesVendas> findVendasByMes(Date dataInicio, Date dataFim) {
         List<Venda> vendas = vendaRepository.findVendasPorPeriodo(dataInicio, dataFim);
         List<MesVendas> qtdVendasMes = new ArrayList<>();
@@ -214,5 +187,6 @@ public class VendaService {
         }
         return qtdVendasMes;
     }
+   
 
 }

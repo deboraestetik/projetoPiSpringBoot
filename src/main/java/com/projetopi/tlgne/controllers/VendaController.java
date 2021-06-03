@@ -58,13 +58,7 @@ public class VendaController {
         return vendaService.findVendasCategoriasPorcentagem(dataInicio, dataFim);
     }
 
-    @GetMapping("/porDia")
-    public List<String> findVendasByDia(
-            @RequestHeader("dataInicio") Date dataInicio,
-            @RequestHeader("dataFim") Date dataFim) {
-        return vendaService.findVendasByDia(dataInicio, dataFim);
-    }
-
+    
     @GetMapping("/porMes")
     public List<MesVendas> findVendasByMes(
             @RequestHeader("dataInicio") Date dataInicio,

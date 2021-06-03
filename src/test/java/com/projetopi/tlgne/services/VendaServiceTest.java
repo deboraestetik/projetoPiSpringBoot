@@ -5,6 +5,7 @@ import com.projetopi.tlgne.entities.*;
 import com.projetopi.tlgne.repositories.DetalhesVendaRepository;
 import com.projetopi.tlgne.repositories.FreteRepository;
 import com.projetopi.tlgne.repositories.ProdutoRepository;
+import com.projetopi.tlgne.repositories.UsuarioRepository;
 import com.projetopi.tlgne.repositories.VendaRepository;
 import java.time.Instant;
 import org.junit.Before;
@@ -22,6 +23,7 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 public class VendaServiceTest {
@@ -42,7 +44,7 @@ public class VendaServiceTest {
 
     @Mock
     private FreteRepository freteRepository;
-
+  
     @Before
     public void setUp() throws Exception {
         vendaService = new VendaService(vendaRepository, detalhesVendaRepository, produtoRepository, detalhesVendaService,freteRepository);

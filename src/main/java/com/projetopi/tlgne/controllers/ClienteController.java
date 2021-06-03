@@ -32,6 +32,11 @@ public class ClienteController {
     public Cliente verificarCpfJaCadastrado(@RequestHeader("cpf") String cpf){
         return clienteService.verificarCpfJaCadastrado(cpf);
     }
+     @GetMapping("/buscarSenha/{id}")
+    public boolean buscarSenha(@PathVariable(value = "id") long id, @RequestHeader("senha") String senha){
+        return clienteService.buscarSenha(id,senha);
+    }
+    
     @CrossOrigin
     @PostMapping(value = "")
     public Cliente saveCliente(@RequestBody Cliente cliente) {
@@ -49,5 +54,6 @@ public class ClienteController {
     public void deleteCliente(@PathVariable(value = "id") long id) {
        clienteService.deleteById(id);
     }
+   
     
 }

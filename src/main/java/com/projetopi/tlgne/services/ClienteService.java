@@ -15,7 +15,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-
 @Service
 public class ClienteService {
 
@@ -73,7 +72,7 @@ public class ClienteService {
     public Cliente saveUpdateCliente(Cliente cliente) throws NotFoundException {
 
         if (clienteRepository.existsById(cliente.getId())) {
-            if(cliente.getEnderecoCobranca() != null){
+            if (cliente.getEnderecoCobranca() != null) {
                 updateEnderecoCobranca(cliente);
             }
             updateUsuarioAndUsuarios(cliente);
@@ -94,8 +93,7 @@ public class ClienteService {
         usuarioService.saveUsuario(cliente.getUsuario());
     }
 
-
-    private void updateEnderecoCobranca(Cliente cliente){
+    private void updateEnderecoCobranca(Cliente cliente) {
         cliente.getEnderecoCobranca().setCliente(cliente);
         cliente.getEnderecoCobranca().setEnderecoCobranca(true);
         EnderecoCliente enderecoCliente = enderecoClienteService.save(cliente.getEnderecoCobranca());
@@ -112,5 +110,14 @@ public class ClienteService {
 
     public Cliente findByCliente(Long id) {
         return clienteRepository.findByCliente(id);
+    }
+
+    public boolean buscarSenha(long id, String senha) {
+        Usuario usuario = usuarioService.findById(id);
+        if (passwordEncoder.matches(senha, usuario.getPassword())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
